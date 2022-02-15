@@ -19,7 +19,16 @@ public class FYGameManager : MonoBehaviour
 
     // Game Timer
 
-    public float curTimer;  
+    public float curTimer;
+
+    // Spawn Points
+    public Transform[] SpawnPoints;
+
+    // Main client player
+    public FYPlayer player;
+
+    // Player List
+    //FYPlayer[] playerList;
 
     public void Awake()
     {
@@ -29,7 +38,8 @@ public class FYGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        AssignSpawnPoints();
+        player.ResetSpawnPoint();
     }
 
     // Update is called once per frame
@@ -44,5 +54,25 @@ public class FYGameManager : MonoBehaviour
     public bool isOver()
     {
         return curTimer <= 0;
+    }
+
+    void AssignSpawnPoints()
+    {
+        if (player == null)
+        {
+            Debug.Log("No Player is set");
+            return;
+        }
+
+        if (SpawnPoints.Length == 0)
+        {
+            Debug.Log("No SpawnPoints are set");
+            return;
+        }
+
+        //int random_iterator = Random.Range(0, SpawnPoints.Length - 1);
+        //
+        //player.setDefaultSpawn(SpawnPoints[random_iterator]);
+        player.setDefaultSpawn(SpawnPoints[0]);
     }
 }
