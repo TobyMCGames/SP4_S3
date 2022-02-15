@@ -7,6 +7,8 @@ TagManager:
   - Prop
   - AbilityOrb
   - Interactable
+  - Enemy
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
