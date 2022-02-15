@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Prop
   - AbilityOrb
+  - Interactable
   layers:
   - Default
   - TransparentFX
