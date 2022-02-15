@@ -19,6 +19,8 @@ public class FYPlayer : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        curHealth = MaxHealth;
+        curLives = MaxLives;
     }
 
     // Start is called before the first frame update
