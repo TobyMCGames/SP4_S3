@@ -41,6 +41,7 @@ public class MovePlayer : MonoBehaviour
         {
             Jump();
         }
+        Moveplayer();
     }
 
     void Jump()
@@ -63,7 +64,7 @@ public class MovePlayer : MonoBehaviour
     private void FixedUpdate()
     {
         isgrounded = Physics.Raycast(transform.position, Vector3.down, playerheight * 0.5f + 0.1f);
-        Moveplayer();
+        
     }
     void Moveplayer()
     {
@@ -74,12 +75,12 @@ public class MovePlayer : MonoBehaviour
             angle -= 180;
 
             m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
-        
-            m_Movement = (transform.forward * verticalmovement) + (camera.transform.right * horizontalmovement);
+            m_Movement = (transform.forward * verticalmovement) + (transform.right * horizontalmovement);
             
             if (isgrounded)
             {
-                m_Rigidbody.AddForce(m_Rotation * m_Movement.normalized * movespeed, ForceMode.Acceleration); 
+                m_Rigidbody.AddForce(m_Rotation * m_Movement.normalized * movespeed, ForceMode.Acceleration);
+
             }
             else if (!isgrounded)
             {
