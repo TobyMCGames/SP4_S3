@@ -5,17 +5,31 @@ using UnityEngine.AI;
 
 public class WaypointController : MonoBehaviour
 {
+    //public List<Transform> waypoints = new List<Transform>();
+    public List<Transform> waypoints;
+    Transform currentTarget;
+    private int _index = 1;
+
     public NavMeshAgent navMeshAgent;
-    //use List so waypoints can be added in Runtime
-    //public Transform[] waypoints;
-    public List<Transform> waypoints = new List<Transform>();
+
+    private bool Reverse = false;
+    private bool atEnd = false;
+    private bool moving = true;
+
+
 
     int m_CurrentWaypointIndex;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        navMeshAgent = GetComponent<NavMeshAgent>();
+
+        if(waypoints.Count > 0 && waypoints[0] != null)
+        {
+            currentTarget = waypoints[_index];
+            navMeshAgent.SetDestination(currentTarget.position);
+        }
     }
 
     public void StartAI()
