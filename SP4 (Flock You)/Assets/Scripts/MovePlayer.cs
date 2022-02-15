@@ -21,7 +21,7 @@ public class MovePlayer : MonoBehaviour
     float tempjumpforce = 10f;
     float playerheight;
     float movespeed = 60f;
-
+    public GameObject camera;
 
 
 
