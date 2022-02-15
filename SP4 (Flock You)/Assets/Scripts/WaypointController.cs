@@ -16,8 +16,6 @@ public class WaypointController : MonoBehaviour
     private bool atEnd = false;
     private bool moving = true;
 
-
-
     int m_CurrentWaypointIndex;
 
     // Start is called before the first frame update
