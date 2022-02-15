@@ -39,6 +39,7 @@ public class FYGameManager : MonoBehaviour
     void Start()
     {
         AssignSpawnPoints();
+        player.ResetSpawnPoint();
     }
 
     // Update is called once per frame
