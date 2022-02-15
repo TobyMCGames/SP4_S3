@@ -39,6 +39,15 @@ public class FYPlayer : MonoBehaviour
         {
             --curLives;
             curHealth = MaxHealth;
+            ResetSpawnPoint();
+            UI_Manager.Instance.UpdateHealth();
+            UI_Manager.Instance.UpdateLives();
+        }
+
+        // Testing
+        if (Input.GetButtonDown("Jump"))
+        {
+            Damaged(1);
         }
     }
 
@@ -49,7 +58,7 @@ public class FYPlayer : MonoBehaviour
 
     public bool isDead()
     {
-        return curLives <= 0;
+        return curLives <= 0 && !hasHealth();
     }
 
     public void setDefaultSpawn(Transform _spawnpoint)
@@ -60,5 +69,11 @@ public class FYPlayer : MonoBehaviour
     public void ResetSpawnPoint()
     {
         gameObject.transform.position = DefaultSpawnPoint.position;
+    }
+
+    public void Damaged(int _damage)
+    {
+        curHealth -= _damage;
+        UI_Manager.Instance.UpdateHealth();
     }
 }
