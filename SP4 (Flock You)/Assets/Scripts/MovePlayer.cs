@@ -23,6 +23,7 @@ public class MovePlayer : MonoBehaviour
     float movespeed = 60f;
     public GameObject camera;
 
+    bool isFlying = false;
 
 
     private void Awake()
@@ -31,6 +32,10 @@ public class MovePlayer : MonoBehaviour
         //if (photonView.IsMine)
         //GetComponent<AudioListener>().enabled = true;
         playerheight = transform.localScale.y;
+        
+    }
+    private void Start()
+    {
     }
 
     private void Update()
@@ -68,24 +73,40 @@ public class MovePlayer : MonoBehaviour
     }
     void Moveplayer()
     {
+        float angle = 0.0f;
+        Quaternion targetrotation;
         if (isWalking == true)// && photonView.IsMine)
         {
             Vector3 player_camera = (camera.transform.position - transform.position);
-            float angle = Mathf.Rad2Deg * Mathf.Atan2(player_camera.x, player_camera.z);
+
+            angle = Mathf.Rad2Deg * Mathf.Atan2(player_camera.x, player_camera.z);
             angle -= 180;
 
             m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
+            targetrotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * 10f);
             m_Movement = (transform.forward * verticalmovement) + (transform.right * horizontalmovement);
-            
             if (isgrounded)
             {
-                m_Rigidbody.AddForce(m_Rotation * m_Movement.normalized * movespeed, ForceMode.Acceleration);
-
-            }
+                m_Rigidbody.AddForce(m_Movement.normalized * movespeed, ForceMode.Acceleration);
+            } 
             else if (!isgrounded)
             {
-                m_Rigidbody.AddForce(m_Rotation * m_Movement.normalized * movespeed* airmul, ForceMode.Acceleration);
+                m_Rigidbody.AddForce(m_Movement.normalized * movespeed* airmul, ForceMode.Acceleration);
             }
+            
+            // rotate the player towards where the camera is facing
+            if (verticalmovement != 0)
+            {
+                
+                m_Rigidbody.MoveRotation(targetrotation);
+            }
+            /*else
+            {
+                angle = Mathf.Rad2Deg * Mathf.Atan2(verticalmovement, horizontalmovement) + transform.eulerAngles.y;
+                m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
+                targetrotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * 10f);
+            }*/
+           
         }
     }
 
