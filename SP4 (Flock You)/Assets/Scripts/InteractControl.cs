@@ -5,7 +5,6 @@ using UnityEngine;
 public class InteractControl : MonoBehaviour
 {
     private GameObject heldObject;
-    private GameObject heldObjectTP;
     private GameObject player;
     private float heldObjectWeight;
     private GameObject touchPointLight, touchPointHeavy;
@@ -32,17 +31,18 @@ public class InteractControl : MonoBehaviour
             if (heldObject != null)
             {
                 //heldObjectTP = heldObject.transform.GetChild(0).gameObject;
+                //Debug.Log(heldObjectTP);
                 heldObjectWeight = heldObject.GetComponent<Rigidbody>().mass;
 
                 //light object
                 if (heldObjectWeight >= 1 && heldObjectWeight <= 7)
                 {
-                    heldObject.transform.position = touchPointLight.transform.position;
+                    heldObject.transform.localPosition = touchPointLight.transform.position;
                 }
                 //heavy object
                 else if (heldObjectWeight > 7)
                 {
-                    heldObject.transform.position = touchPointHeavy.transform.position;
+                    heldObject.transform.localPosition = touchPointLight.transform.position;
                 }
 
                 //change player speed according to weight of object
