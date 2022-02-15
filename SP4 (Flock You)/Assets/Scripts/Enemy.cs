@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
     public GameObject POV_Agro;
     public GameObject POV_DeAgro;
     public enum FSM { IDLE, PATROL, AGRO, STUN }
+    public FSM curState;
+    public Transform[] Waypoints;
 
     // Start is called before the first frame update
     void Start()
