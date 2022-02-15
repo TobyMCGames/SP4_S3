@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Prop
   - AbilityOrb
+  - Enemy
   layers:
   - Default
   - TransparentFX
