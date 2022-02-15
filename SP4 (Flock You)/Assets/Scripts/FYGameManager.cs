@@ -33,6 +33,8 @@ public class FYGameManager : MonoBehaviour
     public void Awake()
     {
         Instance = this;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Start is called before the first frame update

@@ -20,7 +20,10 @@ public class MovePlayer : MonoBehaviour
     // temp values 
     float tempjumpforce = 10f;
     float playerheight;
-    float movespeed = 15f;
+    float movespeed = 60f;
+    public GameObject camera;
+
+
 
     private void Awake()
     {
@@ -62,19 +65,25 @@ public class MovePlayer : MonoBehaviour
         isgrounded = Physics.Raycast(transform.position, Vector3.down, playerheight * 0.5f + 0.1f);
         Moveplayer();
     }
-
     void Moveplayer()
     {
         if (isWalking == true)// && photonView.IsMine)
         {
-            m_Movement = (transform.forward * verticalmovement) + (transform.right * horizontalmovement);
+            Vector3 player_camera = (camera.transform.position - transform.position);
+            float angle = Mathf.Rad2Deg * Mathf.Atan2(player_camera.x, player_camera.z);
+            angle -= 180;
+
+            m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
+        
+            m_Movement = (transform.forward * verticalmovement) + (camera.transform.right * horizontalmovement);
+            
             if (isgrounded)
             {
-                m_Rigidbody.AddForce(m_Movement.normalized * movespeed, ForceMode.Acceleration);
+                m_Rigidbody.AddForce(m_Rotation * m_Movement.normalized * movespeed, ForceMode.Acceleration); 
             }
             else if (!isgrounded)
             {
-                m_Rigidbody.AddForce(m_Movement.normalized * movespeed* airmul, ForceMode.Acceleration);
+                m_Rigidbody.AddForce(m_Rotation * m_Movement.normalized * movespeed* airmul, ForceMode.Acceleration);
             }
         }
     }
