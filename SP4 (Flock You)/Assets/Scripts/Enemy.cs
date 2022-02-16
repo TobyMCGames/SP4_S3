@@ -7,8 +7,12 @@ public class Enemy : MonoBehaviour
 {
     public GameObject POV_Agro;
     public GameObject POV_DeAgro;
+    
+    // Finite State Machine
     public enum FSM { IDLE, PATROL, AGRO, STUN }
     public FSM curState;
+    float Stun_Timer;
+
     //public Transform[] Waypoints;
     WaypointController waypointController;
 
@@ -36,8 +40,21 @@ public class Enemy : MonoBehaviour
                 
                 break;
             case FSM.STUN:
-
+                if (Stun_Timer > 0)
+                    Stun_Timer -= Time.deltaTime;
+                else
+                {
+                    curState = FSM.PATROL;
+                    Debug.Log("Enemy Woke up");
+                }
                 break;
         }
+    }
+
+    public void SetStun(float stunTime)
+    {
+        curState = FSM.STUN;
+        Stun_Timer = stunTime;
+        Debug.Log("Enemy Stunned");
     }
 }
