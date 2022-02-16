@@ -327,6 +327,7 @@ MonoBehaviour:
   movemul: 40
   airmul: 0.4
   camera: {fileID: 0}
+  movementForce: 1
 --- !u!114 &6220354295224625069
 MonoBehaviour:
   m_ObjectHideFlags: 0
