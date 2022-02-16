@@ -12,17 +12,14 @@ public class AbilityControl : MonoBehaviour
     private float ScrollValue = 0f;
     private int AbilityCount = 0;
     private int currAbility = 0;
-    LayEgg layEggAbility = new LayEgg();
+    DistactAbility distactAbility = new DistactAbility();
+    LayEggAbility layEggAbility = new LayEggAbility();
 
     private void Start()
     {
         AbilitiesList.Add(layEggAbility);
+        AbilitiesList.Add(distactAbility);
         AbilityCount = AbilitiesList.Count;
-    }
-
-    public void switchSkill(int i)
-    {
-
     }
 
     private void Update()
@@ -37,6 +34,8 @@ public class AbilityControl : MonoBehaviour
             {
                 currAbility = 0;
             }
+
+            Debug.Log(currAbility);
         }
         else if (ScrollValue <= -ScrollLimit)
         {
@@ -47,14 +46,17 @@ public class AbilityControl : MonoBehaviour
             {
                 currAbility = AbilityCount - 1;
             }
+
+            Debug.Log(currAbility);
         }
 
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.Q) && AbilitiesList[currAbility].CanUse())
         {
             AbilitiesList[currAbility].UseAbility();
         }
 
         layEggAbility.Update();
+        distactAbility.Update();
     }
 
 }
