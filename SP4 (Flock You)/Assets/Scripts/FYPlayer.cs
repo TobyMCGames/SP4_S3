@@ -47,7 +47,7 @@ public class FYPlayer : MonoBehaviour
         // Testing
         if (Input.GetButtonDown("Jump"))
         {
-            Damaged(1);
+            Damaged(0);
         }
     }
 
