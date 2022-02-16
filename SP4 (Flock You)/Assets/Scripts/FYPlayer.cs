@@ -74,8 +74,12 @@ public class FYPlayer : MonoBehaviour
 
     public void ResetSpawnPoint()
     {
+        GameObject NestPrefab = Resources.Load("NestSpawn") as GameObject;
         if (layEggAbility.GetNest() != null)
+        {
             gameObject.transform.position = layEggAbility.GetNest().transform.position;
+            Destroy(layEggAbility.GetNest());
+        }
         else 
             gameObject.transform.position = DefaultSpawnPoint.position;
     }
