@@ -7,6 +7,8 @@ public class UI_Manager : MonoBehaviour
 {
     public static UI_Manager Instance = null;
 
+    public FYPlayer player;
+
     public Text UI_Timer;
     //Temporary use text instead of image
     public Text UI_Health;
@@ -21,6 +23,11 @@ public class UI_Manager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        //Init();
+    }
+
+    public void Init()
     {
         UpdateHealth();
         UpdateAmmo();
@@ -49,7 +56,7 @@ public class UI_Manager : MonoBehaviour
             return;
         }
 
-        UI_Health.text = "x " + FYPlayer.Instance.curHealth;
+        UI_Health.text = "x " + player.curHealth;
     }
 
     public void UpdateAmmo()
@@ -60,7 +67,7 @@ public class UI_Manager : MonoBehaviour
             return;
         }
 
-        UI_Ammo.text = "x " + FYPlayer.Instance.DropLoadControl_script.curAmmo;
+        UI_Ammo.text = "x " + player.DropLoadControl_script.curAmmo;
     }
 
     public void UpdateLives()
@@ -71,6 +78,6 @@ public class UI_Manager : MonoBehaviour
             return;
         }
 
-        UI_Lives.text = "x " + FYPlayer.Instance.curLives;
+        UI_Lives.text = "x " + player.curLives;
     }
 }
