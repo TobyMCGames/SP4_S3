@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 600894972404136892}
   - component: {fileID: 6220354295224625069}
   - component: {fileID: 3433376927388911469}
+  - component: {fileID: 3727522623858185587}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -352,9 +353,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b019b3b01422fb449e53d2929f3b14c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PoopPrefab: {fileID: 7227484998935399807, guid: 16485e6235110924a9f911847dad6840,
+    type: 3}
   MaxAmmo: 5
   MaxTillReload: 1
   MaxRechargeRateTimer: 0.2
+--- !u!114 &3727522623858185587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987478240769630004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee769a6a59a9c63499b3e3f0748e2346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 5
+  MaxLives: 3
+  curHealth: 0
+  curLives: 0
 --- !u!1 &4189169062673136737
 GameObject:
   m_ObjectHideFlags: 0

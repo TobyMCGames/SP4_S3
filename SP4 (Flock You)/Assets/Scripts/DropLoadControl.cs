@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DropLoadControl : MonoBehaviour
 {
+    // Projectile
+    public GameObject PoopPrefab = null;
+
     // Ammo variables
     public int MaxAmmo = 5;
     private int curAmmo;
@@ -48,5 +51,15 @@ public class DropLoadControl : MonoBehaviour
 
         curAmmo++;
         RechargeRateTimer = MaxRechargeRateTimer;
+    }
+
+    void DropLoad()
+    {
+        if (PoopPrefab == null)
+        {
+            Debug.Log("PoopPrefab was not assigned");
+            return;
+        }
+        //GameObject poop = Instantiate(PoopPrefab, gameObject.transform, true, )
     }
 }
