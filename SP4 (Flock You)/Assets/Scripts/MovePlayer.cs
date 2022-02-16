@@ -21,7 +21,7 @@ public class MovePlayer : MonoBehaviour
     // temp values 
     public float jumpforce = 10f;
     float playerheight;
-    public GameObject camera;
+    public Cinemachine.CinemachineFreeLook camera;
     bool isFlying = false;
 
 
@@ -47,7 +47,13 @@ public class MovePlayer : MonoBehaviour
             Jump();
         }
         Moveplayer();
+    
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            camera.m_LookAt = transform;
+        }
     }
+
 
     void Jump()
     {
@@ -69,7 +75,6 @@ public class MovePlayer : MonoBehaviour
     private void FixedUpdate()
     {
         isgrounded = Physics.Raycast(transform.position, Vector3.down, playerheight * 0.5f + 0.1f);
-        
     }
     void Moveplayer()
     {
@@ -106,5 +111,13 @@ public class MovePlayer : MonoBehaviour
     public float GetDefaultMoveMul()
     {
         return DefaultMoveMul;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("testCameraDetach"))
+        {
+            camera.m_LookAt = collision.transform;
+        }
     }
 }
