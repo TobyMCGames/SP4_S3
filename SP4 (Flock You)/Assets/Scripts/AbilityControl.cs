@@ -15,12 +15,27 @@ public class AbilityControl : MonoBehaviour
     DistactAbility distactAbility = new DistactAbility();
     LayEggAbility layEggAbility = new LayEggAbility();
 
-    private void Start()
+    public enum ABILITIES { 
+        DISTRACT,
+        LAYEGG,
+        NUM_ABBILITIES
+    }
+
+    private void Awake()
     {
         //add abilities to list
         AbilitiesList.Add(layEggAbility);
         AbilitiesList.Add(distactAbility);
         AbilityCount = AbilitiesList.Count;
+    }
+
+    private void Start()
+    {
+    }
+
+    public LayEggAbility GetLayEggAbility()
+    {
+        return layEggAbility;
     }
 
     private void Update()

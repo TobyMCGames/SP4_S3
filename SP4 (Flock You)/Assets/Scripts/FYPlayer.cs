@@ -19,19 +19,20 @@ public class FYPlayer : MonoBehaviour
     // Player scripts
     public DropLoadControl DropLoadControl_script;
 
-    LayEggAbility layEggAbility = new LayEggAbility();
+    //LayEggAbility layEggAbility = new LayEggAbility();
+    LayEggAbility layEggAbility;
 
     private void Awake()
     {
         Instance = this;
         curHealth = MaxHealth;
         curLives = MaxLives;
+        layEggAbility = GetComponent<AbilityControl>().GetLayEggAbility();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame

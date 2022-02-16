@@ -11,7 +11,7 @@ public class LayEggAbility : Ability
     public LayEggAbility()
     {
         //init properties
-        cooldown = 1f; 
+        cooldown = 10f; 
         AbilityName = "Lay Egg Ability";
     }
 
