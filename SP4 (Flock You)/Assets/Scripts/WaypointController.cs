@@ -5,16 +5,15 @@ using UnityEngine.AI;
 
 public class WaypointController : MonoBehaviour
 {
-    //public List<Transform> waypoints = new List<Transform>();
     public List<Transform> waypoints;
     Transform currentTarget;
-    private int _index = 1;
+    protected int _index = 1;
 
     public NavMeshAgent navMeshAgent;
 
-    private bool Reverse = false;
-    private bool atEnd = false;
-    private bool moving = true;
+    protected bool Reverse = false;
+    protected bool atEnd = false;
+    protected bool moving = true;
 
     int m_CurrentWaypointIndex;
 
@@ -23,7 +22,7 @@ public class WaypointController : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        if(waypoints.Count > 0 && waypoints[0] != null)
+        if (waypoints.Count > 0 && waypoints[0] != null)
         {
             currentTarget = waypoints[_index];
             navMeshAgent.SetDestination(currentTarget.position);
@@ -39,15 +38,14 @@ public class WaypointController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (navMeshAgent.remainingDistance < navMeshAgent.stoppingDistance && waypoints.Count > 0)
-        //{
-        //    m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % waypoints.Count;
-        //    navMeshAgent.SetDestination(waypoints[m_CurrentWaypointIndex].position);
-        //}
+        
+    }
 
+    public void WaypointUpdate()
+    {
         // Get current speed percent of agent and set the speed parameter of the animator
         float speedPercent = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
-        
+
         if (currentTarget != null)
         {
             //Check if the agent has arrived the target position
@@ -57,7 +55,6 @@ public class WaypointController : MonoBehaviour
                 moving = false;
                 StartCoroutine("MoveToNextWaypoint");
             }
-
         }
     }
 
