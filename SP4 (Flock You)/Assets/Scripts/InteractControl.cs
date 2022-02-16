@@ -7,7 +7,7 @@ public class InteractControl : MonoBehaviour
     private GameObject heldObject;
     private GameObject player;
     private float heldObjectWeight;
-    private GameObject touchPointLight, touchPointHeavy;
+    public GameObject touchPointLight, touchPointHeavy;
     private float speedChange;
     private float playerSpeed;
 
@@ -15,14 +15,16 @@ public class InteractControl : MonoBehaviour
     {
         // init variables
         player = gameObject;
-        touchPointLight = player.transform.Find("TouchPoint_Light").gameObject;
-        touchPointHeavy = player.transform.Find("TouchPoint_Heavy").gameObject;
     }
 
     void Update()
     {
-        //default speed
-        player.GetComponent<PlayerMovement2>().moveSpeed = 0.3f;
+        if (Input.GetMouseButtonUp(0))
+        {
+            Debug.Log("Released L Mouse btn in interactable controls");
+            //default speed
+            player.GetComponent<MovePlayer>().movemul = player.GetComponent<MovePlayer>().GetDefaultMoveMul();
+        }
 
         //if click
         if (Input.GetMouseButton(0))
