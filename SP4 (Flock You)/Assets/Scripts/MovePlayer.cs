@@ -171,7 +171,6 @@ public class MovePlayer : MonoBehaviour
             m_Movement.Normalize();
             m_Rigidbody.AddForce((m_Movement * Time.deltaTime) * movemul, ForceMode.VelocityChange);
             angle = Mathf.Rad2Deg * Mathf.Atan2(m_Movement.x, m_Movement.z);
-
             m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
             forceRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
             m_Rigidbody.MoveRotation(forceRotation);

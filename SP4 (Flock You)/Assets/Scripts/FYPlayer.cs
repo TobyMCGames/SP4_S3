@@ -16,6 +16,11 @@ public class FYPlayer : MonoBehaviour
     public int curHealth;
     public int curLives;
 
+    // Player scripts
+    public DropLoadControl DropLoadControl_script;
+
+    LayEggAbility layEggAbility = new LayEggAbility();
+
     private void Awake()
     {
         Instance = this;
@@ -68,7 +73,10 @@ public class FYPlayer : MonoBehaviour
 
     public void ResetSpawnPoint()
     {
-        gameObject.transform.position = DefaultSpawnPoint.position;
+        if (layEggAbility.GetNest() != null)
+            gameObject.transform.position = layEggAbility.GetNest().transform.position;
+        else 
+            gameObject.transform.position = DefaultSpawnPoint.position;
     }
 
     public void Damaged(int _damage)

@@ -10,8 +10,14 @@ public class LayEggAbility : Ability
 
     public LayEggAbility()
     {
+        //init properties
         cooldown = 1f; 
         AbilityName = "Lay Egg Ability";
+    }
+
+    public GameObject GetNest()
+    {
+        return InitNest;
     }
 
     override public void UseAbility()
@@ -21,13 +27,16 @@ public class LayEggAbility : Ability
 
         if(InitNest == null)
         {
+            //spawn nest
             NestPrefab = Resources.Load("NestSpawn") as GameObject;
-            Object.Instantiate(NestPrefab, player.transform.position, player.transform.rotation);
             InitNest = Object.Instantiate(NestPrefab, player.transform.position, player.transform.rotation);
         }
         else
         {
+            //delete last spawn
             Object.Destroy(InitNest);
+            //spawn new nest
+            InitNest = Object.Instantiate(NestPrefab, player.transform.position, player.transform.rotation);
         }
 
     }
