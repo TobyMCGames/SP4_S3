@@ -2,20 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ability : MonoBehaviour
+public class Ability
 {
-    private float cooldown;
-    private float CurCooldown;
+    public float cooldown = 0;
+    public float CurCooldown = 0;
 
-    bool CanUse()
+    public bool CanUse()
     {
         if (CurCooldown >= 0)
+        {
+            Debug.Log("Ability recharging...");
             return false;
+        }
         else
+        {
+            Debug.Log("Ability Ready!");
             return true;
+        }
     }
 
-    void SetCooldown(float AbilityCooldown)
+    public void SetCooldown(float AbilityCooldown)
     {
         cooldown = AbilityCooldown;
     }
@@ -25,7 +31,7 @@ public class Ability : MonoBehaviour
         CurCooldown = cooldown;
     }
 
-    private void Update()
+    public void Update()
     {
         if (!CanUse()) CurCooldown -= Time.deltaTime;
     }

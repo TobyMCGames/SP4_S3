@@ -14,6 +14,7 @@ public class MovePlayer : MonoBehaviour
     float groundrag = 6f;
     float airDrag = 2f;
     public float movemul = 10f;
+    float DefaultMoveMul;
     public float airmul = 0.4f;
     bool isWalking;
 
@@ -32,6 +33,7 @@ public class MovePlayer : MonoBehaviour
         //if (photonView.IsMine)
         //GetComponent<AudioListener>().enabled = true;
         playerheight = transform.localScale.y;
+        DefaultMoveMul = movemul;
         
     }
     private void Start()
@@ -140,5 +142,10 @@ public class MovePlayer : MonoBehaviour
             m_Rigidbody.drag = groundrag;
         else if (!isgrounded)
             m_Rigidbody.drag = airDrag;
+    }
+
+    public float GetDefaultMoveMul()
+    {
+        return DefaultMoveMul;
     }
 }

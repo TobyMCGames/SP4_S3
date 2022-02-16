@@ -7,7 +7,7 @@ public class InteractControl : MonoBehaviour
     private GameObject heldObject;
     private GameObject player;
     private float heldObjectWeight;
-    private GameObject touchPointLight, touchPointHeavy;
+    public GameObject touchPointLight, touchPointHeavy;
     private float speedChange;
     private float playerSpeed;
 
@@ -15,14 +15,16 @@ public class InteractControl : MonoBehaviour
     {
         // init variables
         player = gameObject;
-        touchPointLight = player.transform.Find("TouchPoint_Light").gameObject;
-        touchPointHeavy = player.transform.Find("TouchPoint_Heavy").gameObject;
     }
 
     void Update()
     {
-        //default speed
-        player.GetComponent<PlayerMovement2>().moveSpeed = 0.3f;
+        if (Input.GetMouseButtonUp(0))
+        {
+            Debug.Log("Released L Mouse btn in interactable controls");
+            //default speed
+            player.GetComponent<MovePlayer>().movemul = player.GetComponent<MovePlayer>().GetDefaultMoveMul();
+        }
 
         //if click
         if (Input.GetMouseButton(0))
@@ -37,19 +39,19 @@ public class InteractControl : MonoBehaviour
                 //light object
                 if (heldObjectWeight >= 1 && heldObjectWeight <= 7)
                 {
-                    heldObject.transform.localPosition = touchPointLight.transform.position;
+                    heldObject.transform.position = touchPointLight.transform.position;
                 }
                 //heavy object
                 else if (heldObjectWeight > 7)
                 {
-                    heldObject.transform.localPosition = touchPointLight.transform.position;
+                    heldObject.transform.position = touchPointLight.transform.position;
                 }
 
                 //change player speed according to weight of object
-                playerSpeed = player.GetComponent<PlayerMovement2>().moveSpeed;
+                playerSpeed = player.GetComponent<MovePlayer>().movemul;
                 speedChange = playerSpeed * 1/2;
                 //set player speed to new speed
-                player.GetComponent<PlayerMovement2>().moveSpeed = speedChange;
+                player.GetComponent<MovePlayer>().movemul = speedChange;
             }
         }
     }
