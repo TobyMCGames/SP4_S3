@@ -51,9 +51,16 @@ public class InteractControl : MonoBehaviour
 
                 //change player speed according to weight of object
                 playerSpeed = player.GetComponent<MovePlayer>().movemul;
-                speedChange = playerSpeed * 1/2;
+                speedChange = playerSpeed * 1 / 2;
                 //set player speed to new speed
                 player.GetComponent<MovePlayer>().movemul = speedChange;
+            }
+        }
+        else
+        {
+            if (heldObject != null)
+            {
+                heldObject.transform.tag = "Interactable";
             }
         }
     }
