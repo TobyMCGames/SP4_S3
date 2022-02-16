@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LayEgg : Ability
+public class DistactAbility : Ability
 {
-    public GameObject NestPrefab;
-
-    public LayEgg()
+    public DistactAbility()
     {
         cooldown = 5f;
+        AbilityName = "Distract Ability";
     }
 
 }
