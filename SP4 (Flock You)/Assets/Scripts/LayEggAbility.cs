@@ -30,6 +30,7 @@ public class LayEggAbility : Ability
         {
             //delete last spawn
             Object.Destroy(InitNest);
+            //spawn new nest
             InitNest = Object.Instantiate(NestPrefab, player.transform.position, player.transform.rotation);
         }
 
