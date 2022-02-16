@@ -40,11 +40,13 @@ public class InteractControl : MonoBehaviour
                 if (heldObjectWeight >= 1 && heldObjectWeight <= 7)
                 {
                     heldObject.transform.position = touchPointLight.transform.position;
+                    heldObject.transform.tag = "Interacted";
                 }
                 //heavy object
                 else if (heldObjectWeight > 7)
                 {
                     heldObject.transform.position = touchPointLight.transform.position;
+                    heldObject.transform.tag = "Interacted";
                 }
 
                 //change player speed according to weight of object

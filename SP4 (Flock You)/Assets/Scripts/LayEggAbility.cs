@@ -15,6 +15,11 @@ public class LayEggAbility : Ability
         AbilityName = "Lay Egg Ability";
     }
 
+    public GameObject GetNest()
+    {
+        return InitNest;
+    }
+
     override public void UseAbility()
     {
         CurCooldown = cooldown;

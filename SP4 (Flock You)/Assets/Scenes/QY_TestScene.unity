@@ -208,7 +208,7 @@ PrefabInstance:
     - target: {fileID: 4967154475190431382, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.24668907
+      value: 0.24668904
       objectReference: {fileID: 0}
     - target: {fileID: 4967154475190431382, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
@@ -218,7 +218,7 @@ PrefabInstance:
     - target: {fileID: 4967154475190431382, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.24668902
+      value: -0.24668907
       objectReference: {fileID: 0}
     - target: {fileID: 4967154475190431383, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
@@ -579,6 +579,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3433376927388911469, guid: 6a8039c5baf075f44bfbd89a7510f2c1,
+        type: 3}
+      propertyPath: PoopPrefab
+      value: 
+      objectReference: {fileID: 7227484998935399807, guid: 16485e6235110924a9f911847dad6840,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a8039c5baf075f44bfbd89a7510f2c1, type: 3}
 --- !u!4 &747100117 stripped
