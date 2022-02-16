@@ -79,7 +79,6 @@ public class MovePlayer : MonoBehaviour
         }
     }
 
-
     void Jump()
     {
         if (isgrounded)
@@ -136,8 +135,9 @@ public class MovePlayer : MonoBehaviour
                         isFlying = true;
                     doubletapcheck = false;
                     elapsedtaptime = 0;
-                    flyDirection = vec3front;
-                    flyDirection.y += 0.5f;
+                    Vector3 axis = Vector3.zero;
+                    axis.Set(1, 0, 0);
+                    flyDirection = Quaternion.AngleAxis(-45,axis)* Vector3.Cross(vec3right,vec3up);
                     Debug.Log("double tap");
                 }
                 else
