@@ -10,7 +10,7 @@ public class DropLoadControl : MonoBehaviour
 
     // Ammo variables
     public int MaxAmmo = 5;
-    private int curAmmo;
+    public int curAmmo;
 
     // Reload Variables
     public float MaxTillReload = 1.0f;
