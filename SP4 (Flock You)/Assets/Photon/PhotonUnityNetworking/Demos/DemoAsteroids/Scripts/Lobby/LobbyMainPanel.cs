@@ -34,11 +34,6 @@ namespace Photon.Pun.Demo.Asteroids
         [Header("Inside Room Panel")]
         public GameObject InsideRoomPanel;
 
-        [Header("Inside Modified Login")]
-        public GameObject ModifiedLogin;
-        public InputField PlayerNameModifiedInput;
-        public InputField PlayerPasswordModifiedInput;
-
         public Button StartGameButton;
         public GameObject PlayerListEntryPrefab;
 
@@ -75,10 +70,17 @@ namespace Photon.Pun.Demo.Asteroids
             UpdateRoomListView();
         }
 
+        public override void OnJoinedLobby()
+        {
+            // whenever this joins a new lobby, clear any previous room lists
+            cachedRoomList.Clear();
+            ClearRoomListView();
+        }
+
+        // note: when a client joins / creates a room, OnLeftLobby does not get called, even if the client was in a lobby before
         public override void OnLeftLobby()
         {
             cachedRoomList.Clear();
-
             ClearRoomListView();
         }
 
@@ -101,13 +103,12 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.CreateRoom(roomName, options, null);
         }
 
-        public void CheckLogin()
+        public override void OnJoinedRoom()
         {
-            JoinRoom();
-            //pass then go JoinRoom()
-        }
-        public void JoinRoom()
-        {
+            // joining (or entering) a room invalidates any cached lobby room list (even if LeaveLobby was not called due to just joining a room)
+            cachedRoomList.Clear();
+
+
             SetActivePanel(InsideRoomPanel.name);
 
             if (playerListEntries == null)
@@ -125,7 +126,7 @@ namespace Photon.Pun.Demo.Asteroids
                 object isPlayerReady;
                 if (p.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_READY, out isPlayerReady))
                 {
-                    entry.GetComponent<PlayerListEntry>().SetPlayerReady((bool)isPlayerReady);
+                    entry.GetComponent<PlayerListEntry>().SetPlayerReady((bool) isPlayerReady);
                 }
 
                 playerListEntries.Add(p.ActorNumber, entry);
@@ -138,11 +139,6 @@ namespace Photon.Pun.Demo.Asteroids
                 {AsteroidsGame.PLAYER_LOADED_LEVEL, false}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-        }
-        public override void OnJoinedRoom()
-        {
-            Debug.Log("Modified Active");
-            SetActivePanel(ModifiedLogin.name);
         }
 
         public override void OnLeftRoom()
@@ -276,8 +272,7 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            PhotonNetwork.LoadLevel("MainScene");
-            //PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
+            PhotonNetwork.LoadLevel("FlockYou_GameScene");
         }
 
         #endregion
@@ -331,7 +326,6 @@ namespace Photon.Pun.Demo.Asteroids
             JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
             RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
             InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
-            ModifiedLogin.SetActive(activePanel.Equals(ModifiedLogin.name));
         }
 
         private void UpdateCachedRoomList(List<RoomInfo> roomList)

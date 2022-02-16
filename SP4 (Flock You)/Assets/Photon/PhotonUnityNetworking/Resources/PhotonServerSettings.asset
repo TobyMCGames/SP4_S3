@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AppSettings:
     AppIdRealtime: b71e6c0f-f474-4d61-8869-6af5847f2eac
+    AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 0.1
+    AppVersion: 
     UseNameServer: 1
-    FixedRegion: asia
+    FixedRegion: 
     Server: 
     Port: 0
     ProxyServer: 
@@ -27,38 +28,36 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: asia
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - AssignTeam
+  - CallBombed
+  - CallCaughtPlayer
+  - CallExplode
+  - ChangePropObject
   - ClickRpc
+  - CollectOrb
+  - DamageEntity
+  - deleteBullet
   - DestroyRpc
   - DestroySpaceship
   - Fire
-  - RespawnSpaceship
-  - CaughtPlayer
-  - CallCaughtPlayer
-  - PlantBomb
-  - CallBombed
-  - CallExplode
-  - ChangePropObject
-  - SwitchPlayerObject
-  - DestroyOldProp
-  - AssignTeam
-  - RegisterPlayerID
-  - SetTeamByID
   - Initialize
-  - SpawnAbilitySphere
-  - CollectOrb
-  - SetLightBeamToObject
-  - TurnInvisible
-  - SetCreatedBullet
-  - DamageEntity
-  - deleteBullet
+  - PlantBomb
+  - RegisterPlayerID
   - RemoveFromList
+  - RespawnSpaceship
+  - SetCreatedBullet
+  - SetLightBeamToObject
+  - SetTeamByID
+  - SpawnAbilitySphere
   - StunEntity
+  - SwitchPlayerObject
+  - TurnInvisible
   DisableAutoOpenWizard: 1
   ShowSettings: 1
-  DevRegionSetOnce: 1
+  DevRegionSetOnce: 0
