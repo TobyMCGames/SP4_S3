@@ -632,22 +632,22 @@ PrefabInstance:
     - target: {fileID: 4967154475190431383, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9693878
+      value: 1.599233
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476088973863, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9693878
+      value: 1.599233
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476267677751, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9693878
+      value: 1.599233
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476839047209, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9693878
+      value: 1.599233
       objectReference: {fileID: 0}
     - target: {fileID: 8917505357998334060, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
@@ -804,23 +804,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2151424871999855446, guid: c226ec5cb10542046970d8f7400496d9,
+        type: 3}
+      propertyPath: waypoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2151424871999855446, guid: c226ec5cb10542046970d8f7400496d9,
+        type: 3}
+      propertyPath: waypoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 2711533687176401134}
+    - target: {fileID: 2151424871999855446, guid: c226ec5cb10542046970d8f7400496d9,
+        type: 3}
+      propertyPath: waypoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 8920317292973890087}
+    - target: {fileID: 2151424871999855446, guid: c226ec5cb10542046970d8f7400496d9,
+        type: 3}
+      propertyPath: waypoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 6568862959457819118}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c226ec5cb10542046970d8f7400496d9, type: 3}
---- !u!1 &5540803180120234700 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 369952268686831569, guid: c226ec5cb10542046970d8f7400496d9,
-    type: 3}
-  m_PrefabInstance: {fileID: 5316137080148358429}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4968102989883364288 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 951536993899882205, guid: c226ec5cb10542046970d8f7400496d9,
-    type: 3}
-  m_PrefabInstance: {fileID: 5316137080148358429}
-  m_PrefabAsset: {fileID: 0}
---- !u!195 &3286063017682553486 stripped
-NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 7231873240371707795, guid: c226ec5cb10542046970d8f7400496d9,
     type: 3}
   m_PrefabInstance: {fileID: 5316137080148358429}
   m_PrefabAsset: {fileID: 0}
