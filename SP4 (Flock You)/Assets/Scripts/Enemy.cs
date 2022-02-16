@@ -45,6 +45,7 @@ public class Enemy : MonoBehaviour
                 else
                 {
                     curState = FSM.PATROL;
+                    GetComponent<NavMeshAgent>().speed = 3.5f;
                     Debug.Log("Enemy Woke up");
                 }
                 break;
@@ -55,6 +56,7 @@ public class Enemy : MonoBehaviour
     {
         curState = FSM.STUN;
         Stun_Timer = stunTime;
+        GetComponent<NavMeshAgent>().speed = 0;
         Debug.Log("Enemy Stunned");
     }
 }
