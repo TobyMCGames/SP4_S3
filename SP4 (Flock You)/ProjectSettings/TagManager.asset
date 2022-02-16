@@ -9,6 +9,7 @@ TagManager:
   - Interactable
   - Enemy
   - SpawnPoint
+  - testCameraDetach
   layers:
   - Default
   - TransparentFX

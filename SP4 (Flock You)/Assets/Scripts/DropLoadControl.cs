@@ -6,10 +6,11 @@ public class DropLoadControl : MonoBehaviour
 {
     // Projectile
     public GameObject PoopPrefab = null;
+    public Transform ProjectileList = null;
 
     // Ammo variables
     public int MaxAmmo = 5;
-    private int curAmmo;
+    public int curAmmo;
 
     // Reload Variables
     public float MaxTillReload = 1.0f;
@@ -34,6 +35,7 @@ public class DropLoadControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             Debug.Log("Drop load");
+            DropLoad();
         }
     }
 
@@ -60,6 +62,16 @@ public class DropLoadControl : MonoBehaviour
             Debug.Log("PoopPrefab was not assigned");
             return;
         }
-        //GameObject poop = Instantiate(PoopPrefab, gameObject.transform, true, )
+        if (ProjectileList == null)
+        {
+            Debug.Log("ProjectileList was not assigned");
+            return;
+        }
+        Debug.Log(">>>>>>>Dropped");
+        GameObject poop = Instantiate(PoopPrefab);
+        poop.transform.position = gameObject.transform.position;
+        poop.GetComponent<Projectile_Poop>().AssignPooper(gameObject);
+        poop.GetComponent<Rigidbody>().AddForce(gameObject.GetComponent<Rigidbody>().velocity);
+        Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
     }
 }

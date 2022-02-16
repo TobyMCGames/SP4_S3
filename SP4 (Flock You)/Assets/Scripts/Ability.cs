@@ -6,33 +6,28 @@ public class Ability
 {
     public float cooldown = 0;
     public float CurCooldown = 0;
+    public string AbilityName;
 
     public bool CanUse()
     {
         if (CurCooldown >= 0)
         {
-            Debug.Log("Ability recharging...");
+            //Debug.Log("Ability Recharging: " + CurCooldown);
             return false;
         }
         else
-        {
-            Debug.Log("Ability Ready!");
             return true;
-        }
-    }
-
-    public void SetCooldown(float AbilityCooldown)
-    {
-        cooldown = AbilityCooldown;
     }
 
     public virtual void UseAbility()
     {
-        CurCooldown = cooldown;
+        //*** Will be overrided *** 
+        //CurCooldown = cooldown;
     }
 
     public void Update()
     {
+        //countdown for cooldown time
         if (!CanUse()) CurCooldown -= Time.deltaTime;
     }
 }

@@ -16,6 +16,9 @@ public class FYPlayer : MonoBehaviour
     public int curHealth;
     public int curLives;
 
+    // Player scripts
+    public DropLoadControl DropLoadControl_script;
+
     private void Awake()
     {
         Instance = this;

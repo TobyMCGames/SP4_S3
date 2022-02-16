@@ -60,7 +60,7 @@ public class UI_Manager : MonoBehaviour
             return;
         }
 
-        //UI_Ammo.text = "x " + FYPlayer.Instance.curHealth;
+        UI_Ammo.text = "x " + FYPlayer.Instance.DropLoadControl_script.curAmmo;
     }
 
     public void UpdateLives()
