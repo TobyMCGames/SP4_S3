@@ -16,18 +16,18 @@ public class Ability
             return false;
         }
         else
-        {
             return true;
-        }
     }
 
     public virtual void UseAbility()
     {
-        CurCooldown = cooldown;
+        //*** Will be overrided *** 
+        //CurCooldown = cooldown;
     }
 
     public void Update()
     {
+        //countdown for cooldown time
         if (!CanUse()) CurCooldown -= Time.deltaTime;
     }
 }
