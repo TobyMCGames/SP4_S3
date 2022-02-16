@@ -16,15 +16,13 @@ public class MovePlayer : MonoBehaviour
     public float movemul = 10f;
     float DefaultMoveMul;
     public float airmul = 0.4f;
-    bool isWalking;
+    bool inputed = false;
 
     // temp values 
-    float tempjumpforce = 10f;
+    public float jumpforce = 10f;
     float playerheight;
-    float movespeed = 60f;
     public GameObject camera;
     bool isFlying = false;
-    public float movementForce = 1;
 
 
     private void Awake()
@@ -53,7 +51,7 @@ public class MovePlayer : MonoBehaviour
 
     void Jump()
     {
-        m_Rigidbody.AddForce(transform.up * tempjumpforce, ForceMode.Impulse);
+        m_Rigidbody.AddForce(transform.up * jumpforce, ForceMode.Impulse);
     }
 
     void PlayerInput()
@@ -64,7 +62,7 @@ public class MovePlayer : MonoBehaviour
             verticalmovement = Input.GetAxisRaw("Vertical");
             bool hasHorizontalInput = !Mathf.Approximately(horizontalmovement, 0f);
             bool hasVerticalInput = !Mathf.Approximately(verticalmovement, 0f);
-            isWalking = hasHorizontalInput || hasVerticalInput;
+            inputed= hasHorizontalInput || hasVerticalInput;
         //}
     }
 
@@ -77,71 +75,32 @@ public class MovePlayer : MonoBehaviour
     {
         float angle = 0.0f;
         Quaternion forceRotation;
-        if (isWalking == true)// && photonView.IsMine)
-        {
-            Vector3 directionforward = camera.transform.forward;
-            directionforward.y = 0;
-            directionforward.Normalize();
-            Vector3 directionright = camera.transform.right;
-            directionright.y = 0;
-            directionright.Normalize();
-            m_Movement = ((directionforward * verticalmovement) + (directionright * horizontalmovement)).normalized;
-     
-            Vector3 player_camera = (camera.transform.position - transform.position);
-            //angle = Mathf.Rad2Deg * Mathf.Atan2(player_camera.x, player_camera.z) - 180;
-            angle = Mathf.Rad2Deg * Mathf.Atan2(m_Movement.z,m_Movement.x) - 180;
-            Debug.Log(angle);
-            m_Rigidbody.AddForce(m_Movement,ForceMode.VelocityChange);
+        Vector3 directionforward = (transform.position - camera.transform.position).normalized;
+        directionforward.y = 0;
+        directionforward.Normalize();
 
-            // set the direction of the force applied to the rigid body.
+        Vector3 directionright = Vector3.Cross(directionforward, Vector3.up) *-1;
+
+        if (inputed == true && !isFlying)// && photonView.IsMine)
+        {
+            m_Rigidbody.angularVelocity = Vector3.zero;
+            m_Movement = ((directionforward * verticalmovement) + (directionright * horizontalmovement).normalized);
+            m_Movement.Normalize();
+            m_Rigidbody.AddForce((m_Movement * Time.deltaTime) * movemul, ForceMode.VelocityChange);
+            angle = Mathf.Rad2Deg * Mathf.Atan2(m_Movement.x, m_Movement.z);
+            Debug.Log(angle);
             m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
             forceRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
             m_Rigidbody.MoveRotation(forceRotation);
-
-            // rotate the player towards where the camera is facing
-            /* if (isgrounded)
-             {
-                 Vector3 player_camera = (camera.transform.position - transform.position);
-                 if (verticalmovement > 0)
-                 {
-                     angle = Mathf.Rad2Deg * Mathf.Atan2(player_camera.x, player_camera.z);
-                     angle -= 180;
-                     m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
-                     targetrotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * 10f);
-                     m_Rigidbody.MoveRotation(targetrotation);
-                     m_Rigidbody.AddForce(m_Movement.normalized * movespeed, ForceMode.Acceleration);
-                 }
-                 else if (verticalmovement < 0)
-                 {
-
-                     angle = Mathf.Rad2Deg * Mathf.Atan2(player_camera.x, player_camera.z);
-                     m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
-                     targetrotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * 10f);
-                     m_Rigidbody.MoveRotation(targetrotation);
-                     m_Rigidbody.AddForce(-m_Movement.normalized * movespeed, ForceMode.Acceleration);
-                 }
-             }
-             else if (!isgrounded)
-             {
-                 m_Rigidbody.AddForce(m_Movement.normalized * movespeed * airmul, ForceMode.Acceleration);
-             }*/
-
-            /*else
-            {
-                angle = Mathf.Rad2Deg * Mathf.Atan2(verticalmovement, horizontalmovement) + transform.eulerAngles.y;
-                m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
-                targetrotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * 10f);
-            }*/
-
         }
     }
 
     void controlDrag()
     {
         if (isgrounded == true)
-            m_Rigidbody.drag = groundrag;
-        else if (!isgrounded)
-            m_Rigidbody.drag = airDrag;
+             m_Rigidbody.drag = groundrag;
+         else if (!isgrounded)
+             m_Rigidbody.drag = airDrag;
     }
 
     public float GetDefaultMoveMul()
