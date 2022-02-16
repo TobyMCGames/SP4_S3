@@ -34,8 +34,11 @@ public class DropLoadControl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            Debug.Log("Drop load");
-            DropLoad();
+            if (CanDropLoad())
+            {
+                Debug.Log("Drop load");
+                DropLoad();
+            }
         }
     }
 
@@ -53,6 +56,12 @@ public class DropLoadControl : MonoBehaviour
 
         curAmmo++;
         RechargeRateTimer = MaxRechargeRateTimer;
+        UI_Manager.Instance.UpdateAmmo();
+    }
+
+    bool CanDropLoad()
+    {
+        return curAmmo > 0;
     }
 
     void DropLoad()
@@ -67,11 +76,15 @@ public class DropLoadControl : MonoBehaviour
             Debug.Log("ProjectileList was not assigned");
             return;
         }
-        Debug.Log(">>>>>>>Dropped");
-        GameObject poop = Instantiate(PoopPrefab);
+
+        GameObject poop = Instantiate(PoopPrefab, ProjectileList);
         poop.transform.position = gameObject.transform.position;
         poop.GetComponent<Projectile_Poop>().AssignPooper(gameObject);
         poop.GetComponent<Rigidbody>().AddForce(gameObject.GetComponent<Rigidbody>().velocity);
         Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
+
+        --curAmmo;
+        UI_Manager.Instance.UpdateAmmo();
+        tillReload = MaxTillReload;
     }
 }
