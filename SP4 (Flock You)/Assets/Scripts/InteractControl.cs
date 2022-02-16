@@ -39,19 +39,19 @@ public class InteractControl : MonoBehaviour
                 //light object
                 if (heldObjectWeight >= 1 && heldObjectWeight <= 7)
                 {
-                    heldObject.transform.localPosition = touchPointLight.transform.position;
+                    heldObject.transform.position = touchPointLight.transform.position;
                 }
                 //heavy object
                 else if (heldObjectWeight > 7)
                 {
-                    heldObject.transform.localPosition = touchPointLight.transform.position;
+                    heldObject.transform.position = touchPointLight.transform.position;
                 }
 
                 //change player speed according to weight of object
-                playerSpeed = player.GetComponent<PlayerMovement2>().moveSpeed;
+                playerSpeed = player.GetComponent<MovePlayer>().movemul;
                 speedChange = playerSpeed * 1/2;
                 //set player speed to new speed
-                player.GetComponent<PlayerMovement2>().moveSpeed = speedChange;
+                player.GetComponent<MovePlayer>().movemul = speedChange;
             }
         }
     }

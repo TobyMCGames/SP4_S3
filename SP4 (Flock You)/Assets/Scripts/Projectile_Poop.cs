@@ -6,6 +6,8 @@ public class Projectile_Poop : MonoBehaviour
 {
     private Vector3 direction;
     private float Velocity;
+    // Use Players PhotonView Instead in Multiplayer (maybe) or use GO instead
+    GameObject pooper = null;
 
     // Start is called before the first frame update
     void Start()
@@ -15,16 +17,25 @@ public class Projectile_Poop : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (pooper != null)
+            if (other.gameObject == pooper)
+                return;
+
         if (other.tag != "Enemy")
         {
             Debug.Log("Poop drop on non-enemy");
-            Destroy(gameObject.transform.parent.gameObject);
         }
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void AssignPooper(GameObject _pooper)
+    {
+        pooper = _pooper;
     }
 }
