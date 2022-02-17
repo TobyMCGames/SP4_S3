@@ -10,7 +10,6 @@ public class DistractDetection : MonoBehaviour
 
     void Start()
     {
-        distractRange = transform.Find("DistractRange").gameObject;
     }
 
     private void OnTriggerEnter(Collider enemy)
