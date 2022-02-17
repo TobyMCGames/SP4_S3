@@ -45,7 +45,7 @@ public class InteractControl : MonoBehaviour
                 //heavy object
                 else if (heldObjectWeight > 7)
                 {
-                    heldObject.transform.position = touchPointLight.transform.position;
+                    heldObject.transform.position = touchPointHeavy.transform.position;
                     heldObject.transform.tag = "Interacted";
                 }
 
