@@ -6,8 +6,8 @@ using UnityEngine.AI;
 public class WaypointController : MonoBehaviour
 {
     public List<Transform> waypoints;
-    Transform currentTarget;
-    protected int _index = 1;
+    private Transform currentTarget;
+    protected int index = 1;
 
     public NavMeshAgent navMeshAgent;
 
@@ -15,6 +15,7 @@ public class WaypointController : MonoBehaviour
     protected bool atEnd = false;
     protected bool moving = true;
 
+    private List<float> playerToWaypointsDiff;
     int m_CurrentWaypointIndex;
 
     // Start is called before the first frame update
@@ -24,9 +25,11 @@ public class WaypointController : MonoBehaviour
 
         if (waypoints.Count > 0 && waypoints[0] != null)
         {
-            currentTarget = waypoints[_index];
+            currentTarget = waypoints[index];
             navMeshAgent.SetDestination(currentTarget.position);
         }
+        else
+            Debug.Log("No waypoint targets set!");
     }
 
     public void StartAI()
@@ -35,17 +38,8 @@ public class WaypointController : MonoBehaviour
         navMeshAgent.SetDestination(waypoints[0].position);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void WaypointUpdate()
     {
-        // Get current speed percent of agent and set the speed parameter of the animator
-        float speedPercent = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
-
         if (currentTarget != null)
         {
             //Check if the agent has arrived the target position
@@ -53,24 +47,46 @@ public class WaypointController : MonoBehaviour
             {
                 // Set moving to false to prevent this if statement from constantly running while at target position
                 moving = false;
+                Debug.Log(transform.name + " at waypoint: " + index);
                 StartCoroutine("MoveToNextWaypoint");
             }
         }
     }
 
+    public void GetClosestWaypoint()
+    {
+        Transform closestWaypoint = null;
+        int waypointIndex = 0;
+        float closestDistance = 0;
+
+        foreach (Transform waypoint in waypoints)
+        {
+            Vector3 posDiff = transform.position - waypoint.position;
+            float curDistanceDiff = posDiff.sqrMagnitude;
+            if (curDistanceDiff < closestDistance || waypointIndex == 0)
+            {
+                currentTarget = waypoint;
+                closestWaypoint = waypoint;
+                closestDistance = curDistanceDiff;
+            }
+            waypointIndex++;
+        }
+        navMeshAgent.SetDestination(closestWaypoint.position);
+    }
+
     IEnumerator MoveToNextWaypoint() {
         if (!Reverse)
         {
-            _index++;
+            index++;
         }
 
         //If not at last waypoint and not going in reverse
-        if (_index < waypoints.Count && !Reverse)
+        if (index < waypoints.Count && !Reverse)
         {
             //Pause a random amount of time before going to the first point
-            if (_index == 1)
+            if (index == 1)
                 yield return new WaitForSeconds(Random.Range(3f, 6f));
-            currentTarget = waypoints[_index];
+            currentTarget = waypoints[index];
         }
         else
         {
@@ -80,20 +96,30 @@ public class WaypointController : MonoBehaviour
                 yield return new WaitForSeconds(Random.Range(3f, 6f));
             }
 
-            _index--;
+            index--;
             Reverse = true;
 
-            //if next waypoint is the first waypoint reset _inReverse and _atEnd
-            if (_index == 0)
+            //if next waypoint is the first waypoint reset Reverse and atEnd
+            if (index == 0)
             {
                 Reverse = false;
                 atEnd = false;
             }
 
-            currentTarget = waypoints[_index];
+            currentTarget = waypoints[index];
         }
+
         //Move agent to next waypoint
         navMeshAgent.SetDestination(currentTarget.position);
         moving = true;
+    }
+
+    public void ChasePlayer()
+    {
+
+
+        currentTarget = waypoints[index];
+        navMeshAgent.SetDestination(currentTarget.position);
+
     }
 }

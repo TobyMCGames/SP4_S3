@@ -200,6 +200,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5531866283144861043, guid: 008496d9bc1b228409b68881800d8ec3,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 008496d9bc1b228409b68881800d8ec3, type: 3}
 --- !u!1 &160729129 stripped
@@ -268,6 +273,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &573012716 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 3286063017682553486, guid: 1796f246ec9d3d542bca7d71a751be1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 911812435}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &731845106
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,9 +340,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curMode: 0
   curTimer: 0
+  UI_Screen: {fileID: 0}
+  Loading_Screen: {fileID: 0}
+  Direction_Test: {fileID: 0}
+  player: {fileID: 160729132}
+  MainCamera: {fileID: 0}
+  ProjectileList: {fileID: 0}
   SpawnPoints:
   - {fileID: 911812436}
-  player: {fileID: 160729132}
 --- !u!4 &787055418
 Transform:
   m_ObjectHideFlags: 0
@@ -358,6 +374,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 2535437059187422184, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: navMeshAgent
+      value: 
+      objectReference: {fileID: 573012716}
     - target: {fileID: 5033030191682350289, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -493,6 +514,11 @@ PrefabInstance:
       propertyPath: m_Lens.m_SensorSize.x
       value: 1.6
       objectReference: {fileID: 0}
+    - target: {fileID: 6061232703347076683, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: navMeshAgent
+      value: 
+      objectReference: {fileID: 573012716}
     - target: {fileID: 6237663844020750584, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -884,8 +910,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709690064}
-  m_LocalRotation: {x: -0.012861915, y: 0.70698977, z: 0.012861912, w: 0.7069899}
-  m_LocalPosition: {x: -6.9999995, y: 3.95, z: -0.0000004172325}
+  m_LocalRotation: {x: -0.012861915, y: 0.70698977, z: 0.012861909, w: 0.7069899}
+  m_LocalPosition: {x: -6.9999995, y: 0, z: -0.0000004172325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

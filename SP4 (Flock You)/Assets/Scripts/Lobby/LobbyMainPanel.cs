@@ -272,7 +272,8 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            PhotonNetwork.LoadLevel("FlockYou_GameScene");
+            //PhotonNetwork.LoadLevel("FlockYou_GameScene");
+            PhotonNetwork.LoadLevel("Toby_Scene");
         }
 
         #endregion
