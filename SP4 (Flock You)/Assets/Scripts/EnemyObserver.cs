@@ -6,17 +6,12 @@ public class EnemyObserver : MonoBehaviour
 {
     public bool isPlayerInRange;
     private Transform player;
+    private bool m_IsPlayerInRange;
 
     // Start is called before the first frame update
     void Start()
     {
         isPlayerInRange = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,5 +27,11 @@ public class EnemyObserver : MonoBehaviour
         {
             isPlayerInRange = false;
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

@@ -11,7 +11,7 @@ public class LayEggAbility : Ability
     public LayEggAbility()
     {
         //init properties
-        cooldown = 1f; 
+        cooldown = 10f; 
         AbilityName = "Lay Egg Ability";
     }
 
@@ -30,6 +30,7 @@ public class LayEggAbility : Ability
             //spawn nest
             NestPrefab = Resources.Load("NestSpawn") as GameObject;
             InitNest = Object.Instantiate(NestPrefab, player.transform.position, player.transform.rotation);
+            Debug.Log("LayEggAbility: Nest Created!");
         }
         else
         {

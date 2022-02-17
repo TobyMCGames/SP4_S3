@@ -12,15 +12,35 @@ public class AbilityControl : MonoBehaviour
     private float ScrollValue = 0f;
     private int AbilityCount = 0;
     private int currAbility = 0;
-    DistactAbility distactAbility = new DistactAbility();
+    DistractAbility distactAbility = new DistractAbility();
     LayEggAbility layEggAbility = new LayEggAbility();
 
-    private void Start()
+    public enum ABILITIES { 
+        DISTRACT,
+        LAYEGG,
+        NUM_ABBILITIES
+    }
+
+    private void Awake()
     {
         //add abilities to list
         AbilitiesList.Add(layEggAbility);
         AbilitiesList.Add(distactAbility);
         AbilityCount = AbilitiesList.Count;
+    }
+
+    private void Start()
+    {
+    }
+
+    public LayEggAbility GetLayEggAbility()
+    {
+        return layEggAbility;
+    }
+
+    public DistractAbility GetDistractAbility()
+    {
+        return distactAbility;
     }
 
     private void Update()

@@ -19,19 +19,20 @@ public class FYPlayer : MonoBehaviour
     // Player scripts
     public DropLoadControl DropLoadControl_script;
 
-    LayEggAbility layEggAbility = new LayEggAbility();
+    //LayEggAbility layEggAbility = new LayEggAbility();
+    LayEggAbility layEggAbility;
 
     private void Awake()
     {
         Instance = this;
         curHealth = MaxHealth;
         curLives = MaxLives;
+        layEggAbility = GetComponent<AbilityControl>().GetLayEggAbility();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -73,8 +74,12 @@ public class FYPlayer : MonoBehaviour
 
     public void ResetSpawnPoint()
     {
+        GameObject NestPrefab = Resources.Load("NestSpawn") as GameObject;
         if (layEggAbility.GetNest() != null)
+        {
             gameObject.transform.position = layEggAbility.GetNest().transform.position;
+            Destroy(layEggAbility.GetNest());
+        }
         else 
             gameObject.transform.position = DefaultSpawnPoint.position;
     }
