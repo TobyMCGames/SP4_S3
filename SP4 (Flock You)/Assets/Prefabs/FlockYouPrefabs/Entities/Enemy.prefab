@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 88710980664673944}
   - component: {fileID: 7231873240371707795}
   - component: {fileID: 7703715096483874549}
-  - component: {fileID: 8079682373857969125}
   - component: {fileID: 2151424871999855446}
   m_Layer: 0
   m_Name: Enemy
@@ -135,24 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b78262de06e7d44f8b7192ab7fa2792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curState: 0
   POV_Agro: {fileID: 0}
   POV_DeAgro: {fileID: 0}
   navMeshAgent: {fileID: 0}
   curState: 0
---- !u!114 &8079682373857969125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 369952268686831569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b573c17a9f3e9443aa954e5b000f6a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayerInRange: 0
+  enemyObserver: {fileID: 7524213982467990095}
 --- !u!114 &2151424871999855446
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
 
     //Init Variables
     WaypointController waypointController;
-    EnemyObserver enemyObserver;
+    public EnemyObserver enemyObserver;
 
 
     // Start is called before the first frame update
@@ -28,7 +28,6 @@ public class Enemy : MonoBehaviour
         curState = FSM.PATROL;
         waypointController = GetComponent<WaypointController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        enemyObserver = GetComponent<EnemyObserver>();
     }
 
     // Update is called once per frame
@@ -52,6 +51,11 @@ public class Enemy : MonoBehaviour
                 
                 break;
             case FSM.DISTRACTED:
+                //if (enemyObserver.isPlayerInRange)
+                //{
+                //    curState = FSM.AGRO;
+                //    Debug.Log("Enemy switching to AGRO state");
+                //}
                 if (Distract_Timer >= 0)
                     Distract_Timer -= Time.deltaTime;
                 else
@@ -71,8 +75,9 @@ public class Enemy : MonoBehaviour
                 }
                 else
                 {
-                    curState = FSM.PATROL;
-                    Debug.Log("Enemy switching to PATROL state");
+                    curState = FSM.DISTRACTED;
+                    Distract_Timer = 3f; //Consider removing this line if causing issues at your own risk
+                    Debug.Log("Enemy switching to DISTRACTED state");
                 }
                 break;
             case FSM.STUN:
