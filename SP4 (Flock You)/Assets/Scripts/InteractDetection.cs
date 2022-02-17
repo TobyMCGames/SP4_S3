@@ -8,7 +8,7 @@ public class InteractDetection : MonoBehaviour
     private GameObject Interactable = null;
     public GameObject GetInteractable() { return Interactable; }
     DistractAbility distractAbility;
-    private void Awake()
+    private void Start()
     {
         distractAbility = GetComponent<AbilityControl>().GetDistractAbility();
     }

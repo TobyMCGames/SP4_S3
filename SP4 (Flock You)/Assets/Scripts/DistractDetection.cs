@@ -8,7 +8,7 @@ public class DistractDetection : MonoBehaviour
     GameObject distractRange;
     private List<GameObject> Enemies = new List<GameObject>();
 
-    void Awake()
+    void Start()
     {
         distractRange = transform.Find("DistractRange").gameObject;
     }
