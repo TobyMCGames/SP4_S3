@@ -24,7 +24,10 @@ public class DistractAbility : Ability
         foreach(GameObject enemy in Enemies)
         {
             if (enemy != null)
+            {
+                enemy.GetComponent<Enemy>().SetDistracted(player.transform.position);
                 Debug.Log(enemy.name + " distracted!");
+            }
         }
     }
 }

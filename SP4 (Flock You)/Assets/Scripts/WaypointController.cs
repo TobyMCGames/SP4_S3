@@ -15,6 +15,9 @@ public class WaypointController : MonoBehaviour
     protected bool atEnd = false;
     protected bool moving = true;
 
+    private bool moveAway = false;
+    private List<float> waypointsDistDiff;
+
     int m_CurrentWaypointIndex;
 
     // Start is called before the first frame update
@@ -27,18 +30,26 @@ public class WaypointController : MonoBehaviour
             currentTarget = waypoints[_index];
             navMeshAgent.SetDestination(currentTarget.position);
         }
+        else
+            Debug.Log("No waypoint targets set!");
+
+        moveAway = false;
+    }
+
+    public void SetMoveAwayStatus(bool status)
+    {
+        moveAway = status;
+    }
+
+    public bool GetMoveAwayStatus()
+    {
+        return moveAway;
     }
 
     public void StartAI()
     {
         enabled = true;
         navMeshAgent.SetDestination(waypoints[0].position);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void WaypointUpdate()
@@ -53,6 +64,7 @@ public class WaypointController : MonoBehaviour
             {
                 // Set moving to false to prevent this if statement from constantly running while at target position
                 moving = false;
+                Debug.Log("Moving = false");
                 StartCoroutine("MoveToNextWaypoint");
             }
         }
@@ -76,6 +88,7 @@ public class WaypointController : MonoBehaviour
         {
             if (!atEnd)
             {
+                Debug.Log("At end");
                 atEnd = true;
                 yield return new WaitForSeconds(Random.Range(3f, 6f));
             }
@@ -92,8 +105,10 @@ public class WaypointController : MonoBehaviour
 
             currentTarget = waypoints[_index];
         }
+
         //Move agent to next waypoint
         navMeshAgent.SetDestination(currentTarget.position);
         moving = true;
+        Debug.Log("Moving = true");
     }
 }
