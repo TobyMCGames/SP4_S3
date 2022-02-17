@@ -30,39 +30,37 @@ public class InteractControl : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             heldObject = GetComponentInChildren<InteractDetection>().GetInteractable();
-            if (heldObject != null)
-            {
-                //heldObjectTP = heldObject.transform.GetChild(0).gameObject;
-                //Debug.Log(heldObjectTP);
-                heldObjectWeight = heldObject.GetComponent<Rigidbody>().mass;
-                //Transform touchpoint = heldObject.transform.Find("touchpoint").transform;
-                //Vector3 touchpointOffset = transform.localPosition - touchpoint.localPosition;
-
-                //light object
-                if (heldObjectWeight >= 1 && heldObjectWeight <= 7)
+                if (heldObject != null)
                 {
-                    heldObject.transform.position = touchPointLight.transform.position;
-                    heldObject.transform.tag = "Interacted";
-                }
-                //heavy object
-                else if (heldObjectWeight > 7)
-                {
-                    heldObject.transform.position = touchPointHeavy.transform.position;
-                    heldObject.transform.tag = "Interacted";
-                }
+                    //heldObjectTP = heldObject.transform.GetChild(0).gameObject;
+                    //Debug.Log(heldObjectTP);
+                    heldObjectWeight = heldObject.GetComponent<Rigidbody>().mass;
+                    //Transform touchpoint = heldObject.transform.Find("touchpoint").transform;
+                    //Vector3 touchpointOffset = transform.localPosition - touchpoint.localPosition;
 
-                //change player speed according to weight of object
-                playerSpeed = player.GetComponent<MovePlayer>().movemul;
-                speedChange = playerSpeed * 1 / 2;
-                //set player speed to new speed
-                player.GetComponent<MovePlayer>().movemul = speedChange;
-            }
+                    //light object
+                    if (heldObjectWeight >= 1 && heldObjectWeight <= 7)
+                    {
+                        heldObject.transform.position = touchPointLight.transform.position;
+                        heldObject.GetComponent<Collider>().enabled = false;
+                    }
+                    //heavy object
+                    else if (heldObjectWeight > 7)
+                    {
+                        heldObject.transform.position = touchPointHeavy.transform.position;
+                    }
+
+                    //change player speed according to weight of object
+                    speedChange = player.GetComponent<MovePlayer>().GetDefaultMoveMul() * 0.5f;
+                    //set player speed to new speed
+                    player.GetComponent<MovePlayer>().movemul = speedChange;
+                }
         }
         else
         {
             if (heldObject != null)
             {
-                heldObject.transform.tag = "Interactable";
+                heldObject.GetComponent<Collider>().enabled = true;
             }
         }
     }
