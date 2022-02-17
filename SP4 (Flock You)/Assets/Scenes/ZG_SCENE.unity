@@ -306,7 +306,7 @@ PrefabInstance:
     - target: {fileID: 600894972404136892, guid: 008496d9bc1b228409b68881800d8ec3,
         type: 3}
       propertyPath: turnSpeed
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 600894972404136892, guid: 008496d9bc1b228409b68881800d8ec3,
         type: 3}
@@ -381,6 +381,11 @@ PrefabInstance:
     - target: {fileID: 1987478240769630005, guid: 008496d9bc1b228409b68881800d8ec3,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1987478240769630006, guid: 008496d9bc1b228409b68881800d8ec3,
+        type: 3}
+      propertyPath: m_Constraints
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1987478240769630006, guid: 008496d9bc1b228409b68881800d8ec3,
