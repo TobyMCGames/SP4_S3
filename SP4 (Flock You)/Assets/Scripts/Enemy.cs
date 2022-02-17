@@ -16,13 +16,15 @@ public class Enemy : MonoBehaviour
     //public Transform[] Waypoints;
     WaypointController waypointController;
 
+    EnemyObserver enemyObserver;
+
 
     // Start is called before the first frame update
     void Start()
     {
         curState = FSM.PATROL;
         waypointController = GetComponent<WaypointController>();
-
+        enemyObserver = GetComponent<EnemyObserver>();
     }
 
     // Update is called once per frame
@@ -35,10 +37,19 @@ public class Enemy : MonoBehaviour
                 
                 break;
             case FSM.PATROL:
-                waypointController.WaypointUpdate();
+                if (enemyObserver.isPlayerInRange)
+                {
+                    curState = FSM.AGRO;
+                }
+                else
+                {
+                    waypointController.WaypointUpdate();
+                }
+                
                 break;
             case FSM.AGRO:
-                
+                // Make enemy chase player
+                curState = FSM.PATROL;
                 break;
             case FSM.STUN:
                 if (Stun_Timer > 0)

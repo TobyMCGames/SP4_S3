@@ -718,8 +718,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelLayer
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6061232703347076683, guid: 1796f246ec9d3d542bca7d71a751be1a, type: 3}
+    - target: {fileID: 7126137953281055102, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1796f246ec9d3d542bca7d71a751be1a, type: 3}
 --- !u!4 &911812436 stripped
 Transform:
