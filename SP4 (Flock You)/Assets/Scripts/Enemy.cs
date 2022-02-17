@@ -17,22 +17,36 @@ public class Enemy : MonoBehaviour
     public GameObject POV_Agro;
     public GameObject POV_DeAgro;
 
+    EnemyObserver enemyObserver;
+
+
+    // Start is called before the first frame update
     void Start()
     {
         curState = FSM.PATROL;
         waypointController = GetComponent<WaypointController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        enemyObserver = GetComponent<EnemyObserver>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         switch (curState)
         {
             case FSM.IDLE:        
                 break;
             case FSM.PATROL:
-                waypointController.WaypointUpdate();
+                if (enemyObserver.isPlayerInRange)
+                {
+                    curState = FSM.AGRO;
+                }
+                else
+                {
+                    waypointController.WaypointUpdate();
+                }
+                
                 break;
             case FSM.DISTRACTED:
                 if (Distract_Timer >= 0)
@@ -44,6 +58,8 @@ public class Enemy : MonoBehaviour
                 }
                 break;
             case FSM.AGRO:
+                // Make enemy chase player
+                curState = FSM.PATROL;
                 break;
             case FSM.STUN:
                 if (Stun_Timer >= 0)
@@ -51,6 +67,7 @@ public class Enemy : MonoBehaviour
                 else
                 {
                     curState = FSM.PATROL;
+                    GetComponent<NavMeshAgent>().speed = 3.5f;
                     Debug.Log("Enemy Woke up");
                 }
                 break;
@@ -61,6 +78,7 @@ public class Enemy : MonoBehaviour
     {
         curState = FSM.STUN;
         Stun_Timer = stunTime;
+        GetComponent<NavMeshAgent>().speed = 0;
         Debug.Log("Enemy Stunned");
     }
 
