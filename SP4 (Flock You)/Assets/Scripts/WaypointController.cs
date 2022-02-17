@@ -27,7 +27,7 @@ public class WaypointController : MonoBehaviour
 
         if (waypoints.Count > 0 && waypoints[0] != null)
         {
-            currentTarget = waypoints[_index];
+            currentTarget = waypoints[index];
             navMeshAgent.SetDestination(currentTarget.position);
         }
         else
@@ -79,16 +79,16 @@ public class WaypointController : MonoBehaviour
     IEnumerator MoveToNextWaypoint() {
         if (!Reverse)
         {
-            _index++;
+            index++;
         }
 
         //If not at last waypoint and not going in reverse
-        if (_index < waypoints.Count && !Reverse)
+        if (index < waypoints.Count && !Reverse)
         {
             //Pause a random amount of time before going to the first point
-            if (_index == 1)
+            if (index == 1)
                 yield return new WaitForSeconds(Random.Range(3f, 6f));
-            currentTarget = waypoints[_index];
+            currentTarget = waypoints[index];
         }
         else
         {
@@ -98,21 +98,30 @@ public class WaypointController : MonoBehaviour
                 yield return new WaitForSeconds(Random.Range(3f, 6f));
             }
 
-            _index--;
+            index--;
             Reverse = true;
 
-            //if next waypoint is the first waypoint reset _inReverse and _atEnd
-            if (_index == 0)
+            //if next waypoint is the first waypoint reset Reverse and atEnd
+            if (index == 0)
             {
                 Reverse = false;
                 atEnd = false;
             }
 
-            currentTarget = waypoints[_index];
+            currentTarget = waypoints[index];
         }
 
         //Move agent to next waypoint
         navMeshAgent.SetDestination(currentTarget.position);
         moving = true;
+    }
+
+    public void ChasePlayer()
+    {
+
+
+        currentTarget = waypoints[index];
+        navMeshAgent.SetDestination(currentTarget.position);
+
     }
 }
