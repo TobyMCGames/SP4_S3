@@ -7,7 +7,7 @@ public class WaypointController : MonoBehaviour
 {
     public List<Transform> waypoints;
     private Transform currentTarget;
-    protected int _index = 1;
+    protected int index = 1;
 
     public NavMeshAgent navMeshAgent;
 
@@ -17,13 +17,11 @@ public class WaypointController : MonoBehaviour
 
     private List<float> playerToWaypointsDiff;
     int m_CurrentWaypointIndex;
-    private bool moveAway;
 
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        moveAway = false;
 
         if (waypoints.Count > 0 && waypoints[0] != null)
         {
@@ -49,7 +47,7 @@ public class WaypointController : MonoBehaviour
             {
                 // Set moving to false to prevent this if statement from constantly running while at target position
                 moving = false;
-                Debug.Log(transform.name + " at waypoint: " + _index);
+                Debug.Log(transform.name + " at waypoint: " + index);
                 StartCoroutine("MoveToNextWaypoint");
             }
         }

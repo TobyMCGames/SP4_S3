@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
-{   
 {
     public GameObject POV_Agro;
     public GameObject POV_DeAgro;
@@ -13,17 +12,13 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent navMeshAgent;
 
     // Finite State Machine
-        public enum FSM { IDLE, PATROL, DISTRACTED, AGRO, STUN }
+    public enum FSM { IDLE, PATROL, DISTRACTED, AGRO, STUN };
     public FSM curState;
     float Stun_Timer;
     float Distract_Timer;
 
     //Init Variables
     WaypointController waypointController;
-    private NavMeshAgent navMeshAgent;
-    public GameObject POV_Agro;
-    public GameObject POV_DeAgro;
-
     EnemyObserver enemyObserver;
 
 
