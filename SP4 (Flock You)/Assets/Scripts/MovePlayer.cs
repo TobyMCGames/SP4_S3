@@ -35,21 +35,28 @@ public class MovePlayer : MonoBehaviour
     // double jump
     double firsttaptime=0.0;
     bool doubletapcheck = false;
-    double doubletaptimeframe = 0.7;
+    double doubletaptimeframe = 0.5f;
     float elapsedtaptime = 0f;
 
+  
+    [Header("Flysettings")]
+    Vector3 flydrop = Vector3.zero;
+    Vector3 flyup = Vector3.zero;
+    float flaptimermax = 0.1f;
+    float currenflaptimer = 0.0f;
+
+    [Header("Orientation")]
+    float pitch = 0.0f, yaw = 0.0f, roll = 0.0f;
     Vector3 vec3right = Vector3.zero;
     Vector3 vec3up = Vector3.zero;
     Vector3 vec3front = Vector3.zero;
+    Vector3 vec3view = Vector3.zero;
     Vector3 flyDirection = Vector3.zero;
-
-    float flyup = 0.0f;
-
-    float pitch = 0.0f, yaw = 0.0f, roll = 0.0f;
-
+    Vector3 Orientation = Vector3.zero;
 
     [Header("Debug")]
     public Text directiontext;
+    public Text orientationtext;
 
 
     private void Awake()
@@ -58,6 +65,7 @@ public class MovePlayer : MonoBehaviour
         playerheight = transform.localScale.y;
         DefaultMoveMul = movemul;
         vec3up = new Vector3(0, 1, 0);
+        flydrop.Set(0,-7.0f, 0);
     }
     private void Start()
     {
@@ -70,8 +78,11 @@ public class MovePlayer : MonoBehaviour
         Moveplayer();
         if (isFlying)
         {
+            m_Rigidbody.useGravity = false;
             Fly();
         }
+        else
+            m_Rigidbody.useGravity = true;
         if (Input.GetKeyUp(KeyCode.C))
         {
             camera.m_LookAt = transform;
@@ -101,16 +112,14 @@ public class MovePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        isgrounded = Physics.Raycast(transform.position, Vector3.down, playerheight * 0.5f + 0.1f);
-        if (isFlying)
-        {
-            directiontext.text = "Flying: " + flyDirection.ToString();
-        }
-        else
-            directiontext.text = flyDirection.ToString();
+        isgrounded = Physics.Raycast(transform.position, Vector3.down,1f);
+
         if (isgrounded)
         {
             isFlying = false;
+            pitch = 0;
+            roll = 0;
+            vec3up = Vector3.up;
         }
         if (doubletapcheck)
         {
@@ -129,10 +138,7 @@ public class MovePlayer : MonoBehaviour
             {
                 if (Time.time - firsttaptime < doubletaptimeframe)
                 {
-                    if (isFlying == true)
-                        isFlying = false;
-                    else
-                        isFlying = true;
+                    isFlying = !isFlying;
                     doubletapcheck = false;
                     elapsedtaptime = 0;
                     Vector3 axis = Vector3.zero;
@@ -163,19 +169,18 @@ public class MovePlayer : MonoBehaviour
         vec3front.y = 0;
         vec3front.Normalize();
 
-        vec3right= Vector3.Cross(vec3front, Vector3.up) *-1;
+        vec3right= Vector3.Cross(vec3front,vec3up) *-1;
+        vec3view = Vector3.Cross(vec3right, vec3up);
         if (inputed && !isFlying)      //&& !isFlying)// && photonView.IsMine)
         {
             m_Rigidbody.angularVelocity = Vector3.zero;
             m_Movement = ((vec3front * verticalmovement) + (vec3right * horizontalmovement).normalized);
-            m_Movement.Normalize();
             m_Rigidbody.AddForce((m_Movement * Time.deltaTime) * movemul, ForceMode.VelocityChange);
             angle = Mathf.Rad2Deg * Mathf.Atan2(m_Movement.x, m_Movement.z);
             m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
             forceRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
             m_Rigidbody.MoveRotation(forceRotation);
-            Vector3.RotateTowards(vec3front, forceRotation.eulerAngles, Mathf.PI * 2, 0.0f);
-               // Debug.Log(vec3front);
+            // Debug.Log(vec3front);
             
         }
     }
@@ -200,12 +205,16 @@ public class MovePlayer : MonoBehaviour
             camera.m_LookAt = collision.transform;
             camera.Follow = collision.transform;
         }
-        /*else if (collision.gameObject.CompareTag("Interacted"))
+        else if (collision.gameObject.CompareTag("Interacted"))
         {
             Physics.IgnoreCollision(collision.collider,GetComponent<Collider>(),true);
-        }*/
+        }
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        
+    }
     public void singletapJump()
     {
         if (isgrounded)
@@ -216,55 +225,40 @@ public class MovePlayer : MonoBehaviour
 
     public void Fly()
     {
-        /*if (tookoff == false)
-        {
 
-        }*/
+
+        if (isFlying)
+        {
+            directiontext.text = "Flying: " + flyDirection.ToString();
+        }
+        else
+            directiontext.text = "Grounded: " + vec3front.ToString();
+
+        float angle = 0.0f;
+        Quaternion forceRotation;
+        vec3front = (transform.position - camera.transform.position).normalized;
+        vec3front.Normalize();
+        vec3front.y = 0;
+
+        vec3right = Vector3.Cross(vec3front, vec3up) * -1;
+        vec3view = Vector3.Cross(vec3right, vec3up);
+
+        m_Rigidbody.angularVelocity = Vector3.zero;
+        m_Movement = ((vec3front * verticalmovement) + (vec3right * horizontalmovement).normalized);
         if (Input.GetKey(KeyCode.Space))
         {
-             flyup += flyverticalforce * Time.deltaTime;
+            m_Movement.y += Time.deltaTime * flyverticalforce;
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            flyup -= flyverticalforce * Time.deltaTime;
-        }
-        if ( flyup > 1)
-        {
-            flyup = 1;
-        }
-        else if (flyup < -1)
-        {
-            flyup = -1;
-        }
-        flyDirection.y = flyup;
-
-        vec3front = transform.position - camera.transform.position;
-        vec3front.Normalize();
-        vec3front.y = 0;
-        //change later due to different orientation
-        vec3right = Vector3.Cross(vec3front,vec3up) *-1;
-
-      
-        if (verticalmovement > 0)
-        {
-            flyDirection = (vec3front * verticalmovement + vec3right * horizontalmovement);
+            m_Movement.y -= Time.deltaTime * flyverticalforce;
         }
 
-        flyDirection.Normalize();
-        flyDirection.y = flyup;
-        //  Debug.Log(flyDirection);
-        m_Rigidbody.AddForce(flyDirection * 30f, ForceMode.Acceleration);
-
-        // rotation of flying force 
-        
-        if (horizontalmovement == 0)
-        {
-            float angle = Mathf.Rad2Deg * Mathf.Atan2(vec3front.x, vec3front.z);
-            // make this relative to player's up
-            m_Rotation = Quaternion.AngleAxis(angle, vec3up);
-
-            m_Rigidbody.MoveRotation(Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed));
-        }
+        m_Rigidbody.AddForce((m_Movement * Time.deltaTime) * movemul, ForceMode.VelocityChange);
+        angle = Mathf.Rad2Deg * Mathf.Atan2(vec3front.x, vec3front.z);
+        m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
+        forceRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
+        m_Rigidbody.MoveRotation(forceRotation);
     }
 }

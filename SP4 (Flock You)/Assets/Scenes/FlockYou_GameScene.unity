@@ -768,7 +768,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366792333}
-  m_LocalRotation: {x: -0.012861915, y: 0.70698977, z: 0.012861912, w: 0.7069899}
+  m_LocalRotation: {x: -0.012861915, y: 0.70698977, z: 0.012861909, w: 0.7069899}
   m_LocalPosition: {x: -6.9999995, y: 0, z: -0.0000004172325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -973,8 +973,10 @@ MonoBehaviour:
   curTimer: 65
   UI_Screen: {fileID: 0}
   Loading_Screen: {fileID: 0}
+  Direction_Test: {fileID: 0}
   player: {fileID: 1987478241276827997}
   MainCamera: {fileID: 0}
+  ProjectileList: {fileID: 0}
   SpawnPoints:
   - {fileID: 5033030191947368740}
 --- !u!4 &1517933914
@@ -1003,6 +1005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebf711f4a200864a979e528085e8717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   UI_Timer: {fileID: 193360771}
   UI_Health: {fileID: 673186660}
   UI_Ammo: {fileID: 1902265180}
@@ -1587,7 +1590,7 @@ PrefabInstance:
     - target: {fileID: 5531866283144861043, guid: 008496d9bc1b228409b68881800d8ec3,
         type: 3}
       propertyPath: sceneViewId
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6851828179818617448, guid: 008496d9bc1b228409b68881800d8ec3,
         type: 3}
@@ -1825,6 +1828,11 @@ PrefabInstance:
       propertyPath: m_Lens.m_SensorSize.x
       value: 1.9693878
       objectReference: {fileID: 0}
+    - target: {fileID: 6061232703347076683, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: navMeshAgent
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6237663844020750585, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -1958,12 +1966,12 @@ PrefabInstance:
     - target: {fileID: 6877641835400412570, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7069898
+      value: 0.7069899
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835400412570, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.01286191
+      value: -0.012861913
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835400412570, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1973,7 +1981,7 @@ PrefabInstance:
     - target: {fileID: 6877641835400412570, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.012861909
+      value: 0.01286191
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835400412571, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
