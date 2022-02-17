@@ -28,13 +28,14 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        waypointController.WaypointUpdate();
         switch (curState)
         {
             case FSM.IDLE:
                 
                 break;
             case FSM.PATROL:
-                waypointController.WaypointUpdate();
+                
                 break;
             case FSM.AGRO:
                 
