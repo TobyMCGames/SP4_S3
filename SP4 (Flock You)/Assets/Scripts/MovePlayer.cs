@@ -35,7 +35,7 @@ public class MovePlayer : MonoBehaviour
     // double jump
     double firsttaptime=0.0;
     bool doubletapcheck = false;
-    double doubletaptimeframe = 0.3f;
+    double doubletaptimeframe = 0.5f;
     float elapsedtaptime = 0f;
 
   
@@ -54,9 +54,9 @@ public class MovePlayer : MonoBehaviour
     Vector3 flyDirection = Vector3.zero;
     Vector3 Orientation = Vector3.zero;
 
-    //[Header("Debug")]
-    //public Text directiontext;
-    //public Text orientationtext;
+    [Header("Debug")]
+    public Text directiontext;
+    public Text orientationtext;
 
 
     private void Awake()
@@ -78,8 +78,11 @@ public class MovePlayer : MonoBehaviour
         Moveplayer();
         if (isFlying)
         {
+            m_Rigidbody.useGravity = false;
             Fly();
         }
+        else
+            m_Rigidbody.useGravity = true;
         if (Input.GetKeyUp(KeyCode.C))
         {
             camera.m_LookAt = transform;
@@ -109,13 +112,8 @@ public class MovePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        isgrounded = Physics.Raycast(transform.position, Vector3.down, playerheight * 0.5f + 0.1f);
-        if (isFlying)
-        {
-            //directiontext.text = "Flying: " + flyDirection.ToString();
-        }
-        else
-            //directiontext.text = "Grounded: " + vec3front.ToString();
+        isgrounded = Physics.Raycast(transform.position, Vector3.down,1f);
+
         if (isgrounded)
         {
             isFlying = false;
@@ -140,10 +138,7 @@ public class MovePlayer : MonoBehaviour
             {
                 if (Time.time - firsttaptime < doubletaptimeframe)
                 {
-                    if (isFlying == true)
-                        isFlying = false;
-                    else
-                        isFlying = true;
+                    isFlying = !isFlying;
                     doubletapcheck = false;
                     elapsedtaptime = 0;
                     Vector3 axis = Vector3.zero;
@@ -216,6 +211,10 @@ public class MovePlayer : MonoBehaviour
         }
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        
+    }
     public void singletapJump()
     {
         if (isgrounded)
@@ -226,113 +225,40 @@ public class MovePlayer : MonoBehaviour
 
     public void Fly()
     {
+
+
+        if (isFlying)
+        {
+            directiontext.text = "Flying: " + flyDirection.ToString();
+        }
+        else
+            directiontext.text = "Grounded: " + vec3front.ToString();
+
+        float angle = 0.0f;
+        Quaternion forceRotation;
+        vec3front = (transform.position - camera.transform.position).normalized;
+        vec3front.Normalize();
+        vec3front.y = 0;
+
+        vec3right = Vector3.Cross(vec3front, vec3up) * -1;
+        vec3view = Vector3.Cross(vec3right, vec3up);
+
+        m_Rigidbody.angularVelocity = Vector3.zero;
+        m_Movement = ((vec3front * verticalmovement) + (vec3right * horizontalmovement).normalized);
         if (Input.GetKey(KeyCode.Space))
         {
-             flyup.y += flyverticalforce * Time.deltaTime;
+            m_Movement.y += Time.deltaTime * flyverticalforce;
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            flyup.y -= flyverticalforce * Time.deltaTime;
-        }
-        if ( flyup.y > 1)
-        {
-            flyup.y = 1;
-        }
-        else if (flyup.y < -1)
-        {
-            flyup.y = -1;
+            m_Movement.y -= Time.deltaTime * flyverticalforce;
         }
 
-        flyup = Quaternion.AngleAxis(pitch, Vector3.up) * flyup;
-        flyDirection.y = flyup.y;
-        flydrop.y = flyup.y*2;
-
-        vec3front = transform.position - camera.transform.position;
-        vec3front.y = 0;
-        vec3front.Normalize();
-        //change later due to different orientation
-        vec3right = Vector3.Cross(vec3front,vec3up) *-1;
-
-        flyDirection = (vec3front * verticalmovement) + (vec3right * horizontalmovement);
-        flyDirection.Normalize();
-        flyDirection.y = flyup.y;
-
-        // flapping 
-        /*if (currenflaptimer > flaptimermax)
-        {
-            currenflaptimer = 0f;
-            m_Rigidbody.AddForce(flydrop * 50 * Time.deltaTime, ForceMode.Impulse);
-        }
-        else
-        {
-            currenflaptimer += Time.deltaTime;
-            m_Rigidbody.AddForce(flyDirection * 30f * Time.deltaTime, ForceMode.Impulse);
-        }*/
-
-
-
-        // rotation of flying force 
-
-        yaw = Mathf.Rad2Deg * Mathf.Atan2(vec3front.x, vec3front.z);
-   
-        // right 
-        if (horizontalmovement != 0)
-        {
-            flyDirection = Vector3.Cross(vec3right, flyDirection);
-            if (roll + horizontalmovement * Time.deltaTime * -10 > 45f)
-            {
-                roll = 45f;
-            }
-            else if (roll + horizontalmovement * Time.deltaTime *-10 < -45)
-            {
-                roll = -45f;
-            }
-            else
-                roll += horizontalmovement * Time.deltaTime * 10 * -1;
-        }
-
-        if (verticalmovement != 0)
-        {
-            if (pitch + verticalmovement *Time.deltaTime * -10 > 45f)
-            {
-                pitch = 45f;
-            }
-            else if (pitch + verticalmovement * Time.deltaTime * -10 < -45f)
-            {
-                pitch = -45f;
-            }
-            else
-            {
-                pitch += verticalmovement * Time.deltaTime * -10f;
-            }
-        }
-        Orientation.Set(pitch, yaw, roll);
-        // update player vector  
-        vec3right = (Quaternion.Euler(Orientation) * vec3right).normalized;
-        vec3up = (Quaternion.Euler(Orientation) * vec3up).normalized;
-        vec3front = (Vector3.Cross(vec3up, vec3right)).normalized;
-        vec3front.y = 0;
-        m_Rotation = Quaternion.Euler(Orientation);
-        //orientationtext.text = "Orientation: " + Orientation.ToString();
-        if (verticalmovement < 0)
-        {
-            m_Rigidbody.AddForce(flyDirection * -30f, ForceMode.Acceleration);
-        }
-        else if (verticalmovement > 0)
-        {
-            m_Rigidbody.AddForce(flyDirection * 30f, ForceMode.Acceleration);
-        }
-        else // fly striaght
-        {
-            //flyDirection.y = 0;
-            m_Rigidbody.AddForce(flyDirection * 30f, ForceMode.Acceleration);
-        }
-
-        //m_Rigidbody.MoveRotation(m_Rotation);
-        Quaternion forceRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
+        m_Rigidbody.AddForce((m_Movement * Time.deltaTime) * movemul, ForceMode.VelocityChange);
+        angle = Mathf.Rad2Deg * Mathf.Atan2(vec3front.x, vec3front.z);
+        m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
+        forceRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
         m_Rigidbody.MoveRotation(forceRotation);
-
-        
     }
 }
