@@ -7,7 +7,10 @@ public class Enemy : MonoBehaviour
 {
     public GameObject POV_Agro;
     public GameObject POV_DeAgro;
-    
+    private Transform player;
+    private int MoveSpeed = 1;
+    public NavMeshAgent navMeshAgent;
+
     // Finite State Machine
     public enum FSM { IDLE, PATROL, AGRO, STUN }
     public FSM curState;
@@ -40,6 +43,7 @@ public class Enemy : MonoBehaviour
                 if (enemyObserver.isPlayerInRange)
                 {
                     curState = FSM.AGRO;
+                    Debug.Log("Enemy switching to AGRO state");
                 }
                 else
                 {
@@ -48,8 +52,18 @@ public class Enemy : MonoBehaviour
                 
                 break;
             case FSM.AGRO:
-                // Make enemy chase player
-                curState = FSM.PATROL;
+                if (enemyObserver.isPlayerInRange)
+                {
+                    // Make enemy chase player
+                    player = GameObject.FindGameObjectWithTag("Player").transform;
+                    //var distance = Vector3.Distance(player.position, transform.position);
+                    navMeshAgent.SetDestination(player.position);
+                }
+                else
+                {
+                    curState = FSM.PATROL;
+                    Debug.Log("Enemy switching to PATROL state");
+                }
                 break;
             case FSM.STUN:
                 if (Stun_Timer > 0)

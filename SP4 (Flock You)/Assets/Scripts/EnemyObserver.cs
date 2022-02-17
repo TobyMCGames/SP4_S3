@@ -16,7 +16,7 @@ public class EnemyObserver : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && player == other.transform) {
+        if (other.tag == "Player") {
             isPlayerInRange = true;
         }
     }
