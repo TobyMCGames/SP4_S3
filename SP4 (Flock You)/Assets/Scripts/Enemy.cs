@@ -53,8 +53,9 @@ public class Enemy : MonoBehaviour
                     Distract_Timer -= Time.deltaTime;
                 else
                 {
-                    curState = FSM.PATROL;
                     Debug.Log("Enemy lose interest");
+                    waypointController.GetClosestWaypoint();
+                    curState = FSM.PATROL;
                 }
                 break;
             case FSM.AGRO:
@@ -82,16 +83,12 @@ public class Enemy : MonoBehaviour
         Debug.Log("Enemy Stunned");
     }
 
-    private void Distracted(Vector3 PlayerLastPos)
+    public void Distracted(Vector3 PlayerLastPos)
     {
+        curState = FSM.DISTRACTED;
         Distract_Timer = 3f;
+        //waypointController.MoveToLocation(PlayerLastPos);
         navMeshAgent.SetDestination(PlayerLastPos);
     }
 
-    public void SetDistracted(Vector3 SetPlayerLastPos)
-    {
-        curState = FSM.DISTRACTED;
-        //waypointController.SetMoveAwayStatus(true);
-        Distracted(SetPlayerLastPos);
-    }
 }

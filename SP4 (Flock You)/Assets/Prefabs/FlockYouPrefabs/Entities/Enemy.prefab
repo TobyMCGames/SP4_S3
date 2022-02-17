@@ -135,9 +135,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b78262de06e7d44f8b7192ab7fa2792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curState: 0
   POV_Agro: {fileID: 0}
   POV_DeAgro: {fileID: 0}
-  curState: 0
 --- !u!114 &8079682373857969125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,22 +165,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waypoints: []
   navMeshAgent: {fileID: 0}
---- !u!54 &3558631890822562093
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 369952268686831569}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1469690790477637325
 GameObject:
   m_ObjectHideFlags: 0

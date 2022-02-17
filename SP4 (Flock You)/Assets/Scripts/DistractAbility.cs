@@ -25,7 +25,7 @@ public class DistractAbility : Ability
         {
             if (enemy != null)
             {
-                enemy.GetComponent<Enemy>().SetDistracted(player.transform.position);
+                enemy.GetComponent<Enemy>().Distracted(player.transform.position);
                 Debug.Log(enemy.name + " distracted!");
             }
         }

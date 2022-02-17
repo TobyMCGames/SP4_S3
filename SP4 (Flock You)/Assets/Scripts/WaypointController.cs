@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class WaypointController : MonoBehaviour
 {
     public List<Transform> waypoints;
-    Transform currentTarget;
+    private Transform currentTarget;
     protected int _index = 1;
 
     public NavMeshAgent navMeshAgent;
@@ -15,15 +15,15 @@ public class WaypointController : MonoBehaviour
     protected bool atEnd = false;
     protected bool moving = true;
 
-    private bool moveAway = false;
-    private List<float> waypointsDistDiff;
-
+    private List<float> playerToWaypointsDiff;
     int m_CurrentWaypointIndex;
+    private bool moveAway;
 
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        moveAway = false;
 
         if (waypoints.Count > 0 && waypoints[0] != null)
         {
@@ -32,18 +32,6 @@ public class WaypointController : MonoBehaviour
         }
         else
             Debug.Log("No waypoint targets set!");
-
-        moveAway = false;
-    }
-
-    public void SetMoveAwayStatus(bool status)
-    {
-        moveAway = status;
-    }
-
-    public bool GetMoveAwayStatus()
-    {
-        return moveAway;
     }
 
     public void StartAI()
@@ -54,9 +42,6 @@ public class WaypointController : MonoBehaviour
 
     public void WaypointUpdate()
     {
-        // Get current speed percent of agent and set the speed parameter of the animator
-        float speedPercent = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
-
         if (currentTarget != null)
         {
             //Check if the agent has arrived the target position
@@ -64,10 +49,31 @@ public class WaypointController : MonoBehaviour
             {
                 // Set moving to false to prevent this if statement from constantly running while at target position
                 moving = false;
-                Debug.Log("Moving = false");
+                Debug.Log(transform.name + " at waypoint: " + _index);
                 StartCoroutine("MoveToNextWaypoint");
             }
         }
+    }
+
+    public void GetClosestWaypoint()
+    {
+        Transform closestWaypoint = null;
+        int waypointIndex = 0;
+        float closestDistance = 0;
+
+        foreach (Transform waypoint in waypoints)
+        {
+            Vector3 posDiff = transform.position - waypoint.position;
+            float curDistanceDiff = posDiff.sqrMagnitude;
+            if (curDistanceDiff < closestDistance || waypointIndex == 0)
+            {
+                currentTarget = waypoint;
+                closestWaypoint = waypoint;
+                closestDistance = curDistanceDiff;
+            }
+            waypointIndex++;
+        }
+        navMeshAgent.SetDestination(closestWaypoint.position);
     }
 
     IEnumerator MoveToNextWaypoint() {
@@ -88,7 +94,6 @@ public class WaypointController : MonoBehaviour
         {
             if (!atEnd)
             {
-                Debug.Log("At end");
                 atEnd = true;
                 yield return new WaitForSeconds(Random.Range(3f, 6f));
             }
@@ -109,6 +114,5 @@ public class WaypointController : MonoBehaviour
         //Move agent to next waypoint
         navMeshAgent.SetDestination(currentTarget.position);
         moving = true;
-        Debug.Log("Moving = true");
     }
 }
