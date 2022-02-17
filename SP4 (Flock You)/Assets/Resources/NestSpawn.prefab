@@ -90,9 +90,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2336154155944584812}
+  - component: {fileID: 2780291962348257399}
+  - component: {fileID: 8266628696447403648}
   m_Layer: 0
   m_Name: NestSpawn
-  m_TagString: Untagged
+  m_TagString: NestSpawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,6 +117,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &2780291962348257399
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336154155944584813}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.41
+  m_Height: 0.5
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: -0.1, z: -0.00000008940697}
+--- !u!114 &8266628696447403648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336154155944584813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e78daad1223a1e418b5425de0b206be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2336154156236695919
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +154,6 @@ GameObject:
   - component: {fileID: 2336154156236695918}
   - component: {fileID: 2336154156236695915}
   - component: {fileID: 2336154156236695916}
-  - component: {fileID: 2336154156236695917}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -197,20 +224,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2336154156236695917
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2336154156236695919}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &2336154156474668536
 GameObject:
   m_ObjectHideFlags: 0

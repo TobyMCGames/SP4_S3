@@ -32,11 +32,7 @@ public class InteractControl : MonoBehaviour
             heldObject = GetComponentInChildren<InteractDetection>().GetInteractable();
             if (heldObject != null)
             {
-                //heldObjectTP = heldObject.transform.GetChild(0).gameObject;
-                //Debug.Log(heldObjectTP);
                 heldObjectWeight = heldObject.GetComponent<Rigidbody>().mass;
-                //Transform touchpoint = heldObject.transform.Find("touchpoint").transform;
-                //Vector3 touchpointOffset = transform.localPosition - touchpoint.localPosition;
 
                 //light object
                 if (heldObjectWeight >= 1 && heldObjectWeight <= 7)

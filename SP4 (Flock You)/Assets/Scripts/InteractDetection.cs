@@ -10,7 +10,7 @@ public class InteractDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Interactable" && Interactable == null)
+        if(other.gameObject.CompareTag("Interactable") && Interactable == null)
         {
             Interactable = other.gameObject;
             Debug.Log(Interactable.name);

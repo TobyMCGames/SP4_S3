@@ -11,6 +11,8 @@ TagManager:
   - SpawnPoint
   - testCameraDetach
   - Interacted
+  - NestSpawn
+  - InteractDetect
   layers:
   - Default
   - TransparentFX

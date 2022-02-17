@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 6611853246373124663}
   - component: {fileID: 1907829816480043661}
   m_Layer: 0
-  m_Name: Capsule
-  m_TagString: Untagged
+  m_Name: InteractDetect
+  m_TagString: InteractDetect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -385,6 +385,7 @@ MonoBehaviour:
   flymaxDecrease: 2
   camera: {fileID: 0}
   directiontext: {fileID: 0}
+  orientationtext: {fileID: 0}
 --- !u!114 &6220354295224625069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,7 +400,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   touchPointLight: {fileID: 4189169062673136737}
   touchPointHeavy: {fileID: 8013924091098126131}
-  objectList: {fileID: 0}
 --- !u!114 &3433376927388911469
 MonoBehaviour:
   m_ObjectHideFlags: 0
