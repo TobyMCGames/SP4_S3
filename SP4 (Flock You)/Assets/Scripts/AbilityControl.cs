@@ -12,7 +12,7 @@ public class AbilityControl : MonoBehaviour
     private float ScrollValue = 0f;
     private int AbilityCount = 0;
     private int currAbility = 0;
-    DistactAbility distactAbility = new DistactAbility();
+    DistractAbility distactAbility = new DistractAbility();
     LayEggAbility layEggAbility = new LayEggAbility();
 
     public enum ABILITIES { 
@@ -36,6 +36,11 @@ public class AbilityControl : MonoBehaviour
     public LayEggAbility GetLayEggAbility()
     {
         return layEggAbility;
+    }
+
+    public DistractAbility GetDistractAbility()
+    {
+        return distactAbility;
     }
 
     private void Update()

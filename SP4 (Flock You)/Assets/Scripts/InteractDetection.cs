@@ -7,6 +7,11 @@ public class InteractDetection : MonoBehaviour
     private bool collided;
     private GameObject Interactable = null;
     public GameObject GetInteractable() { return Interactable; }
+    DistractAbility distractAbility;
+    private void Awake()
+    {
+        distractAbility = GetComponent<AbilityControl>().GetDistractAbility();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
