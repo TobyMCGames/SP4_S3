@@ -21,8 +21,9 @@ public class Projectile_Poop : MonoBehaviour
             if (other.gameObject == pooper || other.transform.IsChildOf(pooper.transform))
                 return;
 
-        if (other.tag != "Enemy")
+        if (other.tag == "Enemy")
         {
+            other.transform.GetComponent<Enemy>().SetStun(5.0f);
         }
         Debug.Log("Poop drop on non-enemy");
         Destroy(gameObject);
