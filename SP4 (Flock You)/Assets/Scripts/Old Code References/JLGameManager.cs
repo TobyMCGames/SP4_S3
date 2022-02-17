@@ -130,7 +130,7 @@ public class JLGameManager : MonoBehaviourPunCallbacks
         {
             object playerLoadedLevel;
 
-            if (p.CustomProperties.TryGetValue(JLGame.PLAYER_LOADED_LEVEL, out playerLoadedLevel))
+            if (p.CustomProperties.TryGetValue(FYGame.PLAYER_LOADED_LEVEL, out playerLoadedLevel))
             {
                 if ((bool)playerLoadedLevel)
                 {
@@ -144,7 +144,7 @@ public class JLGameManager : MonoBehaviourPunCallbacks
         return true;
     }
 
-    [PunRPC]
+    //[PunRPC]
     private void Initialize()
     {
         Debug.Log("Initializing");

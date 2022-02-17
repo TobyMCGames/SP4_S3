@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class FYPlayer : MonoBehaviour
 {
-    // Singleton Instance
-    public static FYPlayer Instance = null;
-
     // Default SpawnPoint
     private Transform DefaultSpawnPoint;
 
@@ -24,15 +21,20 @@ public class FYPlayer : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-        curHealth = MaxHealth;
-        curLives = MaxLives;
-        layEggAbility = GetComponent<AbilityControl>().GetLayEggAbility();
+        Init();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+    }
+
+    public void Init()
+    {
+        curHealth = MaxHealth;
+        curLives = MaxLives;
+        layEggAbility = GetComponent<AbilityControl>().GetLayEggAbility();
+        DropLoadControl_script.Init();
     }
 
     // Update is called once per frame
