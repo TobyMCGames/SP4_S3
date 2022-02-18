@@ -12,6 +12,7 @@ TagManager:
   - testCameraDetach
   - NestSpawn
   - InteractDetect
+  - ObjectIcon
   layers:
   - Default
   - TransparentFX
