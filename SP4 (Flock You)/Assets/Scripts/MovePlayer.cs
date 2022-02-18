@@ -40,12 +40,12 @@ public class MovePlayer : MonoBehaviour
     bool islanding = false;
 
     // double jump
-    double firsttaptime=0.0;
+    double firsttaptime = 0.0;
     bool doubletapcheck = false;
     double doubletaptimeframe = 0.5f;
     float elapsedtaptime = 0f;
 
-  
+
     [Header("Flysettings")]
     Vector3 flydrop = Vector3.zero;
     Vector3 flyup = Vector3.zero;
@@ -74,7 +74,7 @@ public class MovePlayer : MonoBehaviour
         playerheight = transform.localScale.y;
         DefaultMoveMul = movemul;
         vec3up = new Vector3(0, 1, 0);
-        flydrop.Set(0,-7.0f, 0);
+        flydrop.Set(0, -7.0f, 0);
 
         photonView = GetComponent<PhotonView>();
         if (photonView == null)
@@ -86,7 +86,7 @@ public class MovePlayer : MonoBehaviour
                 m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
             }
         }
-        
+
     }
     private void Start()
     {
@@ -130,13 +130,13 @@ public class MovePlayer : MonoBehaviour
 
     void PlayerInput()
     {
-      //  if (photonView.IsMine == true)
+        //  if (photonView.IsMine == true)
         //{
-            horizontalmovement = Input.GetAxisRaw("Horizontal");
-            verticalmovement = Input.GetAxisRaw("Vertical");
-            bool hasHorizontalInput = !Mathf.Approximately(horizontalmovement, 0f);
-            bool hasVerticalInput = !Mathf.Approximately(verticalmovement, 0f);
-            inputed= hasHorizontalInput || hasVerticalInput;
+        horizontalmovement = Input.GetAxisRaw("Horizontal");
+        verticalmovement = Input.GetAxisRaw("Vertical");
+        bool hasHorizontalInput = !Mathf.Approximately(horizontalmovement, 0f);
+        bool hasVerticalInput = !Mathf.Approximately(verticalmovement, 0f);
+        inputed = hasHorizontalInput || hasVerticalInput;
         //}
     }
 
@@ -145,7 +145,7 @@ public class MovePlayer : MonoBehaviour
         if (photonView != null)
             if (!photonView.IsMine)
                 return;
-        isgrounded = Physics.Raycast(m_Rigidbody.position, Vector3.down,1f);
+        isgrounded = Physics.Raycast(m_Rigidbody.position, Vector3.down, 1f);
 
         if (isgrounded)
         {
@@ -170,8 +170,8 @@ public class MovePlayer : MonoBehaviour
         vec3front = (transform.position - camera.transform.position).normalized;
         vec3front.y = 0;
         vec3front.Normalize();
-        
-        vec3right= Vector3.Cross(vec3front,vec3up) *-1;
+
+        vec3right = Vector3.Cross(vec3front, vec3up) * -1;
         vec3view = Vector3.Cross(vec3right, vec3up);
         if (inputed && !isFlying)      //&& !isFlying)// && photonView.IsMine)
         {
@@ -189,9 +189,9 @@ public class MovePlayer : MonoBehaviour
     void controlDrag()
     {
         if (isgrounded == true)
-             m_Rigidbody.drag = groundrag;
-         else if (!isgrounded)
-             m_Rigidbody.drag = airDrag;
+            m_Rigidbody.drag = groundrag;
+        else if (!isgrounded)
+            m_Rigidbody.drag = airDrag;
     }
 
     public float GetDefaultMoveMul()
@@ -228,7 +228,7 @@ public class MovePlayer : MonoBehaviour
         {
             //m_Movement.y += Time.deltaTime * flyverticalforce;
             if (!inputed) // striaght up
-                m_Rigidbody.AddForce(Quaternion.Euler(0,90,0)* (Vector3.up *flyverticalforce),ForceMode.Acceleration);
+                m_Rigidbody.AddForce(Quaternion.Euler(0, 90, 0) * (Vector3.up * flyverticalforce), ForceMode.Acceleration);
 
             else // go up a relative to your orientation
             {
@@ -244,7 +244,7 @@ public class MovePlayer : MonoBehaviour
                 else
                     pitch -= Time.deltaTime * flyverticalforce;
             }
-            
+
         }
         else if (!islanding)
         {
@@ -253,8 +253,8 @@ public class MovePlayer : MonoBehaviour
                 pitch += Time.deltaTime * flyverticalforce * 0.5f;
             }
             else if (pitch > 0.5)
-                pitch -= Time.deltaTime * flyverticalforce * 0.5f; 
-            
+                pitch -= Time.deltaTime * flyverticalforce * 0.5f;
+
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
@@ -262,7 +262,7 @@ public class MovePlayer : MonoBehaviour
             // m_Movement.y -= Time.deltaTime * flyverticalforce;
             if (!inputed) // fly striaght down;
             {
-                m_Rigidbody.AddForce(Quaternion.Euler(0,90,0) * (flyverticalforce * Vector3.down),ForceMode.Acceleration);
+                m_Rigidbody.AddForce(Quaternion.Euler(0, 90, 0) * (flyverticalforce * Vector3.down), ForceMode.Acceleration);
             }
             else // go down a relative to your orientation
             {
@@ -282,7 +282,6 @@ public class MovePlayer : MonoBehaviour
             pitch -= Time.deltaTime * flyverticalforce;
         }
 
-     
         Quaternion rbRotation;
         vec3front = (m_Rigidbody.position - camera.transform.position).normalized;
         vec3front.Normalize();
@@ -304,11 +303,11 @@ public class MovePlayer : MonoBehaviour
             }
             else if (roll > 0.5f)
             {
-                roll -= Time.deltaTime * flyhorizontalforce*0.5f;
+                roll -= Time.deltaTime * flyhorizontalforce * 0.5f;
             }
             else if (roll < 0.5f)
             {
-                roll += Time.deltaTime * flyhorizontalforce *0.5f;
+                roll += Time.deltaTime * flyhorizontalforce * 0.5f;
             }
         }
 
@@ -395,7 +394,20 @@ public class MovePlayer : MonoBehaviour
 
     void landingcheck()
     {
-        islanding = Physics.Raycast(m_Rigidbody.position, Vector3.down,landingheight);
+        islanding = Physics.Raycast(m_Rigidbody.position, Vector3.down, landingheight);
         Debug.Log(islanding);
+    }
+
+    void simulateflap()
+    {
+        if (currenflaptimer >= flaptimermax)
+        {
+
+        }
+        else
+            currenflaptimer += Time.deltaTime;
+
+        
+
     }
 }
