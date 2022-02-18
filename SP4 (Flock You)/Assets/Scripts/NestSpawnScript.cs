@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class NestSpawnScript : MonoBehaviour
 {
-    private int health = 0;
+    //private float health = 0f;
     private GameObject playerWhoSpawnMe = null;
     private bool canBeDamaged = false;
 
-    private void Awake()
+    private void Start()
     {
         //Init variables
-        health = 100;
+        //health = gameObject.GetComponent<EntityHealth>().GetHealth();
     }
 
     public void SetMine(GameObject thisplayer)
@@ -44,7 +44,9 @@ public class NestSpawnScript : MonoBehaviour
 
     private void Update()
     {
-        if(health <= 0)
+        float curHealth = gameObject.GetComponent<EntityHealth>().GetHealth();
+
+        if (curHealth <= 0)
         {
             //destroy nest if zero health
             Destroy(gameObject);
@@ -53,8 +55,8 @@ public class NestSpawnScript : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && canBeDamaged)
         {
             //take damage
-            health -= 20;
-            Debug.Log("NestSpawn Health: " + health);
+            gameObject.GetComponent<EntityHealth>().loseHealth(20f);
+            Debug.Log("NestSpawn Health: " + curHealth);
         }
     }
 }

@@ -7,17 +7,17 @@ public class ShowIcon : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.Find("Icon"))
+        if(other.transform.GetChild(0).CompareTag("ObjectIcon"))
         {
-            other.transform.Find("Icon").gameObject.SetActive(true);
+            other.transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.Find("Icon"))
+        if (other.transform.GetChild(0).CompareTag("ObjectIcon"))
         {
-            other.transform.Find("Icon").gameObject.SetActive(false);
+            other.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }
