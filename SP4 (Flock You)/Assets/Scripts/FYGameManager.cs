@@ -250,6 +250,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         if (curMode == GAMEMODES.SINGLE_PLAYER && player == null)
         {
             ClientPlayer = Instantiate(PlayerPrefab, PlayerList);
+            ClientPlayer.GetComponent<PhotonTransformView>().enabled = false;
         }
         if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
             ClientPlayer = PhotonNetwork.Instantiate("player_online", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)

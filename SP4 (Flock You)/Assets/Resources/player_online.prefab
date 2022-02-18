@@ -206,7 +206,6 @@ GameObject:
   - component: {fileID: 600894972404136892}
   - component: {fileID: 6220354295224625069}
   - component: {fileID: 3433376927388911469}
-  - component: {fileID: 5534369545785978584}
   - component: {fileID: 3727522623858185587}
   - component: {fileID: 5531866283144861043}
   - component: {fileID: 415042616506484329}
@@ -327,14 +326,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 20
-  airmul: 0.4
   movemul: 40
   jumpforce: 10
-  flyverticalforce: 10
-  flyhorizontalforce: 10
   flymaxIncrease: 2
   flymaxDecrease: 2
+  flyverticalforce: 10
+  flyhorizontalforce: 10
+  landingheight: 4
+  landingtimer: 0.1
   camera: {fileID: 0}
+  baserotation: {x: 0, y: 0, z: 0}
   directiontext: {fileID: 0}
   orientationtext: {fileID: 0}
 --- !u!114 &6220354295224625069
@@ -370,18 +371,6 @@ MonoBehaviour:
   curAmmo: 0
   MaxTillReload: 1
   MaxRechargeRateTimer: 0.2
---- !u!114 &5534369545785978584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987478240769630004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d903fbee24840540906b823af8cff86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3727522623858185587
 MonoBehaviour:
   m_ObjectHideFlags: 0
