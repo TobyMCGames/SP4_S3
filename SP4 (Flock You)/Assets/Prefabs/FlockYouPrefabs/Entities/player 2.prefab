@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 6611853246373124663}
   - component: {fileID: 1907829816480043661}
   m_Layer: 0
-  m_Name: Capsule
-  m_TagString: Untagged
+  m_Name: InteractDetect
+  m_TagString: InteractDetect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -377,10 +377,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 20
-  movemul: 40
   airmul: 0.4
+  movemul: 40
   jumpforce: 10
+  flyverticalforce: 10
+  flymaxIncrease: 2
+  flymaxDecrease: 2
   camera: {fileID: 0}
+  directiontext: {fileID: 0}
+  orientationtext: {fileID: 0}
 --- !u!114 &6220354295224625069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,7 +442,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4189169062673136737}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.608, z: 0.92}
+  m_LocalPosition: {x: 0, y: 0.891, z: 2.225}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1987478240769630005}
@@ -467,7 +472,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8013924091098126131}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.265, z: 0.644}
+  m_LocalPosition: {x: 0, y: -0.211, z: 2.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1987478240769630005}

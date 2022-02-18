@@ -200,11 +200,14 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             Debug.Log("No SpawnPoints are set");
             return;
         }
+        // Do if single player vvv
 
         //int random_iterator = Random.Range(0, SpawnPoints.Length - 1);
         //
         //player.setDefaultSpawn(SpawnPoints[random_iterator]);
         player.setDefaultSpawn(SpawnPoints[0]);
+
+        // Do if multiplayer vvv
     }
 
     [PunRPC]

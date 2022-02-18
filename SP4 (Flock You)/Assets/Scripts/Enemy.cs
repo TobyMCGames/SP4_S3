@@ -51,11 +51,11 @@ public class Enemy : MonoBehaviour
                 
                 break;
             case FSM.DISTRACTED:
-                //if (enemyObserver.isPlayerInRange)
-                //{
-                //    curState = FSM.AGRO;
-                //    Debug.Log("Enemy switching to AGRO state");
-                //}
+                if (enemyObserver.isPlayerInRange)
+                {
+                    curState = FSM.AGRO;
+                    Debug.Log("Enemy switching to AGRO state");
+                }
                 if (Distract_Timer >= 0)
                     Distract_Timer -= Time.deltaTime;
                 else
@@ -69,8 +69,8 @@ public class Enemy : MonoBehaviour
                 if (enemyObserver.isPlayerInRange)
                 {
                     // Make enemy chase player
-                    player = GameObject.FindGameObjectWithTag("Player").transform;
-                    //var distance = Vector3.Distance(player.position, transform.position);
+                    player = enemyObserver.player;
+                    //var distance = Vector3.Distance(player.position, transform.position); // calculates distance between player and enemy
                     navMeshAgent.SetDestination(player.position);
                 }
                 else

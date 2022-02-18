@@ -47,7 +47,7 @@ public class WaypointController : MonoBehaviour
             {
                 // Set moving to false to prevent this if statement from constantly running while at target position
                 moving = false;
-                Debug.Log(transform.name + " at waypoint: " + index);
+                //Debug.Log(transform.name + " at waypoint: " + index);
                 StartCoroutine("MoveToNextWaypoint");
             }
         }

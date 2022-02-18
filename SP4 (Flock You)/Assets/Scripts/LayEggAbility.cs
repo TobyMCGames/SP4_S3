@@ -30,6 +30,7 @@ public class LayEggAbility : Ability
             //spawn nest
             NestPrefab = Resources.Load("NestSpawn") as GameObject;
             InitNest = Object.Instantiate(NestPrefab, player.transform.position, player.transform.rotation);
+            InitNest.GetComponent<NestSpawnScript>().SetMine(player.gameObject);
             Debug.Log("LayEggAbility: Nest Created!");
         }
         else
@@ -38,6 +39,7 @@ public class LayEggAbility : Ability
             Object.Destroy(InitNest);
             //spawn new nest
             InitNest = Object.Instantiate(NestPrefab, player.transform.position, player.transform.rotation);
+            InitNest.GetComponent<NestSpawnScript>().SetMine(player.gameObject);
         }
 
     }
