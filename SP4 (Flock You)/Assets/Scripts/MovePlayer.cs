@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class MovePlayer : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class MovePlayer : MonoBehaviour
     public float flyverticalforce = 10f;
     public float flymaxIncrease = 2f;
     public float flymaxDecrease = 2f;
+
+    private PhotonView photonView;
 
     [Header("Player Camera")]
     public Cinemachine.CinemachineFreeLook camera;
@@ -66,6 +69,17 @@ public class MovePlayer : MonoBehaviour
         DefaultMoveMul = movemul;
         vec3up = new Vector3(0, 1, 0);
         flydrop.Set(0,-7.0f, 0);
+
+        photonView = GetComponent<PhotonView>();
+        if (photonView == null)
+            Debug.Log("Player does not have PhotonView");
+        else
+        {
+            if (!photonView.IsMine)
+            {
+                m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            }
+        }
     }
     private void Start()
     {
@@ -73,6 +87,9 @@ public class MovePlayer : MonoBehaviour
 
     private void Update()
     {
+        if (photonView != null)
+            if (!photonView.IsMine)
+                return;
         PlayerInput();
         controlDrag();
         Moveplayer();
@@ -112,6 +129,9 @@ public class MovePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (photonView != null)
+            if (!photonView.IsMine)
+                return;
         isgrounded = Physics.Raycast(transform.position, Vector3.down,1f);
 
         if (isgrounded)
@@ -165,6 +185,7 @@ public class MovePlayer : MonoBehaviour
     {
         float angle = 0.0f;
         Quaternion forceRotation;
+        Debug.Log("cur Photon View is " + photonView.ViewID);
         vec3front = (transform.position - camera.transform.position).normalized;
         vec3front.y = 0;
         vec3front.Normalize();
@@ -260,5 +281,10 @@ public class MovePlayer : MonoBehaviour
         m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
         forceRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
         m_Rigidbody.MoveRotation(forceRotation);
+    }
+
+    public void OnPhotonSerielizedView(PhotonStream stream, PhotonMessageInfo info)
+    {
+
     }
 }
