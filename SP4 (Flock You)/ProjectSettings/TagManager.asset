@@ -13,6 +13,7 @@ TagManager:
   - Interacted
   - NestSpawn
   - InteractDetect
+  - ObjectIcon
   layers:
   - Default
   - TransparentFX
