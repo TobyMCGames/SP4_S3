@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     //Init Variables
     WaypointController waypointController;
     public EnemyObserver enemyObserver;
+    //Dog dog;
 
 
     // Start is called before the first frame update
@@ -33,7 +34,8 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //dog.DogUpdate();
+
         switch (curState)
         {
             case FSM.IDLE:        
@@ -70,8 +72,13 @@ public class Enemy : MonoBehaviour
                 {
                     // Make enemy chase player
                     player = enemyObserver.player;
-                    //var distance = Vector3.Distance(player.position, transform.position); // calculates distance between player and enemy
+                    var distance = Vector3.Distance(player.position, transform.position); // calculates distance between player and enemy
                     navMeshAgent.SetDestination(player.position);
+                    if (distance <= 1) // if distance is close enough and enemy is dog, pounce on the player
+                    {
+
+                    }
+
                 }
                 else
                 {
