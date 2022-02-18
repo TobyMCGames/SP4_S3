@@ -270,7 +270,8 @@ public class MovePlayer : MonoBehaviour
 
         // current
         Orientation.Set(pitch, yaw, roll);
-        orientationtext.text = Orientation.ToString();
+        if (orientationtext != null)
+            orientationtext.text = Orientation.ToString();
         m_Rotation = Quaternion.Euler(Orientation);
         m_Rigidbody.AddForce((m_Movement * Time.deltaTime) * movemul, ForceMode.VelocityChange);
         rbRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
