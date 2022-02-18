@@ -197,10 +197,6 @@ public class MovePlayer : MonoBehaviour
             camera.m_LookAt = collision.transform;
             camera.Follow = collision.transform;
         }
-        else if (collision.gameObject.CompareTag("Interacted"))
-        {
-            Physics.IgnoreCollision(collision.collider,GetComponent<Collider>(),true);
-        }
     }
 
     public void singletapJump()
@@ -322,4 +318,5 @@ public class MovePlayer : MonoBehaviour
                 Jump();
             }
         }
+    }
 }
