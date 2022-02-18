@@ -1,22 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class DropLoadControl : MonoBehaviour
 {
+    PhotonView photonView;
+
     // Projectile
+    [Header("Projectile Essentials")]
     public GameObject PoopPrefab = null;
     public Transform ProjectileList = null;
 
     // Ammo variables
+    [Header("Ammo Variables")]
     public int MaxAmmo = 5;
     public int curAmmo;
 
     // Reload Variables
+    [Header("Reloading Variables")]
     public float MaxTillReload = 1.0f;
     private float tillReload;
     public float MaxRechargeRateTimer = 0.2f;
     private float RechargeRateTimer;
+
+    private void Awake()
+    {
+        photonView = GetComponent<PhotonView>();
+        if (photonView == null)
+            Debug.Log("PhotonView is not set in DropLoadControl.cs");
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +45,9 @@ public class DropLoadControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (photonView != null)
+            if (!photonView.IsMine)
+                return;
         if (curAmmo < MaxAmmo)
         {
             UpdateReload();
