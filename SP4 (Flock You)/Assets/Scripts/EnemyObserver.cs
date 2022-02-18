@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyObserver : MonoBehaviour
 {
     public bool isPlayerInRange;
-    private Transform player;
+    public Transform player;
     private bool m_IsPlayerInRange;
 
     // Start is called before the first frame update
@@ -17,13 +17,15 @@ public class EnemyObserver : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player") {
+            if (player == null)
+                player = other.transform;
             isPlayerInRange = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && other.transform == player)
         {
             isPlayerInRange = false;
         }
