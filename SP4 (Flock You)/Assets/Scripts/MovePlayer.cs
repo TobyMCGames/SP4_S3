@@ -156,7 +156,7 @@ public class MovePlayer : MonoBehaviour
     void Moveplayer()
     {
         float angle = 0.0f;
-        Quaternion forceRotation;
+        Quaternion rbRotation;
         vec3front = (transform.position - camera.transform.position).normalized;
         vec3front.y = 0;
         vec3front.Normalize();
@@ -170,8 +170,8 @@ public class MovePlayer : MonoBehaviour
             m_Rigidbody.AddForce((m_Movement * Time.deltaTime) * movemul, ForceMode.VelocityChange);
             angle = Mathf.Rad2Deg * Mathf.Atan2(m_Movement.x, m_Movement.z);
             m_Rotation = Quaternion.AngleAxis(angle, Vector3.up);
-            forceRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
-            m_Rigidbody.MoveRotation(forceRotation);
+            rbRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
+            m_Rigidbody.MoveRotation(rbRotation);
             // Debug.Log(vec3front);
         }
     }
@@ -211,7 +211,7 @@ public class MovePlayer : MonoBehaviour
         if (!inputed)
             return;
         float angle = 0.0f;
-        Quaternion forceRotation;
+        Quaternion rbRotation;
         vec3front = (transform.position - camera.transform.position).normalized;
         vec3front.Normalize();
         vec3front.y = 0;
@@ -273,8 +273,8 @@ public class MovePlayer : MonoBehaviour
         orientationtext.text = Orientation.ToString();
         m_Rotation = Quaternion.Euler(Orientation);
         m_Rigidbody.AddForce((m_Movement * Time.deltaTime) * movemul, ForceMode.VelocityChange);
-        forceRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
-        m_Rigidbody.MoveRotation(forceRotation);
+        rbRotation = Quaternion.Lerp(transform.rotation, m_Rotation, Time.deltaTime * turnSpeed);
+        m_Rigidbody.MoveRotation(rbRotation);
     }
 
     public void checkdoubletap()
