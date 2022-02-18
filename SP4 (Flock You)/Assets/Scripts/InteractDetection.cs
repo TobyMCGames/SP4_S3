@@ -13,7 +13,6 @@ public class InteractDetection : MonoBehaviour
         if(other.gameObject.CompareTag("Interactable") && Interactable == null)
         {
             Interactable = other.gameObject;
-            Debug.Log(Interactable.name);
         }
     }
 
@@ -25,7 +24,6 @@ public class InteractDetection : MonoBehaviour
         {
             if (other.gameObject == Interactable)
                 Interactable = null;
-            Debug.Log("Item removed");
         }
     }
 }

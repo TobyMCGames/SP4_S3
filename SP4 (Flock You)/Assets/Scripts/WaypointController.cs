@@ -116,8 +116,6 @@ public class WaypointController : MonoBehaviour
 
     public void ChasePlayer()
     {
-
-
         currentTarget = waypoints[index];
         navMeshAgent.SetDestination(currentTarget.position);
 
