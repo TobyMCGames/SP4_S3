@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Photon.Pun;
 
 public class AbilityControl : MonoBehaviour
 {
+    PhotonView photonView;
+
     //private Ability CurAbility = null;
     //public Ability[] Abilities;
     private List<Ability> AbilitiesList = new List<Ability>();
@@ -23,6 +26,10 @@ public class AbilityControl : MonoBehaviour
 
     private void Awake()
     {
+        photonView = GetComponent<PhotonView>();
+        if (photonView == null)
+            Debug.Log("photonView not set in AbilityControl.cs");
+
         //add abilities to list
         AbilitiesList.Add(layEggAbility);
         AbilitiesList.Add(distactAbility);
@@ -45,6 +52,9 @@ public class AbilityControl : MonoBehaviour
 
     private void Update()
     {
+        if (photonView != null)
+            if (!photonView.IsMine)
+                return;
         //mouse scroll check which ability to use
         ScrollValue += Input.mouseScrollDelta.y;
         if(ScrollValue >= ScrollLimit)

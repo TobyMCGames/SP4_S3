@@ -185,7 +185,6 @@ public class MovePlayer : MonoBehaviour
     {
         float angle = 0.0f;
         Quaternion forceRotation;
-        Debug.Log("cur Photon View is " + photonView.ViewID);
         vec3front = (transform.position - camera.transform.position).normalized;
         vec3front.y = 0;
         vec3front.Normalize();
