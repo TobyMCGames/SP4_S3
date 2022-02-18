@@ -40,8 +40,10 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
     [Header("Main Player")]
     // Main client player
+    public GameObject PlayerPrefab;
     public FYPlayer player;
     public CinemachineFreeLook MainCamera;
+    public Transform PlayerList;
     public Transform ProjectileList;
 
     // Player List
@@ -83,14 +85,22 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        //AssignSpawnPoints();
-        //player.ResetSpawnPoint();
-
-        Hashtable props = new Hashtable
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+        {
+            Initialize();
+            UI_Screen.SetActive(true);
+            AssignSpawnPoints();
+            player.ResetSpawnPoint();
+        }
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        {
+            Loading_Screen.SetActive(true);
+            Hashtable props = new Hashtable
             {
                 {JLGame.PLAYER_LOADED_LEVEL, true}
             };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        }
     }
 
     #region PUN CALLBACKS
@@ -189,25 +199,43 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
     void AssignSpawnPoints()
     {
-        if (player == null)
-        {
-            Debug.Log("No Player is set");
-            return;
-        }
-
         if (SpawnPoints.Length == 0)
         {
             Debug.Log("No SpawnPoints are set");
             return;
         }
-        // Do if single player vvv
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+        {
+            if (player == null)
+            {
+                Debug.Log("No Player is set");
+                return;
+            }
 
-        //int random_iterator = Random.Range(0, SpawnPoints.Length - 1);
-        //
-        //player.setDefaultSpawn(SpawnPoints[random_iterator]);
-        player.setDefaultSpawn(SpawnPoints[0]);
+            // Do if single player vvv
 
-        // Do if multiplayer vvv
+            //int random_iterator = Random.Range(0, SpawnPoints.Length - 1);
+            //
+            //player.setDefaultSpawn(SpawnPoints[random_iterator]);
+            player.setDefaultSpawn(SpawnPoints[0]);
+        }
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        {
+            // Do if multiplayer vvv
+        }
+    }
+
+    void SetUpUI()
+    {
+        // DeActiviate Loading_Screen for player after instantiating
+        if (Loading_Screen != null)
+            Loading_Screen.SetActive(false);
+        // ReActiviate UI for player after instantiating
+        if (UI_Screen != null)
+        {
+            UI_Screen.SetActive(true);
+            UI_Manager.Instance.Init();
+        }
     }
 
     [PunRPC]
@@ -218,33 +246,37 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
         Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
-        GameObject player = PhotonNetwork.Instantiate("player_online", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
-
-
-        if (player.GetComponent<PhotonView>().IsMine)
+        GameObject ClientPlayer = null;
+        if (curMode == GAMEMODES.SINGLE_PLAYER && player == null)
         {
-            MainCamera.Follow = player.transform;
-            MainCamera.LookAt = player.transform;
-
-            player.GetComponent<MovePlayer>().camera = MainCamera;
-            player.GetComponent<FYPlayer>().Init();
-            player.GetComponent<DropLoadControl>().ProjectileList = ProjectileList;
-            UI_Manager.Instance.player = player.GetComponent<FYPlayer>();
-            // Temp
-            player.GetComponent<MovePlayer>().directiontext = Direction_Test;
-
-            // DeActiviate Loading_Screen for player after instantiating
-            if (Loading_Screen != null)
-                Loading_Screen.SetActive(false);
-            // ReActiviate UI for player after instantiating
-            if (UI_Screen != null)
-            {
-                UI_Screen.SetActive(true);
-                UI_Manager.Instance.Init();
-            }
-            //photonView.RPC("RegisterPlayerID", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID);
-
+            ClientPlayer = Instantiate(PlayerPrefab, PlayerList);
         }
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            ClientPlayer = PhotonNetwork.Instantiate("player_online", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+
+        if (player != null)
+        {
+            SetUpUI();
+            return;
+        }
+
+        player = ClientPlayer.GetComponent<FYPlayer>();
+
+        MainCamera.Follow = player.transform;
+        MainCamera.LookAt = player.transform;
+
+        player.GetComponent<MovePlayer>().camera = MainCamera;
+        player.GetComponent<FYPlayer>().Init();
+        player.GetComponent<DropLoadControl>().ProjectileList = ProjectileList;
+        UI_Manager.Instance.player = player.GetComponent<FYPlayer>();
+        // Temp
+        player.GetComponent<MovePlayer>().directiontext = Direction_Test;
+
+        // Set up UI now
+        SetUpUI();
+        //photonView.RPC("RegisterPlayerID", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID);
+
+        
 
         //if (PhotonNetwork.IsMasterClient)
         //    photonView.RPC("AssignTeam", RpcTarget.AllViaServer);

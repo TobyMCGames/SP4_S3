@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1066,12 +1066,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curMode: 0
   curTimer: 65
-  UI_Screen: {fileID: 0}
+  UI_Screen: {fileID: 582527649}
   Loading_Screen: {fileID: 0}
   Direction_Test: {fileID: 0}
+  PlayerPrefab: {fileID: 0}
   player: {fileID: 1063407186}
   MainCamera: {fileID: 0}
-  ProjectileList: {fileID: 0}
+  PlayerList: {fileID: 2146221267}
+  ProjectileList: {fileID: 2146221267}
   SpawnPoints:
   - {fileID: 1778687410}
 --- !u!4 &1057815975
@@ -1751,7 +1753,7 @@ PrefabInstance:
     - target: {fileID: 6877641834323163963, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7777778
+      value: 1.9693878
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835054059402, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1791,7 +1793,7 @@ PrefabInstance:
     - target: {fileID: 6877641835054059403, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7777778
+      value: 1.9693878
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835400412570, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1826,7 +1828,7 @@ PrefabInstance:
     - target: {fileID: 6877641835400412571, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7777778
+      value: 1.9693878
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835554508610, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
