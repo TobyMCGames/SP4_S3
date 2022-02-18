@@ -208,7 +208,8 @@ public class MovePlayer : MonoBehaviour
 
     public void Fly()
     {
-
+        if (!inputed)
+            return;
         float angle = 0.0f;
         Quaternion forceRotation;
         vec3front = (transform.position - camera.transform.position).normalized;
@@ -220,7 +221,7 @@ public class MovePlayer : MonoBehaviour
         m_Rigidbody.angularVelocity = Vector3.zero;
         m_Movement = ((vec3front * verticalmovement) + (vec3right * horizontalmovement)).normalized;
 
-        yaw = (Mathf.Rad2Deg * Mathf.Atan2(vec3front.x,vec3front.z));
+        yaw = (Mathf.Rad2Deg * Mathf.Atan2(m_Movement.x, m_Movement.z));
         if (Input.GetKey(KeyCode.Space))
         {
             m_Movement.y += Time.deltaTime * flyverticalforce;
@@ -268,7 +269,6 @@ public class MovePlayer : MonoBehaviour
         }
 
         // current
-        
         Orientation.Set(pitch, yaw, roll);
         orientationtext.text = Orientation.ToString();
         m_Rotation = Quaternion.Euler(Orientation);
