@@ -52,7 +52,7 @@ public class AbilityControl : MonoBehaviour
 
     private void Update()
     {
-        if (photonView != null)
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
         //mouse scroll check which ability to use

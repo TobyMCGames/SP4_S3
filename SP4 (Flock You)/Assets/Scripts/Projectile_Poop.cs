@@ -7,7 +7,7 @@ public class Projectile_Poop : MonoBehaviour
     private Vector3 direction;
     private float Velocity;
     // Use Players PhotonView Instead in Multiplayer (maybe) or use GO instead
-    GameObject pooper = null;
+    Transform pooper = null;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +18,7 @@ public class Projectile_Poop : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (pooper != null)
-            if (other.gameObject == pooper || other.transform.IsChildOf(pooper.transform))
+            if (other.transform == pooper || other.transform.parent.CompareTag("Player"))
                 return;
 
         if (other.tag == "Enemy")
@@ -35,7 +35,7 @@ public class Projectile_Poop : MonoBehaviour
         
     }
 
-    public void AssignPooper(GameObject _pooper)
+    public void AssignPooper(Transform _pooper)
     {
         pooper = _pooper;
     }

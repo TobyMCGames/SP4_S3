@@ -331,6 +331,7 @@ MonoBehaviour:
   movemul: 40
   jumpforce: 10
   flyverticalforce: 10
+  flyhorizontalforce: 10
   flymaxIncrease: 2
   flymaxDecrease: 2
   camera: {fileID: 0}

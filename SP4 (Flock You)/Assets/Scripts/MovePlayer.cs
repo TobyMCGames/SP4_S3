@@ -76,9 +76,12 @@ public class MovePlayer : MonoBehaviour
             Debug.Log("Player does not have PhotonView");
         else
         {
-            if (!photonView.IsMine)
+            if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
             {
-                m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+                if (!photonView.IsMine)
+                {
+                    m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+                }
             }
         }
     }
@@ -88,7 +91,7 @@ public class MovePlayer : MonoBehaviour
 
     private void Update()
     {
-        if (photonView != null)
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
         PlayerInput();
@@ -119,19 +122,16 @@ public class MovePlayer : MonoBehaviour
 
     void PlayerInput()
     {
-      //  if (photonView.IsMine == true)
-        //{
             horizontalmovement = Input.GetAxisRaw("Horizontal");
             verticalmovement = Input.GetAxisRaw("Vertical");
             bool hasHorizontalInput = !Mathf.Approximately(horizontalmovement, 0f);
             bool hasVerticalInput = !Mathf.Approximately(verticalmovement, 0f);
             inputed= hasHorizontalInput || hasVerticalInput;
-        //}
     }
 
     private void FixedUpdate()
     {
-        if (photonView != null)
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
         isgrounded = Physics.Raycast(transform.position, Vector3.down,1f);
@@ -144,13 +144,15 @@ public class MovePlayer : MonoBehaviour
             vec3up = Vector3.up;
         }
 
-
-        if (isFlying)
+        if (directiontext != null)
         {
-            directiontext.text = "Flying: " + Orientation.ToString();
+            if (isFlying)
+            {
+                directiontext.text = "Flying: " + Orientation.ToString();
+            }
+            else
+                directiontext.text = "Grounded: " + vec3front.ToString();
         }
-        else
-            directiontext.text = "Grounded: " + vec3front.ToString();
     }
 
     void Moveplayer()
