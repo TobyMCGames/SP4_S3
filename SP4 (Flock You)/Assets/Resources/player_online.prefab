@@ -207,6 +207,7 @@ GameObject:
   - component: {fileID: 6220354295224625069}
   - component: {fileID: 3433376927388911469}
   - component: {fileID: 3727522623858185587}
+  - component: {fileID: 4264601043590729276}
   - component: {fileID: 5531866283144861043}
   - component: {fileID: 415042616506484329}
   m_Layer: 0
@@ -388,6 +389,18 @@ MonoBehaviour:
   curHealth: 0
   curLives: 0
   DropLoadControl_script: {fileID: 3433376927388911469}
+--- !u!114 &4264601043590729276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987478240769630004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d903fbee24840540906b823af8cff86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5531866283144861043
 MonoBehaviour:
   m_ObjectHideFlags: 0
