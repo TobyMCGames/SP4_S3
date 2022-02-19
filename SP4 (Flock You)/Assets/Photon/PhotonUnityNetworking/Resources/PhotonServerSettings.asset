@@ -59,6 +59,8 @@ MonoBehaviour:
   - SwitchPlayerObject
   - TurnInvisible
   - LoadPoopProperties
+  - AssignPlayerSpawn
+  - SetToPlayerList
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
