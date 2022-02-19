@@ -857,6 +857,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelLayer
       objectReference: {fileID: 0}
+    - target: {fileID: 8216566085948366739, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8949744693049997321, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_RootOrder
@@ -1810,7 +1815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a792c6ee6b6a84fb03bdc0d88306ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curMode: 0
+  curMode: 1
   curTimer: 65
   UI_Screen: {fileID: 468744744}
   Loading_Screen: {fileID: 1995356319}
