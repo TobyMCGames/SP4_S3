@@ -311,7 +311,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &600894972404136892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,11 +329,15 @@ MonoBehaviour:
   jumpforce: 10
   flymaxIncrease: 2
   flymaxDecrease: 2
-  flyverticalforce: 10
-  flyhorizontalforce: 100
+  flyverticalforce: 60
+  flyhorizontalforce: 60
   landingheight: 4
   landingtimer: 0.1
+  birdterminalvelocity: -30
+  playerState: 0
   camera: {fileID: 0}
+  Lookat: {fileID: 0}
+  DiveBombDirection: {x: 0, y: 0, z: 0}
   baserotation: {x: 0, y: 0, z: 0}
   directiontext: {fileID: 0}
   orientationtext: {fileID: 0}
