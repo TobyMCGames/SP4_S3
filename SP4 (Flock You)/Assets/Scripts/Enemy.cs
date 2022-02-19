@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public GameObject POV_Agro;
-    public GameObject POV_DeAgro;
     protected Transform player;
     protected int MoveSpeed = 1;
     public NavMeshAgent navMeshAgent;
@@ -16,11 +14,13 @@ public class Enemy : MonoBehaviour
     public FSM curState;
     protected float Stun_Timer;
     protected float Distract_Timer;
+    protected float defaultDetectionRadius;
 
     //Init Variables
     protected WaypointController waypointController;
     public EnemyObserver enemyObserver;
-    //Dog dog;
+    protected float DistractTime;
+
 
 
     void Start()
@@ -28,10 +28,19 @@ public class Enemy : MonoBehaviour
         curState = FSM.PATROL;
         waypointController = GetComponent<WaypointController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        defaultDetectionRadius = enemyObserver.GetComponent<CapsuleCollider>().radius;
+        OverridenInit();
     }
 
+    protected virtual void OverridenInit()
+    {
+        //add any variables that are not part of the base init 
+        DistractTime = 3f;
+    }
+
+
     // Update is called once per frame
-    public virtual void Update()
+    protected virtual void Update()
     {
         // can be overiden
         switch (curState)
@@ -39,58 +48,86 @@ public class Enemy : MonoBehaviour
             case FSM.IDLE:
                 break;
             case FSM.PATROL:
-                if (enemyObserver.isPlayerInRange)
-                {
-                    curState = FSM.AGRO;
-                    Debug.Log("Enemy switching to AGRO state");
-                }
-                else
-                {
-                    waypointController.WaypointUpdate();
-                }
+                PatrolState();
                 break;
             case FSM.DISTRACTED:
-                if (enemyObserver.isPlayerInRange)
-                {
-                    curState = FSM.AGRO;
-                    Debug.Log("Enemy switching to AGRO state");
-                }
-                if (Distract_Timer >= 0)
-                    Distract_Timer -= Time.deltaTime;
-                else
-                {
-                    Debug.Log("Enemy lose interest");
-                    waypointController.GetClosestWaypoint();
-                    curState = FSM.PATROL;
-                }
+                DistractedState();
                 break;
             case FSM.AGRO:
-                if (enemyObserver.isPlayerInRange)
-                {
-                    // Make enemy chase player
-                    player = enemyObserver.player;
-                    //var distance = Vector3.Distance(player.position, transform.position); // calculates distance between player and enemy
-                    navMeshAgent.SetDestination(player.position);
-                }
-                else
-                {
-                    curState = FSM.DISTRACTED;
-                    Distract_Timer = 3f; //Consider removing this line if causing issues at your own risk
-                    Debug.Log("Enemy switching to DISTRACTED state");
-                }
+                AgroState();
                 break;
             case FSM.STUN:
-                if (Stun_Timer >= 0)
-                    Stun_Timer -= Time.deltaTime;
-                else
-                {
-                    curState = FSM.PATROL;
-                    GetComponent<NavMeshAgent>().speed = 3.5f;
-                    Debug.Log("Enemy Woke up");
-                }
+                StunState();
                 break;
         }
     }
+
+    protected virtual void PatrolState()
+    {
+        SetDetectionRange(defaultDetectionRadius);
+
+        if (enemyObserver.isPlayerInRange)
+        {
+            curState = FSM.AGRO;
+            Debug.Log("Enemy switching to AGRO state");
+        }
+        else
+            waypointController.WaypointUpdate();
+    }
+
+    protected virtual void DistractedState()
+    {
+        SetDetectionRange(defaultDetectionRadius * 3f);
+
+        if (enemyObserver.isPlayerInRange)
+        {
+            curState = FSM.AGRO;
+            Debug.Log("Enemy switching to AGRO state");
+        }
+        if (Distract_Timer >= 0)
+            Distract_Timer -= Time.deltaTime;
+        else
+        {
+            Debug.Log("Enemy lose interest");
+            waypointController.GetClosestWaypoint();
+            curState = FSM.PATROL;
+        }
+    }
+
+    protected virtual void AgroState()
+    {
+        if (enemyObserver.isPlayerInRange)
+        {
+            // Make enemy chase player
+            player = enemyObserver.player;
+            SetDetectionRange(defaultDetectionRadius * 4f);
+            navMeshAgent.SetDestination(player.position);
+        }
+        else
+        {
+            curState = FSM.DISTRACTED;
+            Distract_Timer = DistractTime; //Consider removing this line if causing issues at your own risk
+            Debug.Log("Enemy switching to DISTRACTED state");
+        }
+    }
+
+    protected virtual void SetDetectionRange(float radius)
+    {
+        enemyObserver.GetComponent<CapsuleCollider>().radius = radius;
+    }
+
+    protected virtual void StunState()
+    {
+        if (Stun_Timer >= 0)
+            Stun_Timer -= Time.deltaTime;
+        else
+        {
+            curState = FSM.PATROL;
+            GetComponent<NavMeshAgent>().speed = 3.5f;
+            Debug.Log("Enemy Woke up");
+        }
+    }
+
 
     public void SetStun(float stunTime)
     {
@@ -103,7 +140,7 @@ public class Enemy : MonoBehaviour
     public void Distracted(Vector3 PlayerLastPos)
     {
         curState = FSM.DISTRACTED;
-        Distract_Timer = 3f;
+        Distract_Timer = DistractTime;
         //waypointController.MoveToLocation(PlayerLastPos);
         navMeshAgent.SetDestination(PlayerLastPos);
     }

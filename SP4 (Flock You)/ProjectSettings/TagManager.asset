@@ -13,6 +13,7 @@ TagManager:
   - NestSpawn
   - InteractDetect
   - ObjectIcon
+  - Weapon
   layers:
   - Default
   - TransparentFX
