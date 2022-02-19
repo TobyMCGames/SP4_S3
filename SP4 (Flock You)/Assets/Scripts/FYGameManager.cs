@@ -46,6 +46,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public Transform PlayerList;
     public Transform ProjectileList;
 
+    [Header("Server Settings")]
+    bool AllPlayersAssigned = false;
     // Player List
     //FYPlayer[] playerList;
 
@@ -148,6 +150,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 if (!startTimeIsSet)
                 {
                     photonView.RPC("Initialize", RpcTarget.AllViaServer);
+                    AssignSpawnPoints();
                 }
             }
             else
@@ -186,6 +189,13 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        if (curMode == GAMEMODES.MULTIPLAYER)
+        {
+            if (!AllPlayersAssigned)
+                if (PhotonNetwork.IsMasterClient && PhotonNetwork.CountOfPlayers == PlayerList.childCount)
+                    AssignSpawnPoints();
+        }
+
         if (!isOver())
         {
             curTimer -= Time.deltaTime;
@@ -213,15 +223,22 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             }
 
             // Do if single player vvv
-
-            //int random_iterator = Random.Range(0, SpawnPoints.Length - 1);
-            //
-            //player.setDefaultSpawn(SpawnPoints[random_iterator]);
-            player.setDefaultSpawn(SpawnPoints[0]);
+            player.setDefaultSpawn(SpawnPoints[0].position);
+            AllPlayersAssigned = true;
         }
         if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
         {
-            // Do if multiplayer vvv
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+
+            if (PlayerList.childCount > SpawnPoints.Length)
+                Debug.Log("There are more players than spawnpoints");
+
+            for (int i = 0; i < PlayerList.childCount; ++i)
+            {
+                int ViewID = PlayerList.GetChild(i).gameObject.GetPhotonView().ViewID;
+                photonView.RPC("AssignPlayerSpawn", RpcTarget.AllViaServer, ViewID, i);
+            }
         }
     }
 
@@ -267,7 +284,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         MainCamera.LookAt = player.transform;
 
         player.GetComponent<MovePlayer>().camera = MainCamera;
-        player.GetComponent<FYPlayer>().Init();
+        //player.GetComponent<FYPlayer>().Init();
         player.GetComponent<DropLoadControl>().ProjectileList = ProjectileList;
         UI_Manager.Instance.player = player.GetComponent<FYPlayer>();
         // Temp
@@ -277,9 +294,31 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         SetUpUI();
         //photonView.RPC("RegisterPlayerID", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID);
 
-        
+        photonView.RPC("SetToPlayerList", RpcTarget.AllViaServer, player.gameObject.GetPhotonView().ViewID);
+    }
 
-        //if (PhotonNetwork.IsMasterClient)
-        //    photonView.RPC("AssignTeam", RpcTarget.AllViaServer);
+    [PunRPC]
+    private void SetToPlayerList(int playerID)
+    {
+        if (player.gameObject.GetPhotonView().ViewID == playerID)
+        {
+            player.transform.SetParent(PlayerList);
+            return;
+        }
+
+        PhotonNetwork.GetPhotonView(playerID).transform.SetParent(PlayerList);
+    }
+
+    [PunRPC]
+    private void AssignPlayerSpawn(int playerID, int nestID)
+    {
+        if (player.GetComponent<PhotonView>().ViewID != playerID)
+            return;
+
+        AllPlayersAssigned = true;
+
+        player.setDefaultSpawn(SpawnPoints[nestID].position);
+        SpawnPoints[nestID].GetChild(0).GetComponent<SpawnPointScript>().owner = player;
+        player.ResetSpawnPoint();
     }
 }

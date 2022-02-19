@@ -5,7 +5,7 @@ using UnityEngine;
 public class FYPlayer : MonoBehaviour
 {
     // Default SpawnPoint
-    private Transform DefaultSpawnPoint;
+    private Vector3 DefaultSpawnPoint = new Vector3(0.0f, 0.0f, 0.0f);
 
     // Health & Lives
     public int MaxHealth = 5;
@@ -69,7 +69,7 @@ public class FYPlayer : MonoBehaviour
         return curLives <= 0 && !hasHealth();
     }
 
-    public void setDefaultSpawn(Transform _spawnpoint)
+    public void setDefaultSpawn(Vector3 _spawnpoint)
     {
         DefaultSpawnPoint = _spawnpoint;
     }
@@ -83,7 +83,7 @@ public class FYPlayer : MonoBehaviour
             Destroy(layEggAbility.GetNest());
         }
         else 
-            gameObject.transform.position = DefaultSpawnPoint.position;
+            gameObject.transform.position = DefaultSpawnPoint;
     }
 
     public void Damaged(int _damage)
