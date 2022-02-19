@@ -7,23 +7,22 @@ public class Enemy : MonoBehaviour
 {
     public GameObject POV_Agro;
     public GameObject POV_DeAgro;
-    private Transform player;
-    private int MoveSpeed = 1;
+    protected Transform player;
+    protected int MoveSpeed = 1;
     public NavMeshAgent navMeshAgent;
 
     // Finite State Machine
     public enum FSM { IDLE, PATROL, DISTRACTED, AGRO, STUN };
     public FSM curState;
-    float Stun_Timer;
-    float Distract_Timer;
+    protected float Stun_Timer;
+    protected float Distract_Timer;
 
     //Init Variables
-    WaypointController waypointController;
+    protected WaypointController waypointController;
     public EnemyObserver enemyObserver;
     //Dog dog;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         curState = FSM.PATROL;
@@ -32,13 +31,12 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
-        //dog.DogUpdate();
-
+        // can be overiden
         switch (curState)
         {
-            case FSM.IDLE:        
+            case FSM.IDLE:
                 break;
             case FSM.PATROL:
                 if (enemyObserver.isPlayerInRange)
@@ -50,7 +48,6 @@ public class Enemy : MonoBehaviour
                 {
                     waypointController.WaypointUpdate();
                 }
-                
                 break;
             case FSM.DISTRACTED:
                 if (enemyObserver.isPlayerInRange)
@@ -72,13 +69,8 @@ public class Enemy : MonoBehaviour
                 {
                     // Make enemy chase player
                     player = enemyObserver.player;
-                    var distance = Vector3.Distance(player.position, transform.position); // calculates distance between player and enemy
+                    //var distance = Vector3.Distance(player.position, transform.position); // calculates distance between player and enemy
                     navMeshAgent.SetDestination(player.position);
-                    if (distance <= 1) // if distance is close enough and enemy is dog, pounce on the player
-                    {
-
-                    }
-
                 }
                 else
                 {

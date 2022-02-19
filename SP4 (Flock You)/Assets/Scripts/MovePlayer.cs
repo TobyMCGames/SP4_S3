@@ -396,8 +396,8 @@ public class MovePlayer : MonoBehaviour
 
     void landingcheck()
     {
-        islanding = Physics.Raycast(m_Rigidbody.position, Vector3.down, landingheight);
-        Debug.Log(islanding);
+        islanding = Physics.Raycast(m_Rigidbody.position, Vector3.down,landingheight);
+        //Debug.Log(islanding);
     }
 
     void simulateflap()

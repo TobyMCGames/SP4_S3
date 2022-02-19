@@ -36,7 +36,7 @@ public class InteractControl : MonoBehaviour
 
                 //light object
                 if (heldObjectWeight >= 1 && heldObjectWeight <= 7)
-                {
+                {         
                     heldObject.transform.position = touchPointLight.transform.position;
                     heldObject.GetComponent<Collider>().enabled = false;
                 }
@@ -44,7 +44,6 @@ public class InteractControl : MonoBehaviour
                 else if (heldObjectWeight > 7)
                 {
                     heldObject.transform.position = touchPointHeavy.transform.position;
-                    //heldObject.GetComponent<Collider>().enabled = false;
                 }
 
                 //change player speed according to weight of object
@@ -58,6 +57,8 @@ public class InteractControl : MonoBehaviour
             if (heldObject != null)
             {
                 heldObject.GetComponent<Collider>().enabled = true;
+                //set the player who is interacting with the object back to null
+                //heldObject.GetComponent<Interactable>().SetPlayerInteracting(null);
             }
         }
     }
