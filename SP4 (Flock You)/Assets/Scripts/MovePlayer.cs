@@ -6,6 +6,18 @@ using Photon.Pun;
 
 public class MovePlayer : MonoBehaviour
 {
+    public enum PlayerState
+    {
+        IDLE,
+        JUMPING,
+        FLYING,
+        FLYING_HEIGHTCHANGE,// when bird is flying up / down
+        FLYING_DIVEBOMB,
+        FLYING_HOVERING,
+    }
+
+
+
     [Header("Player Settings")]
     [Tooltip("how fast can the player rotate")]
     public float turnSpeed = 20f;[Tooltip("Movement speed multiplier that affects the player's movementspeed")]
@@ -17,7 +29,10 @@ public class MovePlayer : MonoBehaviour
     public float flyhorizontalforce = 100f;[Tooltip("Determines how close the player can be before bird prepares to land")]
     public float landingheight = 4f;[Tooltip("how fast the player lands does not take into account player height")]
     public float landingtimer = 0.1f;
+    public PlayerState playerState = PlayerState.IDLE;
     private float landingelapsed = 0.0f;
+    private float divebombminpitch = 90.0f;
+    
 
     private PhotonView photonView;
 
@@ -35,8 +50,7 @@ public class MovePlayer : MonoBehaviour
     float playerheight;
 
     bool inputed = false;
-    bool isgrounded;
-    bool isFlying = false;
+    bool isgrounded = false;
     bool islanding = false;
 
     // double jump
@@ -47,19 +61,19 @@ public class MovePlayer : MonoBehaviour
 
 
     [Header("Flysettings")]
-    Vector3 flydrop = Vector3.zero;
-    Vector3 flyup = Vector3.zero;
+    Vector3 flydrop = Vector3.zero; // for hovering
     float flaptimermax = 0.1f;
     float currenflaptimer = 0.0f;
+    public Vector3 DiveBombDirection = Vector3.zero;
+    float divebombspeed = -1f;
+
+
 
     [Header("Orientation")]
     float pitch = 0.0f, yaw = 0.0f, roll = 0.0f;
     Vector3 vec3right = Vector3.zero;
     Vector3 vec3up = Vector3.zero;
     Vector3 vec3front = Vector3.zero;
-    Vector3 vec3view = Vector3.zero;
-    Vector3 flyDirectionfront = Vector3.zero;
-    Vector3 flyDirectionright = Vector3.zero;
     Vector3 Orientation = Vector3.zero;
     public Vector3 baserotation = Vector3.zero;
 
@@ -74,20 +88,20 @@ public class MovePlayer : MonoBehaviour
         playerheight = transform.localScale.y;
         DefaultMoveMul = movemul;
         vec3up = new Vector3(0, 1, 0);
-        flydrop.Set(0, -7.0f, 0);
-
+        flydrop.Set(0, -3.0f, 0);
+        DiveBombDirection = Physics.gravity;
         photonView = GetComponent<PhotonView>();
         if (photonView == null)
             Debug.Log("Player does not have PhotonView");
         else
         {
-            if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            /*if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
             {
                 if (!photonView.IsMine)
                 {
                     m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
                 }
-            }
+            }*/
         }
         
     }
@@ -107,14 +121,15 @@ public class MovePlayer : MonoBehaviour
         PlayerInput();
         controlDrag();
         Moveplayer();
-        if (isFlying)
+        if (playerState >= PlayerState.FLYING)
         {
             m_Rigidbody.useGravity = false;
             Fly();
         }
         else
             m_Rigidbody.useGravity = true;
-        checkdoubletap();
+        //checkdoubletap();
+        checkJump(); // checks if player jumps
         if (Input.GetKeyUp(KeyCode.C))
         {
             camera.m_LookAt = transform;
@@ -123,11 +138,22 @@ public class MovePlayer : MonoBehaviour
         landingcheck();
     }
 
-    void Jump()
+    void checkJump()
     {
-        if (isgrounded)
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            m_Rigidbody.AddForce(transform.up * jumpforce, ForceMode.Impulse);
+            if (isgrounded && playerState != PlayerState.JUMPING)
+            {
+                playerState = PlayerState.JUMPING;
+                m_Rigidbody.AddForce(transform.up * jumpforce, ForceMode.Impulse);
+            }
+            else if (!isgrounded && playerState < PlayerState.FLYING)
+            {
+                playerState = PlayerState.FLYING;
+                //flydrop =
+                if (flydrop.y > 0)
+                    flydrop *= -1;
+            }
         }
     }
 
@@ -145,19 +171,19 @@ public class MovePlayer : MonoBehaviour
         if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
-        isgrounded = Physics.Raycast(m_Rigidbody.position, Vector3.down, 1f);
+        isgrounded = Physics.Raycast(m_Rigidbody.position, Vector3.down, playerheight *0.5f);
 
         if (isgrounded)
         {
-            isFlying = false;
             pitch = 0;
             roll = 0;
             vec3up = Vector3.up;
+            playerState = PlayerState.IDLE;
         }
 
         if (directiontext != null)
         {
-            if (isFlying)
+            if (playerState == PlayerState.FLYING)
             {
                 directiontext.text = "Flying: " + Orientation.ToString();
             }
@@ -174,8 +200,8 @@ public class MovePlayer : MonoBehaviour
         vec3front.Normalize();
 
         vec3right = Vector3.Cross(vec3front, vec3up) * -1;
-        vec3view = Vector3.Cross(vec3right, vec3up);
-        if (inputed && !isFlying)      //&& !isFlying)// && photonView.IsMine)
+        
+        if (inputed && playerState < PlayerState.FLYING)      //&& !isFlying)// && photonView.IsMine)
         {
             m_Rigidbody.angularVelocity = Vector3.zero;
             m_Movement = ((vec3front * verticalmovement) + (vec3right * horizontalmovement)).normalized;
@@ -210,25 +236,31 @@ public class MovePlayer : MonoBehaviour
         }
         else
         {
-            isFlying = false;
+            playerState = PlayerState.IDLE;
             m_Rigidbody.useGravity = true;
         }
     }
 
-    public void singletapJump()
+    /*public void singletapJump()
     {
         if (isgrounded)
         {
             Jump();
         }
-    }
+    }*/
 
     public void Fly()
     {
-
+        checkdoubletap();
+        if (playerState == PlayerState.FLYING_DIVEBOMB)
+        {
+            divebomb();
+            return;
+        }
         if (Input.GetKey(KeyCode.Space))
         {
             //m_Movement.y += Time.deltaTime * flyverticalforce;
+            playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // striaght up
                 m_Rigidbody.AddForce(Quaternion.Euler(0, 90, 0) * (Vector3.up * flyverticalforce), ForceMode.Acceleration);
 
@@ -246,28 +278,25 @@ public class MovePlayer : MonoBehaviour
                 else
                     pitch -= Time.deltaTime * flyverticalforce;
             }
-
         }
-        else if (!islanding)
+        else if (!islanding && playerState != PlayerState.FLYING_DIVEBOMB)
         {
-            if (pitch < 0.5)
-            {
-                pitch += Time.deltaTime * flyverticalforce * 0.5f;
-            }
-            else if (pitch > 0.5)
-                pitch -= Time.deltaTime * flyverticalforce * 0.5f;
-
+            recenterPitch();
+            playerState = PlayerState.FLYING;
         }
+
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            // m_Movement.y -= Time.deltaTime * flyverticalforce;
+            playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // fly striaght down;
             {
                 m_Rigidbody.AddForce(Quaternion.Euler(0, 90, 0) * (flyverticalforce * Vector3.down), ForceMode.Acceleration);
             }
             else // go down a relative to your orientation
             {
+                recenterRoll();
+                playerState = PlayerState.FLYING;
                 Vector3 movement = Orientation;
                 movement.y = 0;
                 m_Rigidbody.AddForce(Quaternion.Euler(Orientation) * Vector3.down *
@@ -279,9 +308,9 @@ public class MovePlayer : MonoBehaviour
                     pitch += Time.deltaTime * flyverticalforce;
             }
         }
-        else if (pitch > 0.5 && !islanding)
+        else if (!islanding)
         {
-            pitch -= Time.deltaTime * flyverticalforce;
+            recenterPitch();
         }
 
         Quaternion rbRotation;
@@ -289,47 +318,24 @@ public class MovePlayer : MonoBehaviour
         vec3front.Normalize();
         vec3front.y = 0;
         vec3right = Vector3.Cross(vec3front, vec3up) * -1;
-        vec3view = Vector3.Cross(vec3right, vec3up);
-
+       
         m_Rigidbody.angularVelocity = Vector3.zero;
 
         if (!islanding)
         {
-            if (horizontalmovement != 0)
+            if (horizontalmovement != 0 && playerState != PlayerState.FLYING_HEIGHTCHANGE)
             {
-                roll -= (horizontalmovement * flyhorizontalforce * Time.deltaTime);
+                roll -= ((horizontalmovement * flyhorizontalforce) * Time.deltaTime);
                 if (roll > 45)
                     roll = 45;
                 else if (roll < -45)
                     roll = -45;
             }
-            else if (roll > 0.5f)
-            {
-                roll -= Time.deltaTime * flyhorizontalforce * 0.5f;
-            }
-            else if (roll < 0.5f)
-            {
-                roll += Time.deltaTime * flyhorizontalforce * 0.5f;
-            }
-        }
-
-
-        // current
-
-        // player has inputed then we calculate where we facing
-        if (islanding)
-        {
-            if (landingelapsed >= landingtimer)
-            {
-                landingelapsed = 0;
-                pitch *= 0.25f;
-                roll *= 0.25f;
-            }
             else
-                landingelapsed += Time.deltaTime;
+                recenterRoll();
         }
-
-
+        // player has inputed then we calculate where we facing
+        handleLanding(); 
         if (horizontalmovement != 0 || verticalmovement != 0)
         {
             yaw = (Mathf.Rad2Deg * Mathf.Atan2(m_Movement.x, m_Movement.z));
@@ -344,6 +350,10 @@ public class MovePlayer : MonoBehaviour
         }
         else
         {
+            if (playerState != PlayerState.FLYING_HEIGHTCHANGE)
+            {
+                simulateflap();
+            }
             Orientation.Set(pitch, yaw, roll);
             m_Rotation = Quaternion.Euler(Orientation);
             rbRotation = Quaternion.Lerp(m_Rigidbody.rotation, m_Rotation, Time.deltaTime * turnSpeed);
@@ -358,25 +368,25 @@ public class MovePlayer : MonoBehaviour
             elapsedtaptime += Time.deltaTime;
             if (elapsedtaptime > doubletaptimeframe)
             {
-                singletapJump();
                 doubletapcheck = false;
                 elapsedtaptime = 0;
                 Debug.Log("single tap");
             }
         }
-        if (Input.GetButtonUp("Jump"))
+        if (Input.GetButtonUp("Jump") && playerState > PlayerState.FLYING)
         {
             if (doubletapcheck)
             {
                 if (Time.time - firsttaptime < doubletaptimeframe)
                 {
-                    isFlying = !isFlying;
                     doubletapcheck = false;
                     elapsedtaptime = 0;
                     Vector3 axis = Vector3.zero;
                     Orientation.Set(0, 0, 0);
                     axis.Set(1, 0, 0);
                     Debug.Log("double tap");
+                    playerState = PlayerState.FLYING_DIVEBOMB;
+                    DiveBombDirection = vec3front;
                 }
                 else
                 {
@@ -388,7 +398,6 @@ public class MovePlayer : MonoBehaviour
             {
                 firsttaptime = Time.time;
                 doubletapcheck = true;
-                Jump();
             }
         }
     }
@@ -404,12 +413,97 @@ public class MovePlayer : MonoBehaviour
     {
         if (currenflaptimer >= flaptimermax)
         {
-
+            m_Rigidbody.AddForce(flydrop, ForceMode.Impulse);
+            currenflaptimer = 0;
+            flydrop *= -1;
         }
         else
             currenflaptimer += Time.deltaTime;
+    }
 
-        
+    public void ChangePlayerState(PlayerState nextplayerState)
+    {
+        switch (playerState) // check what is the current state and change the values according to what is the next state
+        {
+            case PlayerState.IDLE:
+                break;
+            case PlayerState.JUMPING:
+                break;
+            case PlayerState.FLYING:
+                break;
+            
+            case PlayerState.FLYING_DIVEBOMB:
+                break;
+        }
+    }
+    public void handleLanding()
+    {
+        if (islanding)
+        {
+            if (landingelapsed >= landingtimer)
+            {
+                landingelapsed = 0;
+                pitch *= 0.25f;
+                roll *= 0.25f;
+            }
+            else
+                landingelapsed += Time.deltaTime;
+        }
+    }
 
+    public void divebomb()
+    {
+        m_Rigidbody.angularDrag = 0;
+        m_Rigidbody.angularVelocity = Vector3.zero;
+        if (pitch < divebombminpitch)
+        {
+            pitch += flyverticalforce;
+        }
+        else
+            pitch = divebombminpitch;
+
+        DiveBombDirection.x += (horizontalmovement *flyhorizontalforce *Time.deltaTime);
+        DiveBombDirection.y = 0;
+        DiveBombDirection.Normalize();
+        DiveBombDirection.y = divebombspeed;
+        yaw = (Mathf.Rad2Deg * Mathf.Atan2(DiveBombDirection.x,DiveBombDirection.z));
+        Orientation.Set(pitch, yaw, roll);
+        if (orientationtext != null)
+            orientationtext.text = Orientation.ToString();
+        m_Rotation = Quaternion.Euler(Orientation);
+        m_Rotation = Quaternion.RotateTowards(m_Rigidbody.rotation, m_Rotation,1f);
+        m_Rigidbody.AddForce(DiveBombDirection * Time.deltaTime * movemul, ForceMode.Impulse);
+        m_Rigidbody.MoveRotation(m_Rotation);
+        divebombspeed += Physics.gravity.y* 0.1f;
+       
+    }
+
+    void recenterRoll()
+    {
+        if (roll >= -0.5f && roll <= 0.5)
+        {
+            roll = 0f;
+        }
+        else if (roll > 0.5f)
+        {
+            roll -= Time.deltaTime * flyhorizontalforce *2;
+        }
+        else if (roll < -0.5f)
+        {
+            roll += Time.deltaTime * flyhorizontalforce * 2;
+        }
+    }
+    void recenterPitch()
+    {
+        if (pitch >= -0.5f && pitch <= 0.5f)
+        {
+            pitch = 0;
+        }
+        else if (pitch < -0.5)
+        {
+            pitch += Time.deltaTime * flyverticalforce * 0.5f;
+        }
+        else if (pitch > 0.5)
+            pitch -= Time.deltaTime * flyverticalforce * 0.5f;
     }
 }
