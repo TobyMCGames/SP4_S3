@@ -52,7 +52,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     //FYPlayer[] playerList;
 
     // Spawn Points
-    public SpawnPointScript[] SpawnPoints;
+    public Transform[] SpawnPoints;
 
     public void Awake()
     {
@@ -223,7 +223,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             }
 
             // Do if single player vvv
-            player.setDefaultSpawn(SpawnPoints[0].transform.position);
+            player.setDefaultSpawn(SpawnPoints[0].position);
             AllPlayersAssigned = true;
         }
         if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
@@ -294,7 +294,19 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         SetUpUI();
         //photonView.RPC("RegisterPlayerID", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID);
 
+        photonView.RPC("SetToPlayerList", RpcTarget.AllViaServer, player.gameObject.GetPhotonView().ViewID);
+    }
 
+    [PunRPC]
+    private void SetToPlayerList(int playerID)
+    {
+        if (player.gameObject.GetPhotonView().ViewID == playerID)
+        {
+            player.transform.SetParent(PlayerList);
+            return;
+        }
+
+        PhotonNetwork.GetPhotonView(playerID).transform.SetParent(PlayerList);
     }
 
     [PunRPC]
@@ -305,8 +317,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
         AllPlayersAssigned = true;
 
-        player.setDefaultSpawn(SpawnPoints[nestID].transform.position);
-        SpawnPoints[nestID].owner = player;
+        player.setDefaultSpawn(SpawnPoints[nestID].position);
+        SpawnPoints[nestID].GetChild(0).GetComponent<SpawnPointScript>().owner = player;
         player.ResetSpawnPoint();
     }
 }
