@@ -45,7 +45,11 @@ public class Projectile_Poop : MonoBehaviour
                 other.transform.GetComponent<Enemy>().SetStun(5.0f);
         }
         Debug.Log("Poop drop on non-enemy");
-        Destroy(gameObject);
+
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            PhotonNetwork.Destroy(gameObject);
+        else
+            Destroy(gameObject);
     }
 
     // Update is called once per frame
