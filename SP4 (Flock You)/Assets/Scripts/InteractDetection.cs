@@ -24,19 +24,17 @@ public class InteractDetection : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (Interactable == null)
+        if (Interactable == null && PeckableObject == null)
             return;
+
         else if (other.gameObject.tag == "Interactable")
         {
-            if (other.gameObject == Interactable)
-                Interactable = null;
+            Interactable = null;
         }
+
         else if (other.gameObject.tag == "Peckable")
         {
-            if (other.gameObject == PeckableObject)
-            {
-                PeckableObject = null;
-            }
+            PeckableObject = null;
         }
     }
 }

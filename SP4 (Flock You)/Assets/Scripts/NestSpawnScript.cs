@@ -13,6 +13,12 @@ public class NestSpawnScript : Peckable
         playerWhoSpawnMe = thisplayer;
     }
 
+    public GameObject GetWhoSpawnMe()
+    {
+        //very long function name returning a very long variable name lol
+        return playerWhoSpawnMe;
+    }
+
     protected override void Update()
     {
         float curHealth = gameObject.GetComponent<EntityHealth>().GetHealth();

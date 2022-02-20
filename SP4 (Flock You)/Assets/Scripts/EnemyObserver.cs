@@ -33,7 +33,6 @@ public class EnemyObserver : MonoBehaviour
             if (weapon == null)
             {
                weapon = other.transform;
-
             }
             isWeaponInRange = true;
         }

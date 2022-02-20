@@ -44,7 +44,15 @@ public class InteractControl : MonoBehaviour
             peckableObject = player.GetComponentInChildren<InteractDetection>().GetPeckable();
             if (peckableObject != null)
             {
-                peckableObject.GetComponent<Peckable>().SetCanBeDamaged(true);
+                if(peckableObject.name == "NestSpawn(Clone)")
+                {
+                    if(peckableObject.GetComponent<NestSpawnScript>().GetWhoSpawnMe() != gameObject)
+                    {
+                        peckableObject.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
+                    }
+                }
+                else
+                    peckableObject.GetComponent<Peckable>().SetCanBeDamaged(true);
             }
 
         }
