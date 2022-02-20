@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: ccd73e39406f389468daa184d17048b4, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 06a3d65eb1eb7ce4db1c9a4409e3fd8b, type: 2}
 --- !u!1 &193360770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,12 +1011,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a792c6ee6b6a84fb03bdc0d88306ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curMode: 0
+  curMode: 1
   curTimer: 65
   UI_Screen: {fileID: 2043670230}
   Loading_Screen: {fileID: 274018344}
   Direction_Test: {fileID: 390943595}
-  PlayerPrefab: {fileID: 1987478240769630004, guid: 008496d9bc1b228409b68881800d8ec3,
+  PlayerPrefab: {fileID: 1987478240769630004, guid: 9dada587bff820f47992798a8be3e19d,
     type: 3}
   player: {fileID: 0}
   MainCamera: {fileID: 1293928278}
@@ -1024,6 +1024,9 @@ MonoBehaviour:
   ProjectileList: {fileID: 5033030191947368741}
   SpawnPoints:
   - {fileID: 5033030191947368740}
+  - {fileID: 5033030191947368744}
+  - {fileID: 5033030191947368743}
+  - {fileID: 5033030191947368742}
 --- !u!4 &1517933914
 Transform:
   m_ObjectHideFlags: 0
@@ -1050,7 +1053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebf711f4a200864a979e528085e8717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 3727522623858185587, guid: 008496d9bc1b228409b68881800d8ec3, type: 3}
+  player: {fileID: 0}
   UI_Timer: {fileID: 193360771}
   UI_Health: {fileID: 673186660}
   UI_Ammo: {fileID: 1902265180}
@@ -1535,6 +1538,11 @@ PrefabInstance:
       propertyPath: ProjectileList
       value: 
       objectReference: {fileID: 1717723799}
+    - target: {fileID: 1239688870232721064, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2036792975436179266, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Enabled
@@ -1564,6 +1572,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4231859626717117386, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5049350245078227108, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1699,6 +1712,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
       value: 1.9693878
+      objectReference: {fileID: 0}
+    - target: {fileID: 5262900346577911482, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6061232703347076683, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1921,6 +1939,24 @@ Transform:
 --- !u!4 &5033030191947368741 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8730143791125661979, guid: 1796f246ec9d3d542bca7d71a751be1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5033030191947368739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5033030191947368742 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4975838959058960504, guid: 1796f246ec9d3d542bca7d71a751be1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5033030191947368739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5033030191947368743 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1517381088404112682, guid: 1796f246ec9d3d542bca7d71a751be1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5033030191947368739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5033030191947368744 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5539217660095351172, guid: 1796f246ec9d3d542bca7d71a751be1a,
     type: 3}
   m_PrefabInstance: {fileID: 5033030191947368739}
   m_PrefabAsset: {fileID: 0}

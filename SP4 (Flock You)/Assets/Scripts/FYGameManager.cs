@@ -109,7 +109,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("DemoAsteroids-LobbyScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
     }
 
     public override void OnLeftRoom()
