@@ -45,7 +45,7 @@ public class DropLoadControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (photonView != null)
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
         if (curAmmo < MaxAmmo)

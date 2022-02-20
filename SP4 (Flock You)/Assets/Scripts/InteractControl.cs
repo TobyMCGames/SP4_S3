@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class InteractControl : MonoBehaviour
 {
+    private PhotonView photonView;
     private GameObject heldObject;
     private GameObject player;
     private float heldObjectWeight;
@@ -11,14 +13,24 @@ public class InteractControl : MonoBehaviour
     private float speedChange;
     private float playerSpeed;
 
-    private void Start()
+    private void Awake()
     {
         // init variables
         player = gameObject;
+        photonView = gameObject.GetPhotonView();
+    }
+
+    private void Start()
+    {
+        
     }
 
     void Update()
     {
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            if (!photonView.IsMine)
+                return;
+
         if (Input.GetMouseButtonUp(0))
         {
             Debug.Log("Released L Mouse btn in interactable controls");
