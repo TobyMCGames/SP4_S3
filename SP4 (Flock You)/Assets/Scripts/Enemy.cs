@@ -21,8 +21,6 @@ public class Enemy : MonoBehaviour
     public EnemyObserver enemyObserver;
     protected float DistractTime;
 
-
-
     void Start()
     {
         curState = FSM.PATROL;

@@ -8,6 +8,5 @@ public class Dog : Enemy
     {
         base.Update();
     }
-
 }
 
