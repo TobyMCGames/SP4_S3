@@ -27,8 +27,12 @@ public class Projectile_Poop : MonoBehaviour
             return;
 
         if (pooper != null)
+        {
             if (other.transform == pooper || other.transform.parent == pooper)
                 return;
+        }
+        else
+            Debug.Log("No pooper assigned");
 
         if (other.tag == "Enemy")
         {
