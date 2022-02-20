@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class FYPlayer : MonoBehaviour
 {
+    private PhotonView photonView;
+
     // Default SpawnPoint
     private Vector3 DefaultSpawnPoint = new Vector3(0.0f, 0.0f, 0.0f);
 
@@ -35,11 +38,16 @@ public class FYPlayer : MonoBehaviour
         curLives = MaxLives;
         layEggAbility = GetComponent<AbilityControl>().GetLayEggAbility();
         DropLoadControl_script.Init();
+        photonView = gameObject.GetPhotonView();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            if (!photonView.IsMine)
+                return;
+
         if (isDead())
             return;
 
