@@ -192,7 +192,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         if (curMode == GAMEMODES.MULTIPLAYER)
         {
             if (!AllPlayersAssigned)
-                if (PhotonNetwork.IsMasterClient && PhotonNetwork.CountOfPlayers == PlayerList.childCount)
+                if (PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length == PlayerList.childCount)
                     AssignSpawnPoints();
         }
 
@@ -234,10 +234,11 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             if (PlayerList.childCount > SpawnPoints.Length)
                 Debug.Log("There are more players than spawnpoints");
 
-            for (int i = 0; i < PlayerList.childCount; ++i)
+            for (int i = 0; i < PlayerList.childCount; i++)
             {
                 int ViewID = PlayerList.GetChild(i).gameObject.GetPhotonView().ViewID;
                 photonView.RPC("AssignPlayerSpawn", RpcTarget.AllViaServer, ViewID, i);
+                Debug.Log(ViewID + " spawn point is at " + SpawnPoints[i].position);
             }
         }
     }
