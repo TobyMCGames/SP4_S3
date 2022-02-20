@@ -15,6 +15,7 @@ TagManager:
   - ObjectIcon
   - Weapon
   - Projectile
+  - Non-collidable
   layers:
   - Default
   - TransparentFX

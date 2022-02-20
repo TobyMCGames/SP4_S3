@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class Enemy : MonoBehaviour
 {
+    private PhotonView photonView;
+
     protected Transform player;
     protected int MoveSpeed = 1;
     public NavMeshAgent navMeshAgent;
@@ -23,8 +26,9 @@ public class Enemy : MonoBehaviour
 
 
 
-    void Start()
+    void Awake()
     {
+        photonView = GetComponent<PhotonView>();
         curState = FSM.PATROL;
         waypointController = GetComponent<WaypointController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -42,6 +46,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+
         // can be overiden
         switch (curState)
         {
@@ -128,7 +136,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
     public void SetStun(float stunTime)
     {
         curState = FSM.STUN;
@@ -139,10 +146,23 @@ public class Enemy : MonoBehaviour
 
     public void Distracted(Vector3 PlayerLastPos)
     {
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            if (!PhotonNetwork.IsMasterClient)
+                return;
         curState = FSM.DISTRACTED;
         Distract_Timer = DistractTime;
         //waypointController.MoveToLocation(PlayerLastPos);
         navMeshAgent.SetDestination(PlayerLastPos);
     }
 
+    [PunRPC]
+    private void SetStunRPC(int viewID, float stunTime)
+    {
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+
+        GameObject _enemy = PhotonNetwork.GetPhotonView(viewID).gameObject;
+        _enemy.GetComponent<Enemy>().SetStun(stunTime);
+    }
 }
