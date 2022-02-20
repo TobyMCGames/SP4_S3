@@ -16,6 +16,13 @@ public class MovePlayer : MonoBehaviour
         FLYING_HOVERING,
     }
 
+    public enum doubletapchecktype
+    {
+        DOUBLE_SPACE,
+        DOUBLE_A,
+        DOUBLE_D,
+        DOUBLE_NONE,
+    }
 
 
     [Header("Player Settings")]
@@ -81,6 +88,8 @@ public class MovePlayer : MonoBehaviour
     [Header("Debug")]
     public Text directiontext;
     public Text orientationtext;
+
+    private doubletapchecktype doublechecktype = doubletapchecktype.DOUBLE_NONE;
 
 
     private void Awake()
@@ -370,9 +379,9 @@ public class MovePlayer : MonoBehaviour
         }
     }
 
-    public void checkdoubletap()
-    {
-        if (doubletapcheck)
+    public void checkdoubletap() //doubletapchecktype doubletap
+    { //&& doublechecktype != doubletapchecktype.DOUBLE_SPACE
+        if (doubletapcheck )
         {
             elapsedtaptime += Time.deltaTime;
             if (elapsedtaptime > doubletaptimeframe)
@@ -390,12 +399,16 @@ public class MovePlayer : MonoBehaviour
                 {
                     doubletapcheck = false;
                     elapsedtaptime = 0;
-                    Vector3 axis = Vector3.zero;
                     Orientation.Set(0, 0, 0);
-                    axis.Set(1, 0, 0);
-                    Debug.Log("double tap");
-                    playerState = PlayerState.FLYING_DIVEBOMB;
-                    DiveBombDirection = vec3front;
+                    if (playerState > PlayerState.FLYING && playerState != PlayerState.FLYING_DIVEBOMB)
+                    {
+                        playerState = PlayerState.FLYING_DIVEBOMB;
+                        DiveBombDirection = vec3front;
+                    }
+                    else if (playerState == PlayerState.FLYING_DIVEBOMB) // recover divebomb
+                    {
+
+                    }
                 }
                 else
                 {
@@ -407,9 +420,72 @@ public class MovePlayer : MonoBehaviour
             {
                 firsttaptime = Time.time;
                 doubletapcheck = true;
+                doublechecktype = doubletapchecktype.DOUBLE_SPACE;
             }
         }
     }
+
+    /*public void checkdoubletap(doubletapchecktype doubletap)
+    {
+        switch (doubletap)
+        {
+            case doubletapchecktype.DOUBLE_SPACE:
+                if (Input.GetKeyUp(KeyCode.Space))
+                {
+                    if (!doubletapcheck)
+                    {
+                        doubletapcheck = true;
+                        firsttaptime = Time.time;
+                    }
+                }
+                else if (doubletapcheck && Input.GetKey(KeyCode.Space)) // divebomb
+                {
+
+                }
+                break;
+            case doubletapchecktype.DOUBLE_A:
+                if (Input.GetKeyUp(KeyCode.A))
+                {
+                    if (!doubletapcheck)
+                    {
+                        doubletapcheck = true;
+                        firsttaptime = Time.time;
+                    }
+                }
+                break;
+            case doubletapchecktype.DOUBLE_D:
+                if (Input.GetKeyUp(KeyCode.D))
+                {
+                    if (!doubletapcheck)
+                    {
+                        doubletapcheck = true;
+                        firsttaptime = Time.time;
+                    }
+                }
+                break;
+        }
+        if (Time.time - firsttaptime < doubletaptimeframe)
+        {
+            doubletapcheck = false;
+            elapsedtaptime = 0;
+            Orientation.Set(0, 0, 0);
+            if (playerState > PlayerState.FLYING && playerState != PlayerState.FLYING_DIVEBOMB)
+            {
+                playerState = PlayerState.FLYING_DIVEBOMB;
+                DiveBombDirection = vec3front;
+            }
+            else if (playerState == PlayerState.FLYING_DIVEBOMB) // recover divebomb
+            {
+
+            }
+        }
+        else
+        {
+            doubletapcheck = false;
+            Debug.Log("single tap");
+        }
+
+    }*/
 
 
     void landingcheck()
