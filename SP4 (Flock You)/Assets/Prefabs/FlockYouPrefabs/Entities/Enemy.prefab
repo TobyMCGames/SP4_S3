@@ -134,8 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b78262de06e7d44f8b7192ab7fa2792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  POV_Agro: {fileID: 0}
-  POV_DeAgro: {fileID: 0}
   navMeshAgent: {fileID: 0}
   curState: 0
   enemyObserver: {fileID: 7524213982467990095}
@@ -212,6 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerInRange: 0
+  player: {fileID: 0}
 --- !u!1 &5437273660523320064
 GameObject:
   m_ObjectHideFlags: 0

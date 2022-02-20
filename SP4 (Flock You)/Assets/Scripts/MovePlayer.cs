@@ -129,13 +129,13 @@ public class MovePlayer : MonoBehaviour
             Debug.Log("Player does not have PhotonView");
         else
         {
-            /*if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
             {
                 if (!photonView.IsMine)
                 {
                     m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
                 }
-            }*/
+            }
         }
     }
     private void Start()
@@ -152,9 +152,9 @@ public class MovePlayer : MonoBehaviour
 
     private void Update()
     {
-        //if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
-          //  if (!photonView.IsMine)
-            //    return;
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            if (!photonView.IsMine)
+                return;
         PlayerInput();
         controlDrag();
         Moveplayer();

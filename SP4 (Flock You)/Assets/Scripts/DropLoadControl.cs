@@ -104,16 +104,17 @@ public class DropLoadControl : MonoBehaviour
             poop.transform.position = gameObject.transform.position;
             poop.GetComponent<Projectile_Poop>().AssignPooper(transform);
             poop.GetComponent<Rigidbody>().AddForce(gameObject.GetComponent<Rigidbody>().velocity);
-            Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
         }
         else if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
         {
             GameObject poop = PhotonNetwork.Instantiate("Bird_Poop", gameObject.transform.position, Quaternion.Euler(0.0f, 0.0f, 0.0f));
-            photonView.RPC( "LoadPoopProperties", RpcTarget.AllViaServer, 
-                            poop.GetPhotonView().ViewID, 
-                            photonView.ViewID, 
+            poop.GetComponent<Projectile_Poop>().AssignPooper(transform);
+            photonView.RPC("LoadPoopProperties", RpcTarget.AllViaServer,
+                            poop.GetPhotonView().ViewID,
                             gameObject.GetComponent<Rigidbody>().velocity);
         }
+
+        Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
 
         --curAmmo;
         UI_Manager.Instance.UpdateAmmo();
@@ -122,11 +123,9 @@ public class DropLoadControl : MonoBehaviour
 
     // For multiplayer only
     [PunRPC]
-    public void LoadPoopProperties(int _poopID, int _pooperID, Vector3 _velocity)
+    public void LoadPoopProperties(int _poopID, Vector3 _velocity)
     {
         GameObject poop = PhotonNetwork.GetPhotonView(_poopID).gameObject;
-        poop.GetComponent<Projectile_Poop>().AssignPooper(PhotonNetwork.GetPhotonView(_pooperID).transform);
         poop.GetComponent<Rigidbody>().AddForce(_velocity);
-        Debug.Log(_velocity);
     }
 }
