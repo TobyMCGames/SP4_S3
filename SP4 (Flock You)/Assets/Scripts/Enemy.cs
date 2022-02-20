@@ -25,7 +25,6 @@ public class Enemy : MonoBehaviour
     protected float DistractTime;
 
 
-
     void Awake()
     {
         photonView = GetComponent<PhotonView>();
