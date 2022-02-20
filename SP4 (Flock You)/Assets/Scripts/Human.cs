@@ -75,6 +75,7 @@ public class Human : Enemy
             weapon.transform.localPosition = new Vector3(0, 0, 0);
             weapon.transform.localRotation = new Quaternion(0,0,0,0);
             Destroy(weapon.GetComponent<Rigidbody>());
+            Destroy(weapon.GetComponent<BoxCollider>());
             pickupWeapon = false;
         }
     }
