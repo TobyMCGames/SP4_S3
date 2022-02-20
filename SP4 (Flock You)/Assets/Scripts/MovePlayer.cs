@@ -315,15 +315,12 @@ public class MovePlayer : MonoBehaviour
             //m_Movement.y += Time.deltaTime * flyverticalforce;
             playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // striaght up
-                m_Rigidbody.AddForce(Quaternion.Euler(0, 90, 0) * (Vector3.up * flyverticalforce), ForceMode.Acceleration);
+                m_Rigidbody.AddForce((Vector3.up * flyverticalforce) * Time.deltaTime, ForceMode.VelocityChange);
 
             else // go up a relative to your orientation
             {
                 Vector3 movement = Orientation;
                 movement.y = 0;
-                movemul -= AirResistance * Time.deltaTime;
-                if (movemul < DefaultMoveMul)
-                    movemul = DefaultMoveMul;
                 m_Rigidbody.AddForce(Quaternion.Euler(Orientation) *
                     (Vector3.up * flyverticalforce * Time.deltaTime), ForceMode.VelocityChange);
 
@@ -347,7 +344,7 @@ public class MovePlayer : MonoBehaviour
             playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // fly striaght down;
             {
-                m_Rigidbody.AddForce(Quaternion.Euler(0, 90, 0) * (flyverticalforce * Vector3.down), ForceMode.Acceleration);
+                m_Rigidbody.AddForce((flyverticalforce * Vector3.down) * Time.deltaTime, ForceMode.VelocityChange);
             }
             else // go down a relative to your orientation
             {
@@ -574,8 +571,6 @@ public class MovePlayer : MonoBehaviour
         if (currenflaptimer >= flaptimermax)
         {
             m_Rigidbody.AddForce(flydrop,ForceMode.Impulse);
-            // stop camera from going up and down
-            Lookat.transform.localPosition = (flydrop / GetComponent<Rigidbody>().mass *Time.deltaTime) *-1;
             currenflaptimer = 0;
             flydrop *= -1;
         }
