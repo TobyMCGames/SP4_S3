@@ -335,8 +335,10 @@ MonoBehaviour:
   flyhorizontalforce: 10
   landingheight: 4
   landingtimer: 0.1
+  birdterminalvelocity: -30
   playerState: 0
   camera: {fileID: 0}
+  Lookat: {fileID: 0}
   DiveBombDirection: {x: 0, y: 0, z: 0}
   baserotation: {x: 0, y: 0, z: 0}
   directiontext: {fileID: 0}
