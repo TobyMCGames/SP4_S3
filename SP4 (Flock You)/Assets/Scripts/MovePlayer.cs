@@ -141,7 +141,7 @@ public class MovePlayer : MonoBehaviour
 
     void checkJump()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isgrounded && playerState != PlayerState.JUMPING)
             {
