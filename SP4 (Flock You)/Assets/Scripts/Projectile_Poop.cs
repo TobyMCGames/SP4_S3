@@ -1,24 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Projectile_Poop : MonoBehaviour
 {
+    private PhotonView photonView;
+
     private Vector3 direction;
     private float Velocity;
     // Use Players PhotonView Instead in Multiplayer (maybe) or use GO instead
     Transform pooper = null;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        photonView = gameObject.GetPhotonView();
     }
 
     void OnTriggerEnter(Collider other)
     {
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            if (!photonView.IsMine)
+                return;
+
+        if (other.CompareTag("Projectile"))
+            return;
+
         if (pooper != null)
-            if (other.transform == pooper || other.transform.parent.CompareTag("Player"))
+            if (other.transform == pooper || other.transform.parent == pooper)
                 return;
 
         if (other.tag == "Enemy")

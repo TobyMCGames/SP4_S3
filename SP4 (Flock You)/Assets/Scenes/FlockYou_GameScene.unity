@@ -1024,6 +1024,9 @@ MonoBehaviour:
   ProjectileList: {fileID: 5033030191947368741}
   SpawnPoints:
   - {fileID: 5033030191947368740}
+  - {fileID: 5033030191947368744}
+  - {fileID: 5033030191947368743}
+  - {fileID: 5033030191947368742}
 --- !u!4 &1517933914
 Transform:
   m_ObjectHideFlags: 0
@@ -1074,7 +1077,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 5
+  sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &1527491388
@@ -1903,7 +1906,7 @@ PrefabInstance:
     - target: {fileID: 8216566085948366739, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: sceneViewId
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8949744693049997321, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1921,6 +1924,24 @@ Transform:
 --- !u!4 &5033030191947368741 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8730143791125661979, guid: 1796f246ec9d3d542bca7d71a751be1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5033030191947368739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5033030191947368742 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4975838959058960504, guid: 1796f246ec9d3d542bca7d71a751be1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5033030191947368739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5033030191947368743 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1517381088404112682, guid: 1796f246ec9d3d542bca7d71a751be1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5033030191947368739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5033030191947368744 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5539217660095351172, guid: 1796f246ec9d3d542bca7d71a751be1a,
     type: 3}
   m_PrefabInstance: {fileID: 5033030191947368739}
   m_PrefabAsset: {fileID: 0}
