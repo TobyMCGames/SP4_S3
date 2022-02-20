@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class WaypointController : MonoBehaviour
 {
+    private PhotonView photonView;
+
     public List<Transform> waypoints;
     private Transform currentTarget;
     protected int index = 1;
@@ -22,6 +25,11 @@ public class WaypointController : MonoBehaviour
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        photonView = GetComponent<PhotonView>();
+
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            if (!PhotonNetwork.IsMasterClient)
+                return;
 
         if (waypoints.Count > 0 && waypoints[0] != null)
         {
@@ -40,6 +48,7 @@ public class WaypointController : MonoBehaviour
 
     public void WaypointUpdate()
     {
+
         if (currentTarget != null)
         {
             //Check if the agent has arrived the target position

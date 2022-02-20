@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1907829816480043661}
   m_Layer: 0
   m_Name: InteractDetect
-  m_TagString: InteractDetect
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -377,13 +377,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 20
-  airmul: 0.4
   movemul: 40
   jumpforce: 10
-  flyverticalforce: 10
   flymaxIncrease: 2
   flymaxDecrease: 2
+  flyverticalforce: 10
+  flyhorizontalforce: 100
+  landingheight: 4
+  landingtimer: 0.05
+  birdterminalvelocity: -30
+  AirResistance: 10
+  playerState: 0
   camera: {fileID: 0}
+  Lookat: {fileID: 0}
+  DiveBombDirection: {x: 0, y: 0, z: 0}
+  baserotation: {x: 0, y: 0, z: 0}
   directiontext: {fileID: 0}
   orientationtext: {fileID: 0}
 --- !u!114 &6220354295224625069

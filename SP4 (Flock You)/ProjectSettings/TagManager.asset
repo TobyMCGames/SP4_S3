@@ -10,11 +10,11 @@ TagManager:
   - Enemy
   - SpawnPoint
   - testCameraDetach
-  - NestSpawn
-  - InteractDetect
   - ObjectIcon
   - Weapon
   - Projectile
+  - Non-collidable
+  - Peckable
   layers:
   - Default
   - TransparentFX

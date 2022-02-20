@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class InteractDetection : MonoBehaviour
 {
-    private bool collided;
     private GameObject Interactable = null;
+    private GameObject PeckableObject = null;
     public GameObject GetInteractable() { return Interactable; }
+    public GameObject GetPeckable() { return PeckableObject; }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,16 +15,26 @@ public class InteractDetection : MonoBehaviour
         {
             Interactable = other.gameObject;
         }
+
+        if (other.gameObject.CompareTag("Peckable") && PeckableObject == null)
+        {
+            PeckableObject = other.gameObject;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (Interactable == null)
+        if (Interactable == null && PeckableObject == null)
             return;
+
         else if (other.gameObject.tag == "Interactable")
         {
-            if (other.gameObject == Interactable)
-                Interactable = null;
+            Interactable = null;
+        }
+
+        else if (other.gameObject.tag == "Peckable")
+        {
+            PeckableObject = null;
         }
     }
 }

@@ -61,6 +61,10 @@ MonoBehaviour:
   - LoadPoopProperties
   - AssignPlayerSpawn
   - SetToPlayerList
+  - SetStun
+  - SetStunRPC
+  - DropItem
+  - SetHolder
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

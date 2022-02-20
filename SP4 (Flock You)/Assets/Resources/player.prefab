@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 1641904040622765214}
   m_Layer: 0
   m_Name: DistractRange
-  m_TagString: Untagged
+  m_TagString: Non-collidable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

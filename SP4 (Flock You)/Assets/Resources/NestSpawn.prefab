@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 3267947674722400484}
   m_Layer: 0
   m_Name: NestSpawn
-  m_TagString: NestSpawn
+  m_TagString: Peckable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
