@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class InteractDetection : MonoBehaviour
 {
-    private bool collided;
     private GameObject Interactable = null;
+    private GameObject PeckableObject = null;
     public GameObject GetInteractable() { return Interactable; }
+    public GameObject GetPeckable() { return PeckableObject; }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Interactable") && Interactable == null)
         {
             Interactable = other.gameObject;
+        }
+
+        if (other.gameObject.CompareTag("Peckable") && PeckableObject == null)
+        {
+            PeckableObject = other.gameObject;
         }
     }
 
@@ -24,6 +30,13 @@ public class InteractDetection : MonoBehaviour
         {
             if (other.gameObject == Interactable)
                 Interactable = null;
+        }
+        else if (other.gameObject.tag == "Peckable")
+        {
+            if (other.gameObject == PeckableObject)
+            {
+                PeckableObject = null;
+            }
         }
     }
 }

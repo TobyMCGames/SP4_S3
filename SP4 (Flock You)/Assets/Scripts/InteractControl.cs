@@ -7,6 +7,7 @@ public class InteractControl : MonoBehaviour
 {
     private PhotonView photonView;
     private GameObject heldObject;
+    private GameObject peckableObject;
     private GameObject player;
     private float heldObjectWeight;
     public GameObject touchPointLight, touchPointHeavy;
@@ -38,7 +39,17 @@ public class InteractControl : MonoBehaviour
             player.GetComponent<MovePlayer>().movemul = player.GetComponent<MovePlayer>().GetDefaultMoveMul();
         }
 
-        //if click
+        if(Input.GetMouseButtonDown(0))
+        {
+            peckableObject = player.GetComponentInChildren<InteractDetection>().GetPeckable();
+            if (peckableObject != null)
+            {
+                peckableObject.GetComponent<Peckable>().SetCanBeDamaged(true);
+            }
+
+        }
+
+        //if click and hold
         if (Input.GetMouseButton(0))
         {
             heldObject = GetComponentInChildren<InteractDetection>().GetInteractable();
@@ -69,8 +80,6 @@ public class InteractControl : MonoBehaviour
             if (heldObject != null)
             {
                 heldObject.GetComponent<Collider>().enabled = true;
-                //set the player who is interacting with the object back to null
-                //heldObject.GetComponent<Interactable>().SetPlayerInteracting(null);
             }
         }
     }
