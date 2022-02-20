@@ -110,7 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aaf9efd388d4d048ab88ed695b20f98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Interactable: {fileID: 0}
 --- !u!114 &8127016691743227169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,7 +576,7 @@ GameObject:
   - component: {fileID: 1641904040622765214}
   m_Layer: 0
   m_Name: DistractRange
-  m_TagString: Untagged
+  m_TagString: Non-collidable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

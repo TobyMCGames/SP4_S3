@@ -13,6 +13,7 @@ TagManager:
   - ObjectIcon
   - Weapon
   - Projectile
+  - Non-collidable
   - Peckable
   layers:
   - Default

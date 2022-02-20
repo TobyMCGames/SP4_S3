@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 7231873240371707795}
   - component: {fileID: 7703715096483874549}
   - component: {fileID: 2151424871999855446}
+  - component: {fileID: 58418068173521650}
+  - component: {fileID: 4172129370813152934}
   m_Layer: 0
   m_Name: Human
   m_TagString: Enemy
@@ -134,8 +136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b78262de06e7d44f8b7192ab7fa2792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  POV_Agro: {fileID: 0}
-  POV_DeAgro: {fileID: 0}
   navMeshAgent: {fileID: 0}
   curState: 0
   enemyObserver: {fileID: 7524213982467990095}
@@ -156,6 +156,45 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   navMeshAgent: {fileID: 0}
+--- !u!114 &58418068173521650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369952268686831569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 4172129370813152934}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &4172129370813152934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369952268686831569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1469690790477637325
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +208,7 @@ GameObject:
   - component: {fileID: 7524213982467990095}
   m_Layer: 0
   m_Name: PointOfView
-  m_TagString: Untagged
+  m_TagString: Non-collidable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

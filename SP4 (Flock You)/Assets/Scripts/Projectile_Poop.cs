@@ -23,7 +23,7 @@ public class Projectile_Poop : MonoBehaviour
             if (!photonView.IsMine)
                 return;
 
-        if (other.CompareTag("Projectile"))
+        if (other.CompareTag("Projectile") || other.CompareTag("Non-collidable"))
             return;
 
         if (pooper != null)
@@ -34,9 +34,15 @@ public class Projectile_Poop : MonoBehaviour
         else
             Debug.Log("No pooper assigned");
 
-        if (!other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
-            other.transform.GetComponent<Enemy>().SetStun(5.0f);
+            if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            {
+                PhotonView _enemy = other.gameObject.GetPhotonView();
+                _enemy.RPC("SetStunRPC", RpcTarget.MasterClient, _enemy.ViewID, 5.0f);
+            }
+            else
+                other.transform.GetComponent<Enemy>().SetStun(5.0f);
         }
         Debug.Log("Poop drop on non-enemy");
         Destroy(gameObject);
