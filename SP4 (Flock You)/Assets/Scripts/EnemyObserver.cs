@@ -27,12 +27,13 @@ public class EnemyObserver : MonoBehaviour
             }
             isPlayerInRange = true;
         }
-        //detect weaapon
+        //detect weapon
         else if (other.tag == "Weapon")
         {
             if (weapon == null)
             {
-                weapon = other.transform;
+               weapon = other.transform;
+
             }
             isWeaponInRange = true;
         }
@@ -48,7 +49,9 @@ public class EnemyObserver : MonoBehaviour
         else if (other.tag == "Weapon")
         {
             if(weapon != null)
+            {
                 weapon = null;
+            }
             isWeaponInRange = false;
         }
     }

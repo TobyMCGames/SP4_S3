@@ -14,6 +14,7 @@ public class Weapon : MonoBehaviour
     protected float FirerateTimer;
     protected float waitToShoot = 0f;
     protected float waitToShootTimer = 0f;
+    private GameObject enemyPickUp = null;
 
     public GameObject ProjectilePrefab = null;
     public GameObject ProjectileList = null;
@@ -29,6 +30,19 @@ public class Weapon : MonoBehaviour
         waitToShoot = 2f;
         FirerateTimer = 0f;
         waitToShootTimer = 0f;
+    }
+
+    public void SetEnemyPickUp(GameObject enemy)
+    {
+        if (enemyPickUp == null)
+            enemyPickUp = enemy;
+        else
+            Debug.Log("Enemy to pickup weapon already set to this enemy: " + enemyPickUp);
+    }
+
+    public GameObject GetEnemyPickup()
+    {
+        return enemyPickUp;
     }
 
     protected virtual void Update()
