@@ -127,5 +127,6 @@ public class DropLoadControl : MonoBehaviour
     {
         GameObject poop = PhotonNetwork.GetPhotonView(_poopID).gameObject;
         poop.GetComponent<Rigidbody>().AddForce(_velocity);
+        poop.transform.SetParent(ProjectileList);
     }
 }

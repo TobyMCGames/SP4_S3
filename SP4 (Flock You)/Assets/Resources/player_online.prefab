@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aaf9efd388d4d048ab88ed695b20f98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Interactable: {fileID: 0}
 --- !u!114 &8127016691743227169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,6 +352,7 @@ MonoBehaviour:
   landingheight: 4
   landingtimer: 0.1
   birdterminalvelocity: -30
+  AirResistance: 10
   playerState: 0
   camera: {fileID: 0}
   Lookat: {fileID: 8714987993477327268}

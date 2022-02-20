@@ -34,7 +34,7 @@ public class Projectile_Poop : MonoBehaviour
         else
             Debug.Log("No pooper assigned");
 
-        if (other.tag == "Enemy")
+        if (!other.CompareTag("Enemy"))
         {
             other.transform.GetComponent<Enemy>().SetStun(5.0f);
         }
