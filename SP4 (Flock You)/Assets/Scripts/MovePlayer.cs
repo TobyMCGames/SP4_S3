@@ -7,7 +7,7 @@ using Photon.Pun;
 public class MovePlayer : MonoBehaviour
 {
 
-    /*public struct doubletappair
+    public struct doubletappair
     {
         public doubletapchecktype keytype;
         public bool keyStatus;
@@ -27,7 +27,7 @@ public class MovePlayer : MonoBehaviour
         {
             firsttaptime = _firsttaptime;
         }
-    }*/
+    }
 
     public enum PlayerState
     {
@@ -37,15 +37,17 @@ public class MovePlayer : MonoBehaviour
         FLYING_HEIGHTCHANGE,// when bird is flying up / down
         FLYING_DIVEBOMB,
         FLYING_HOVERING,
+        FLYING_BARREL_LEFT,
+        FLYING_BARREL_RIGHT,
     }
 
-    /*public enum doubletapchecktype
+    public enum doubletapchecktype
     {
         DOUBLE_SPACE,
         DOUBLE_A,
         DOUBLE_D,
         DOUBLE_NONE,
-    }*/
+    }
 
 
     [Header("Player Settings")]
@@ -86,6 +88,11 @@ public class MovePlayer : MonoBehaviour
     bool isgrounded = false;
     bool islanding = false;
 
+    // barrel roll
+    public float BarrelRollSpeed = 5f;
+    float BarrelRollAngle = 0;
+    float rolloffsetX =0;
+
     // double jump
     double firsttaptime = 0.0;
     bool doubletapcheck = false;
@@ -98,7 +105,6 @@ public class MovePlayer : MonoBehaviour
     float flaptimermax = 0.1f;
     float currenflaptimer = 0.0f;
     public Vector3 DiveBombDirection = Vector3.zero;
-    float diveyaw = 0f;
 
     [Header("Orientation")]
     float pitch = 0.0f, yaw = 0.0f, roll = 0.0f;
@@ -114,7 +120,7 @@ public class MovePlayer : MonoBehaviour
 
     //private doubletapchecktype doublechecktype = doubletapchecktype.DOUBLE_NONE;
 
-    //public List<doubletappair> doubletapchecklist = new List<doubletappair>();
+    public List<doubletappair> doubletapchecklist = new List<doubletappair>();
 
     private void Awake()
     {
@@ -145,9 +151,9 @@ public class MovePlayer : MonoBehaviour
         roll = baserotation.z;
         m_Rigidbody.MoveRotation(Quaternion.Euler(pitch, yaw, roll));
 
-        //doubletapchecklist.Add(new doubletappair(doubletapchecktype.DOUBLE_A));
-        //doubletapchecklist.Add(new doubletappair(doubletapchecktype.DOUBLE_D));
-        //doubletapchecklist.Add(new doubletappair(doubletapchecktype.DOUBLE_SPACE));
+        doubletapchecklist.Add(new doubletappair(doubletapchecktype.DOUBLE_A));
+        doubletapchecklist.Add(new doubletappair(doubletapchecktype.DOUBLE_D));
+        doubletapchecklist.Add(new doubletappair(doubletapchecktype.DOUBLE_SPACE));
     }
 
     private void Update()
@@ -196,11 +202,21 @@ public class MovePlayer : MonoBehaviour
 
     void PlayerInput()
     {
-            horizontalmovement = Input.GetAxisRaw("Horizontal");
-            verticalmovement = Input.GetAxisRaw("Vertical");
-            bool hasHorizontalInput = !Mathf.Approximately(horizontalmovement, 0f);
-            bool hasVerticalInput = !Mathf.Approximately(verticalmovement, 0f);
-            inputed= hasHorizontalInput || hasVerticalInput;
+        horizontalmovement = Input.GetAxisRaw("Horizontal");
+        verticalmovement = Input.GetAxisRaw("Vertical");
+        bool hasHorizontalInput = !Mathf.Approximately(horizontalmovement, 0f);
+        bool hasVerticalInput = !Mathf.Approximately(verticalmovement, 0f);
+        inputed= hasHorizontalInput || hasVerticalInput;
+        
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            playerState = PlayerState.FLYING_BARREL_RIGHT;
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            playerState = PlayerState.FLYING_BARREL_LEFT;
+        }
     }
 
     private void FixedUpdate()
@@ -217,8 +233,7 @@ public class MovePlayer : MonoBehaviour
             pitch = 0;
             roll = 0;
             vec3up = Vector3.up;
-            
-            diveyaw = 0;
+           
             if (playerState == PlayerState.FLYING_DIVEBOMB)
                 m_Rigidbody.position = hit.point + (Vector3.up * playerheight * 0.5f);
             playerState = PlayerState.IDLE;
@@ -310,6 +325,12 @@ public class MovePlayer : MonoBehaviour
             divebomb();
             return;
         }
+        else if (playerState == PlayerState.FLYING_BARREL_LEFT || playerState == PlayerState.FLYING_BARREL_RIGHT)
+        {
+            BarrelRoll();
+            return;
+        }
+
         if (Input.GetKey(KeyCode.Space))
         {
             //m_Movement.y += Time.deltaTime * flyverticalforce;
@@ -415,7 +436,7 @@ public class MovePlayer : MonoBehaviour
         }
     }
 
-    public void checkdoubletap()
+    /*public void checkdoubletap()
     {
         if (doubletapcheck)
         {
@@ -460,9 +481,9 @@ public class MovePlayer : MonoBehaviour
                 doubletapcheck = true;
             }
         }
-    }
+    }*/
 
-    /*
+    
     public void checkdoubletap()
     {
         doubletapchecktype type = doubletapchecktype.DOUBLE_NONE;
@@ -489,11 +510,14 @@ public class MovePlayer : MonoBehaviour
                             doubletapstatus = false;
                         }
                     }
-                    else if (Input.GetKey(KeyCode.Space) && doubletapstatus) // divebomb
+                    else if (Input.GetKey(KeyCode.Space)) // divebomb
                     {
-                        playerState = PlayerState.FLYING_DIVEBOMB;
-                        doubletapchecklist[i].setStatus(!doubletapstatus);
-                        doubletapchecklist[i].setTapTime(doublefirsttaptime);
+                        if (doubletapstatus)
+                        {
+                            playerState = PlayerState.FLYING_DIVEBOMB;
+                            doubletapchecklist[i].setStatus(!doubletapstatus);
+                            doubletapchecklist[i].setTapTime(doublefirsttaptime);
+                        }
                         return; // we do not want it to continue checking for the second up input as we want doubletapcheck to be true
                     }
                     break;
@@ -549,7 +573,7 @@ public class MovePlayer : MonoBehaviour
             doubletapchecklist[i].setStatus(doubletapstatus);
             doubletapchecklist[i].setTapTime(doublefirsttaptime);
         }
-    }*/
+    }
 
 
     void landingcheck()
@@ -638,6 +662,66 @@ public class MovePlayer : MonoBehaviour
             movemul += -fallspeed * 5;
         }
     }
+
+    void BarrelRoll()
+    {
+        if (playerState == PlayerState.FLYING_BARREL_LEFT)
+        {
+            roll += turnSpeed * 12 * Time.deltaTime;
+            BarrelRollAngle += turnSpeed * 12 * Time.deltaTime;
+            if (BarrelRollAngle > 180)
+            {
+                rolloffsetX -= 0.05f;
+            }
+            else
+            {
+                rolloffsetX += 0.05f;
+            }
+        }
+        else if (playerState == PlayerState.FLYING_BARREL_RIGHT)
+        {
+            roll -= turnSpeed * 12 * Time.deltaTime;
+            BarrelRollAngle -= turnSpeed * 12 * Time.deltaTime;
+            if ( BarrelRollAngle < -180)
+            {
+                rolloffsetX += 0.05f;
+            }
+            else
+            {
+                rolloffsetX -= 0.05f;
+            }
+        }
+       
+        m_Movement = (verticalmovement * vec3front) + (horizontalmovement * vec3right);
+        m_Movement.x += rolloffsetX;
+        
+        Orientation.Set(pitch, yaw, roll);
+        m_Rotation = Quaternion.Euler(Orientation);
+        m_Rotation = Quaternion.RotateTowards(m_Rigidbody.rotation, m_Rotation, turnSpeed * 12 * Time.deltaTime);
+        m_Movement = m_Rotation * m_Movement;
+        m_Rigidbody.AddForce(m_Movement * movemul * Time.deltaTime, ForceMode.VelocityChange);
+        m_Rigidbody.MoveRotation(m_Rotation);
+
+        if (BarrelRollAngle >= 360 && playerState == PlayerState.FLYING_BARREL_LEFT)
+        {
+            playerState = PlayerState.FLYING;
+            rolloffsetX = 0;
+            BarrelRollAngle = 0;
+            m_Rigidbody.angularVelocity = Vector3.zero;
+            if (roll > 360)
+                roll -= 360;
+        }
+        else if (BarrelRollAngle <= -360 && playerState == PlayerState.FLYING_BARREL_RIGHT)
+        {
+            playerState = PlayerState.FLYING;
+            rolloffsetX = 0;
+            BarrelRollAngle = 0;
+            m_Rigidbody.angularVelocity = Vector3.zero;
+            if (roll < -360)
+                roll += 360;
+        }
+    }
+
     void recenterRoll()
     {
         if (roll >= -0.5f && roll <= 0.5)
