@@ -22,8 +22,6 @@ public class MovePlayer : MonoBehaviour
     public enum doubletapchecktype
     {
         DOUBLE_SPACE,
-        DOUBLE_A,
-        DOUBLE_D,
         DOUBLE_NONE,
     }
 
@@ -128,12 +126,8 @@ public class MovePlayer : MonoBehaviour
         roll = baserotation.z;
         m_Rigidbody.MoveRotation(Quaternion.Euler(pitch, yaw, roll));
 
-        keyfirsttapstatus.Add(doubletapchecktype.DOUBLE_A, false);
-        keyfirsttapstatus.Add(doubletapchecktype.DOUBLE_D, false);
         keyfirsttapstatus.Add(doubletapchecktype.DOUBLE_SPACE, false);
 
-        keyfirsttaptimelist.Add(doubletapchecktype.DOUBLE_A, 0);
-        keyfirsttaptimelist.Add(doubletapchecktype.DOUBLE_D, 0);
         keyfirsttaptimelist.Add(doubletapchecktype.DOUBLE_SPACE, 0);
     }
 
@@ -190,11 +184,11 @@ public class MovePlayer : MonoBehaviour
         inputed= hasHorizontalInput || hasVerticalInput;
         
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.D))
         {
             playerState = PlayerState.FLYING_BARREL_RIGHT;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.A))
         {
             playerState = PlayerState.FLYING_BARREL_LEFT;
         }
@@ -343,7 +337,7 @@ public class MovePlayer : MonoBehaviour
         }
 
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftControl))
         {
             if (playerState != PlayerState.FLYING_DIVEBOMB)
                 playerState = PlayerState.FLYING_HEIGHTCHANGE;
@@ -420,53 +414,6 @@ public class MovePlayer : MonoBehaviour
         }
     }
 
-    /*public void checkdoubletap()
-    {
-        if (doubletapcheck)
-        {
-            elapsedtaptime += Time.deltaTime;
-            if (elapsedtaptime > doubletaptimeframe)
-            {
-                doubletapcheck = false;
-                elapsedtaptime = 0;
-                Debug.Log("single tap");
-            }
-        }
-        if (Input.GetButtonUp("Jump") && playerState > PlayerState.FLYING)
-        {
-            if (doubletapcheck)
-            {
-                if (Time.time - firsttaptime < doubletaptimeframe)
-                {
-                    doubletapcheck = false;
-                    elapsedtaptime = 0;
-                    Orientation.Set(0, 0, 0);
-                    if (playerState > PlayerState.FLYING && playerState != PlayerState.FLYING_DIVEBOMB)
-                    {
-                        playerState = PlayerState.FLYING_DIVEBOMB;
-                        DiveBombDirection = vec3front;
-                        fallspeed = 0;
-                    }
-                    else if (playerState == PlayerState.FLYING_DIVEBOMB) // recover divebomb
-                    {
-                        playerState = PlayerState.FLYING_HEIGHTCHANGE;
-                        movemul -= fallspeed;
-                    }
-                }
-                else
-                {
-                    doubletapcheck = false;
-                    Debug.Log("single tap");
-                }
-            }
-            else
-            {
-                firsttaptime = Time.time;
-                doubletapcheck = true;
-            }
-        }
-    }*/
-
     void checkDoubletap()
     {
         for (doubletapchecktype i=0;i < doubletapchecktype.DOUBLE_NONE;i++)
@@ -518,42 +465,6 @@ public class MovePlayer : MonoBehaviour
                         movemul += -fallspeed * Time.deltaTime;
                     }
                     break;
-                case doubletapchecktype.DOUBLE_A:
-                    if (Input.GetKeyUp(KeyCode.A))
-                    {
-                        if (keyfirsttapstatus[i] == true && playerState >= PlayerState.FLYING) // barrel roll to the left
-                        {
-                            if (Time.time - keyfirsttaptimelist[i] < doubletaptimeframe)
-                            {
-                                playerState = PlayerState.FLYING_BARREL_LEFT;
-                            }
-                            keyfirsttapstatus[i] = false;
-                        }  
-                        else
-                        { // check for double tap
-                            keyfirsttapstatus[i] = true;
-                            keyfirsttaptimelist[i] = Time.time;
-                        }
-                    }
-                    break;
-                case doubletapchecktype.DOUBLE_D:
-                    if (Input.GetKeyUp(KeyCode.D))
-                    {
-                        if (keyfirsttapstatus[i] == true&& playerState >= PlayerState.FLYING) // barrel roll to the left
-                        {
-                            if (Time.time - keyfirsttaptimelist[i] < doubletaptimeframe)
-                            {
-                                playerState = PlayerState.FLYING_BARREL_RIGHT;
-                            }
-                            keyfirsttapstatus[i] = false;
-                        }
-                        else
-                        { // check for double tap
-                            keyfirsttapstatus[i] = true;
-                            keyfirsttaptimelist[i] = Time.time;
-                        }
-                    }
-                    break;
             }
             if (Time.time - keyfirsttaptimelist[i] > doubletaptimeframe)
             {
@@ -589,21 +500,6 @@ public class MovePlayer : MonoBehaviour
             currenflaptimer += Time.deltaTime;
     }
 
-    public void ChangePlayerState(PlayerState nextplayerState)
-    {
-        switch (playerState) // check what is the current state and change the values according to what is the next state
-        {
-            case PlayerState.IDLE:
-                break;
-            case PlayerState.JUMPING:
-                break;
-            case PlayerState.FLYING:
-                break;
-            
-            case PlayerState.FLYING_DIVEBOMB:
-                break;
-        }
-    }
     public void handleLanding()
     {
         if (islanding)
