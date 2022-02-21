@@ -6,9 +6,14 @@ using Photon.Pun;
 
 public class Login : MonoBehaviour
 {
-    public string URL = GlobalSettings.BaseServer + "login.php";
+    public string URL;
     public Text displayTxt; //must add using UnityEngine.UI
     public InputField if_username, if_password; //to link to the inpufields
+
+    private void Awake()
+    {
+        URL = GlobalSettings.BaseServer + "login.php";
+    }
 
     [Header("From Selection Panel")]
     public Text PlayerNameDisplayTxt;

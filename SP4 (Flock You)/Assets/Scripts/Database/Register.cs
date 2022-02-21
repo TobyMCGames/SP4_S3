@@ -4,9 +4,15 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 public class Register : MonoBehaviour
 {
-    public string URL = GlobalSettings.BaseServer + "register.php";
+    public string URL;
     public Text displayTxt; //must add using UnityEngine.UI
     public InputField if_username, if_password, if_confirmPassword; //to link to the inpufields
+
+    private void Awake()
+    {
+        URL = GlobalSettings.BaseServer + "register.php";
+    }
+
     public void DoRegister()
     { //to be involved by button click
         Debug.Log("SendUserNamePassword");
