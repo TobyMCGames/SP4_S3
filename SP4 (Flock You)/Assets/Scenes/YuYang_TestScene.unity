@@ -1559,6 +1559,16 @@ PrefabInstance:
       propertyPath: ProjectileList
       value: 
       objectReference: {fileID: 1717723799}
+    - target: {fileID: 1473214748934468342, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502287666922627806, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1887408464682180715, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: sceneViewId
@@ -1613,6 +1623,11 @@ PrefabInstance:
         type: 3}
       propertyPath: sceneViewId
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5033030192790779012, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Floor
       objectReference: {fileID: 0}
     - target: {fileID: 5049350245078227108, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1957,7 +1972,7 @@ PrefabInstance:
     - target: {fileID: 7451826532183156654, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7602759982286005531, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}

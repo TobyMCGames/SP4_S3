@@ -6,10 +6,7 @@ using UnityEngine.AI;
 public class Dog : Enemy
 {
     float distanceBetweenPlayer;
-    //Vector3;
     Rigidbody rigidbody;
-
-    //CharacterController controller;
     float jumpPower = 20f;
     Enemy enemy;
     public bool isPouncing;
@@ -20,20 +17,9 @@ public class Dog : Enemy
     {
         //Fetch the Rigidbody from the GameObject with this script attached
         rigidbody = GetComponent<Rigidbody>();
-        //controller = GetComponent<CharacterController>();
         isPouncing = false;
         pounceSuccess = false;
     }
-
-    //protected override void Update()
-    //{
-    //    base.Update();
-    //    distanceBetweenPlayer = Vector3.Distance(transform.position, player.position); //finds distance
-    //    if (distanceBetweenPlayer <= 2.6f)
-    //    {
-    //        Debug.Log("distanceBetweenPlayer: " + distanceBetweenPlayer);
-    //    }
-    //}
 
     protected override void AgroState()
     {
@@ -47,20 +33,6 @@ public class Dog : Enemy
             navMeshAgent.SetDestination(player.position);
             // If dog is within range, pounce on player
             distanceBetweenPlayer = Vector3.Distance(transform.position, player.position); //finds distance
-
-            //if (distanceBetweenPlayer <= 2.6f)
-            //{
-            //    if (!isPouncing)
-            //    {
-            //        Pounce();
-            //    }
-            //}
-            //else
-            //{
-            //    if (!isPouncing)
-            //        navMeshAgent.SetDestination(player.position);
-            //}
-
             if (distanceBetweenPlayer <= 2.6f)
             {
                 Pounce();
@@ -72,15 +44,12 @@ public class Dog : Enemy
         }
         else
         {
+            GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
             curState = FSM.DISTRACTED;
-            Distract_Timer = DistractTime; //Consider removing this line if causing issues at your own risk
+            Distract_Timer = DistractTime;
             Debug.Log("Enemy switching to DISTRACTED state");
         }
     }
-    //IEnumerator WaitFor1To2s()
-    //{
-    //    yield return new WaitForSeconds(Random.Range(1f, 2f));
-    //}
 
     protected void Pounce()
     {
@@ -92,17 +61,10 @@ public class Dog : Enemy
             // Look towards player direction
             transform.LookAt(player.position);
             // Pounce!
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+            //transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
             rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             rigidbody.AddForce(Vector3.forward, ForceMode.Impulse);
         }
-        //transform.LookAt(player.position);
-        //if ((controller.collisionFlags & CollisionFlags.Below) != 0)
-        //{
-        //    print("touched the floor");
-        //    isPouncing = false;
-        //    GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
-        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -112,9 +74,9 @@ public class Dog : Enemy
             if (isPouncing == true)
             {
                 isPouncing = false;
-                //GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
+                GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
             }
-            GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
+            //GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
         }
     }
 
@@ -126,4 +88,3 @@ public class Dog : Enemy
         }
     }
 }
-
