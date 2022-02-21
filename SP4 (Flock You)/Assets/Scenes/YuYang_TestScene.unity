@@ -1954,6 +1954,11 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8477922299225322140, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8949744693049997321, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_RootOrder

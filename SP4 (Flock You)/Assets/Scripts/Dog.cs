@@ -7,7 +7,12 @@ public class Dog : Enemy
     float distanceBetweenPlayer;
     //Vector3;
     Rigidbody rigidbody;
-    float jumpPower = 20f;
+
+    //CharacterController controller;
+    float jumpPower = 5f;
+    Enemy enemy;
+    public bool isPouncing;
+    private GameObject playerObj = null;
 
     protected void Start()
     {
@@ -22,6 +27,8 @@ public class Dog : Enemy
 
     protected override void AgroState()
     {
+        if (isPouncing)
+            return;
         if (enemyObserver.isPlayerInRange)
         {
             // Make enemy chase player
@@ -32,9 +39,15 @@ public class Dog : Enemy
             distanceBetweenPlayer = Vector3.Distance(transform.position, player.position); //finds distance
             if (distanceBetweenPlayer <= 2.6f)
             {
-                Debug.Log("Distance between dog and player: " + distanceBetweenPlayer);
-                // Add more script here to start pouncing
-                rigidbody.AddForce(0, jumpPower, 0, ForceMode.Impulse);
+                if (isPouncing == false)
+                {
+                    Pounce();
+                }
+            }
+            else
+            {
+                if (isPouncing == false)
+                    navMeshAgent.SetDestination(player.position);
             }
         }
         else
@@ -44,5 +57,54 @@ public class Dog : Enemy
             Debug.Log("Enemy switching to DISTRACTED state");
         }
     }
+    //IEnumerator WaitFor1To2s()
+    //{
+    //    yield return new WaitForSeconds(Random.Range(1f, 2f));
+    //}
+
+    protected void Pounce()
+    {
+        //if (isPouncing == false)
+        {
+            isPouncing = true;
+            GetComponent<NavMeshAgent>().enabled = false; // turn off NavMeshAgent
+            //WaitFor1To2s();
+            //Debug.Log("Distance between dog and player: " + distanceBetweenPlayer);
+            // Look towards player direction
+            transform.LookAt(player.position);
+            // Pounce!
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+            rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+            rigidbody.AddForce(Vector3.forward, ForceMode.Impulse);
+            // When dog touches floor, re-enable NavMeshAgent
+
+        }
+        //transform.LookAt(player.position);
+        //if ((controller.collisionFlags & CollisionFlags.Below) != 0)
+        //{
+        //    print("touched the floor");
+        //    isPouncing = false;
+        //    GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
+        //}
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Floor")
+        {
+            if (isPouncing == true)
+            {
+                //print("touched the floor");
+                isPouncing = false;
+                GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
+            }
+
+        }
+    }
+
+    //private void OnTriggerExit(Collider other)
+    //{
+        
+    //}
 }
 
