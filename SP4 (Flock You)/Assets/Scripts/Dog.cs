@@ -9,9 +9,10 @@ public class Dog : Enemy
     //Vector3;
     Rigidbody rigidbody;
     //CharacterController controller;
-    float jumpPower = 5f;
+    float jumpPower = 20f;
     Enemy enemy;
     public bool isPouncing;
+    bool pounceSuccess;
     private GameObject playerObj = null;
 
     protected void Start()
@@ -20,6 +21,7 @@ public class Dog : Enemy
         rigidbody = GetComponent<Rigidbody>();
         //controller = GetComponent<CharacterController>();
         isPouncing = false;
+        pounceSuccess = false;
     }
 
     //protected override void Update()
@@ -39,17 +41,26 @@ public class Dog : Enemy
             
             // If dog is within range, pounce on player
             distanceBetweenPlayer = Vector3.Distance(transform.position, player.position); //finds distance
+            //if (distanceBetweenPlayer <= 2.6f)
+            //{
+            //    if (!isPouncing)
+            //    {
+            //        Pounce();
+            //    }
+            //}
+            //else
+            //{
+            //    if (!isPouncing)
+            //        navMeshAgent.SetDestination(player.position);
+            //}
+
             if (distanceBetweenPlayer <= 2.6f)
             {
-                if (isPouncing == false)
-                {
-                    Pounce();
-                }
+                Pounce();
             }
             else
             {
-                if (isPouncing == false)
-                    navMeshAgent.SetDestination(player.position);
+                navMeshAgent.SetDestination(player.position);
             }
         }
         else
@@ -97,17 +108,19 @@ public class Dog : Enemy
         {
             if (isPouncing == true)
             {
-                //print("touched the floor");
                 isPouncing = false;
-                GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
+                //GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
             }
-
+            GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
         }
     }
 
-    //private void OnTriggerExit(Collider other)
-    //{
-        
-    //}
+    private void OnTriggerExit(Collider other)
+    {
+        if (isPouncing)
+        {
+            //Pounce successful!
+        }
+    }
 }
 
