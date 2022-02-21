@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Dog : Enemy
 {
     float distanceBetweenPlayer;
     //Vector3;
     Rigidbody rigidbody;
+    //CharacterController controller;
     float jumpPower = 20f;
+    Enemy enemy;
+    bool isPouncing;
+    private GameObject playerObj = null;
 
     protected void Start()
     {
         //Fetch the Rigidbody from the GameObject with this script attached
         rigidbody = GetComponent<Rigidbody>();
+        //controller = GetComponent<CharacterController>();
+        isPouncing = false;
     }
 
     //protected override void Update()
@@ -27,14 +34,19 @@ public class Dog : Enemy
             // Make enemy chase player
             player = enemyObserver.player;
             SetDetectionRange(defaultDetectionRadius * 4f);
-            navMeshAgent.SetDestination(player.position);
+            
             // If dog is within range, pounce on player
             distanceBetweenPlayer = Vector3.Distance(transform.position, player.position); //finds distance
             if (distanceBetweenPlayer <= 2.6f)
             {
-                Debug.Log("Distance between dog and player: " + distanceBetweenPlayer);
-                // Add more script here to start pouncing
-                rigidbody.AddForce(0, jumpPower, 0, ForceMode.Impulse);
+                if (isPouncing == false)
+                {
+                    Pounce();
+                }
+            }
+            else
+            {
+                navMeshAgent.SetDestination(player.position);
             }
         }
         else
@@ -44,5 +56,54 @@ public class Dog : Enemy
             Debug.Log("Enemy switching to DISTRACTED state");
         }
     }
+
+    IEnumerator WaitFor1To2s()
+    {
+        yield return new WaitForSeconds(Random.Range(1f, 2f));
+    }
+
+    protected void Pounce()
+    {
+        //if (isPouncing == false)
+        {
+            isPouncing = true;
+            GetComponent<NavMeshAgent>().enabled = false; // turn off NavMeshAgent
+            //WaitFor1To2s();
+            //Debug.Log("Distance between dog and player: " + distanceBetweenPlayer);
+            // Look towards player direction
+            transform.LookAt(player.position);
+            // Pounce!
+            rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+            rigidbody.AddForce(Vector3.forward, ForceMode.Impulse);
+            // When dog touches floor, re-enable NavMeshAgent
+
+        }
+        //transform.LookAt(player.position);
+        //if ((controller.collisionFlags & CollisionFlags.Below) != 0)
+        //{
+        //    print("touched the floor");
+        //    isPouncing = false;
+        //    GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
+        //}
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Floor")
+        {
+            if (isPouncing == true)
+            {
+                //print("touched the floor");
+                isPouncing = false;
+                GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
+            }
+
+        }
+    }
+
+    //private void OnTriggerExit(Collider other)
+    //{
+        
+    //}
 }
 
