@@ -34,6 +34,9 @@ public class AbilityControl : MonoBehaviour
         AbilitiesList.Add(layEggAbility);
         AbilitiesList.Add(distactAbility);
         AbilityCount = AbilitiesList.Count;
+
+        for (int i = 0; i < AbilityCount; i++)
+            AbilitiesList[i].SetPlayer(transform);
     }
 
     private void Start()

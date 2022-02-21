@@ -7,7 +7,7 @@ public class Register : MonoBehaviour
     public string URL = GlobalSettings.BaseServer + "register.php";
     public Text displayTxt; //must add using UnityEngine.UI
     public InputField if_username, if_password, if_confirmPassword; //to link to the inpufields
-    public void SendUserNamePassword()
+    public void DoRegister()
     { //to be involved by button click
         Debug.Log("SendUserNamePassword");
         if (if_username.text == "" || if_password.text == "")
@@ -19,6 +19,7 @@ public class Register : MonoBehaviour
     }
     IEnumerator DoSendUserNamePassword()
     {
+        displayTxt.text = "Processing...";
         WWWForm form = new WWWForm();
         form.AddField("sUsername", if_username.text);
         form.AddField("sPassword", if_password.text);
@@ -27,11 +28,10 @@ public class Register : MonoBehaviour
         switch (webreq.result)
         {
             case UnityWebRequest.Result.Success:
-                Debug.Log(webreq.downloadHandler.text);
                 displayTxt.text = webreq.downloadHandler.text;
                 break;
             default:
-                displayTxt.text = "server error";
+                displayTxt.text = "Server Error";
                 break;
         }
     }

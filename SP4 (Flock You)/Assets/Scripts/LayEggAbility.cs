@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class LayEggAbility : Ability
 {
@@ -23,24 +24,45 @@ public class LayEggAbility : Ability
     override public void UseAbility()
     {
         CurCooldown = cooldown;
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-        if(InitNest == null)
-        {
-            //spawn nest
+        if (NestPrefab == null)
             NestPrefab = Resources.Load("NestSpawn") as GameObject;
-            InitNest = Object.Instantiate(NestPrefab, player.transform.position, player.transform.rotation);
-            InitNest.GetComponent<NestSpawnScript>().SetMine(player.gameObject);
-            Debug.Log("LayEggAbility: Nest Created!");
-        }
-        else
-        {
-            //delete last spawn
-            Object.Destroy(InitNest);
-            //spawn new nest
-            InitNest = Object.Instantiate(NestPrefab, player.transform.position, player.transform.rotation);
-            InitNest.GetComponent<NestSpawnScript>().SetMine(player.gameObject);
-        }
 
+        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+        {
+            if (InitNest == null)
+            {
+                //spawn nest
+                InitNest = Object.Instantiate(NestPrefab, player.position, player.rotation);
+                InitNest.GetComponent<NestSpawnScript>().SetMine(player.gameObject);
+                Debug.Log("LayEggAbility: Nest Created!");
+            }
+            else
+            {
+                //delete last spawn
+                Object.Destroy(InitNest);
+                //spawn new nest
+                InitNest = Object.Instantiate(NestPrefab, player.transform.position, player.transform.rotation);
+                InitNest.GetComponent<NestSpawnScript>().SetMine(player.gameObject);
+            }
+        }
+        else if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        {
+            if (InitNest == null)
+            {
+                //spawn nest
+                InitNest = PhotonNetwork.Instantiate("NestSpawn", player.position, player.rotation);
+                InitNest.GetComponent<NestSpawnScript>().SetMine(player.gameObject);
+                Debug.Log("LayEggAbility: Nest Created!");
+            }
+            else
+            {
+                //delete last spawn
+                PhotonNetwork.Destroy(InitNest);
+                //spawn new nest
+                InitNest = PhotonNetwork.Instantiate("NestSpawn", player.position, player.rotation);
+                InitNest.GetComponent<NestSpawnScript>().SetMine(player.gameObject);
+            }
+        }
     }
 }
