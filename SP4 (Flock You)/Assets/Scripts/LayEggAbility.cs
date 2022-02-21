@@ -7,6 +7,7 @@ public class LayEggAbility : Ability
 
     private GameObject NestPrefab;
     private GameObject InitNest;
+    private Transform player;
 
     public LayEggAbility()
     {
