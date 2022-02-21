@@ -571,7 +571,7 @@ public class MovePlayer : MonoBehaviour
             }
             else
             {
-                rolloffsetX -= 0.05f;
+                rolloffsetX -= 0.05f;   
             }
         }
        

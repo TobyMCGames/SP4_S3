@@ -122,7 +122,6 @@ public class WaypointController : MonoBehaviour
         moving = true;
     }
 
-    // this looks like an unused function -yy
     public void ChasePlayer()
     {
         currentTarget = waypoints[index];

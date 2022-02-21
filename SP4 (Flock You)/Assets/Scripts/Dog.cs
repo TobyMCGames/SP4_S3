@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Dog : Enemy
 {
     float distanceBetweenPlayer;
     //Vector3;
     Rigidbody rigidbody;
+
     //CharacterController controller;
     float jumpPower = 20f;
     Enemy enemy;
@@ -38,7 +38,7 @@ public class Dog : Enemy
             // Make enemy chase player
             player = enemyObserver.player;
             SetDetectionRange(defaultDetectionRadius * 4f);
-            
+            navMeshAgent.SetDestination(player.position);
             // If dog is within range, pounce on player
             distanceBetweenPlayer = Vector3.Distance(transform.position, player.position); //finds distance
             //if (distanceBetweenPlayer <= 2.6f)
@@ -70,7 +70,6 @@ public class Dog : Enemy
             Debug.Log("Enemy switching to DISTRACTED state");
         }
     }
-
     //IEnumerator WaitFor1To2s()
     //{
     //    yield return new WaitForSeconds(Random.Range(1f, 2f));
