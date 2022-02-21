@@ -1817,6 +1817,11 @@ PrefabInstance:
       propertyPath: curState
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3231930916497376527, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4006190002733468391, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_LocalPosition.x
