@@ -37,7 +37,6 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     //Temp
     public Text Direction_Test;
 
-
     [Header("Main Player")]
     // Main client player
     public GameObject PlayerPrefab;

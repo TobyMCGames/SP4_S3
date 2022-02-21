@@ -12,13 +12,10 @@ public class BaseEvent :MonoBehaviour
         NUM_EVENTS,
     }
 
-    public EventType Eventtype;
-    private Collider EventArea;
-    private PhotonView EventTarget;
-    
-    
-
-    
+    [SerializeField] protected EventType Eventtype;
+    [SerializeField] protected Collider EventArea;
+    [SerializeField] protected List<PhotonView> EventTarget;
+    [SerializeField] protected PhotonView EventView;
     public virtual bool IsReqMet()
     {
         return false;
@@ -33,27 +30,23 @@ public class BaseEvent :MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public virtual void Update()
     {
-        
     }
 
-    private void Update()
-    {
-        
-    }
-
-    private void Start()
+    public virtual void Start()
     {
         EventArea = null;
     }
-    PhotonView GetEventTarget()
+
+    public virtual void Awake()
     {
-        return EventTarget;
+
     }
     
-    void SetEventTarget(PhotonView photonview)
+    public EventType GetEventType()
     {
-        EventTarget = photonview;
+        return Eventtype;
     }
+
 }
