@@ -3298,7 +3298,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1826739973}
+      - m_Target: {fileID: 1826739972}
         m_TargetAssemblyTypeName: Register, Assembly-CSharp
         m_MethodName: DoRegister
         m_Mode: 1
@@ -6909,46 +6909,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815348011}
   m_CullTransparentMesh: 1
---- !u!1 &1826739971
+--- !u!1 &1826739971 stripped
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 6085842425276159477, guid: 3e60dbb935be73d4e86fb803efd5e985,
+    type: 3}
+  m_PrefabInstance: {fileID: 6085842426683425526}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1826739974}
-  - component: {fileID: 1826739972}
-  - component: {fileID: 1826739973}
-  m_Layer: 0
-  m_Name: DatabaseManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1826739972
+--- !u!114 &1826739972 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1826739971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ca4ea9aa53968d4ab3c9b62a5f19981, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  URL: http://localhost/FlockYou_server/login.php
-  displayTxt: {fileID: 46365618}
-  if_username: {fileID: 328590478}
-  if_password: {fileID: 500635058}
-  PlayerNameDisplayTxt: {fileID: 178564850}
---- !u!114 &1826739973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1896682447112623664, guid: 3e60dbb935be73d4e86fb803efd5e985,
+    type: 3}
+  m_PrefabInstance: {fileID: 6085842426683425526}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826739971}
   m_Enabled: 1
@@ -6956,25 +6927,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ad835dbff6f194d99e0db7b899f371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  URL: http://localhost/FlockYou_server/register.php
-  displayTxt: {fileID: 869520902}
-  if_username: {fileID: 1827949178}
-  if_password: {fileID: 1003826906}
-  if_confirmPassword: {fileID: 590649455}
---- !u!4 &1826739974
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!114 &1826739973 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3017652947777773765, guid: 3e60dbb935be73d4e86fb803efd5e985,
+    type: 3}
+  m_PrefabInstance: {fileID: 6085842426683425526}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826739971}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca4ea9aa53968d4ab3c9b62a5f19981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1827949176
 GameObject:
   m_ObjectHideFlags: 0
@@ -7201,7 +7165,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1826739972}
+      - m_Target: {fileID: 1826739973}
         m_TargetAssemblyTypeName: Login, Assembly-CSharp
         m_MethodName: DoLogin
         m_Mode: 1
@@ -8098,3 +8062,152 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2123690806}
   m_CullTransparentMesh: 1
+--- !u!1001 &6085842426683425526
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1896682447112623664, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: displayTxt
+      value: 
+      objectReference: {fileID: 869520902}
+    - target: {fileID: 1896682447112623664, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: if_password
+      value: 
+      objectReference: {fileID: 1003826906}
+    - target: {fileID: 1896682447112623664, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: if_username
+      value: 
+      objectReference: {fileID: 1827949178}
+    - target: {fileID: 1896682447112623664, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: if_confirmPassword
+      value: 
+      objectReference: {fileID: 590649455}
+    - target: {fileID: 3017652947777773765, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: displayTxt
+      value: 
+      objectReference: {fileID: 46365618}
+    - target: {fileID: 3017652947777773765, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: if_password
+      value: 
+      objectReference: {fileID: 500635058}
+    - target: {fileID: 3017652947777773765, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: if_username
+      value: 
+      objectReference: {fileID: 328590478}
+    - target: {fileID: 3017652947777773765, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: PlayerNameDisplayTxt
+      value: 
+      objectReference: {fileID: 178564850}
+    - target: {fileID: 6085842425276159472, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085842425276159472, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085842425276159472, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085842425276159472, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085842425276159472, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085842425276159472, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085842425276159472, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085842425276159472, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085842425276159472, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085842425276159472, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085842425276159472, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085842425276159474, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: displayTxt
+      value: 
+      objectReference: {fileID: 46365618}
+    - target: {fileID: 6085842425276159474, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: if_password
+      value: 
+      objectReference: {fileID: 500635058}
+    - target: {fileID: 6085842425276159474, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: if_username
+      value: 
+      objectReference: {fileID: 328590478}
+    - target: {fileID: 6085842425276159474, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: PlayerNameDisplayTxt
+      value: 
+      objectReference: {fileID: 178564850}
+    - target: {fileID: 6085842425276159475, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: displayTxt
+      value: 
+      objectReference: {fileID: 869520902}
+    - target: {fileID: 6085842425276159475, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: if_password
+      value: 
+      objectReference: {fileID: 1003826906}
+    - target: {fileID: 6085842425276159475, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: if_username
+      value: 
+      objectReference: {fileID: 1827949178}
+    - target: {fileID: 6085842425276159475, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: if_confirmPassword
+      value: 
+      objectReference: {fileID: 590649455}
+    - target: {fileID: 6085842425276159477, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: m_Name
+      value: DatabaseManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3e60dbb935be73d4e86fb803efd5e985, type: 3}
