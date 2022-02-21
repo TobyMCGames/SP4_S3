@@ -39,6 +39,7 @@ public class InteractItem : MonoBehaviour
     [PunRPC]
     public void DropItem()
     {
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         transform.SetParent(InteractableList);
     }
 
@@ -47,5 +48,6 @@ public class InteractItem : MonoBehaviour
     {
         GameObject _holder = PhotonNetwork.GetPhotonView(ViewID).gameObject;
         transform.SetParent(_holder.transform.GetChild(child));
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
     }
 }
