@@ -8,10 +8,15 @@ namespace Photon.Pun.Demo.Asteroids
 {
     public class LobbyMainPanel : MonoBehaviourPunCallbacks
     {
+        [Header("Database Manager")]
+        public GameObject databaseManager;
+
         [Header("Login Panel")]
         public GameObject LoginPanel;
-
         public InputField PlayerNameInput;
+
+        [Header("Register Panel")]
+        public GameObject RegisterPanel;
 
         [Header("Selection Panel")]
         public GameObject SelectionPanel;
@@ -50,7 +55,8 @@ namespace Photon.Pun.Demo.Asteroids
             cachedRoomList = new Dictionary<string, RoomInfo>();
             roomListEntries = new Dictionary<string, GameObject>();
             
-            PlayerNameInput.text = "Player " + Random.Range(1000, 10000);
+            //random player name
+            //PlayerNameInput.text = "Player " + Random.Range(1000, 10000);
         }
 
         #endregion
@@ -216,6 +222,18 @@ namespace Photon.Pun.Demo.Asteroids
             SetActivePanel(SelectionPanel.name);
         }
 
+        public void OpenRegisterPanel()
+        {
+            RegisterPanel.SetActive(true);
+            LoginPanel.SetActive(false);
+        }
+
+        public void OpenLoginPanel()
+        {
+            RegisterPanel.SetActive(false);
+            LoginPanel.SetActive(true);
+        }
+
         public void OnCreateRoomButtonClicked()
         {
             string roomName = RoomNameInputField.text;
@@ -322,6 +340,7 @@ namespace Photon.Pun.Demo.Asteroids
         private void SetActivePanel(string activePanel)
         {
             LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
+            RegisterPanel.SetActive(activePanel.Equals(RegisterPanel.name));
             SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
             CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
             JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));

@@ -2,25 +2,30 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class Login : MonoBehaviour
 {
     public string URL = GlobalSettings.BaseServer + "login.php";
     public Text displayTxt; //must add using UnityEngine.UI
     public InputField if_username, if_password; //to link to the inpufields
-    public void SendUserNamePassword()
+
+    [Header("From Selection Panel")]
+    public Text PlayerNameDisplayTxt;
+
+    public void DoLogin()
     { //to be invoked by button click
         if (if_username.text == "" || if_password.text == "")
             displayTxt.text = "Username or Password is Empty";
         else
         {
-            StartCoroutine(DoSendUserNamePassword());
+            StartCoroutine(SendLoginInfo());
         }
 
     }
-    IEnumerator DoSendUserNamePassword()
+    IEnumerator SendLoginInfo()
     {
+        displayTxt.text = "Processing...";
         WWWForm form = new WWWForm();
         form.AddField("sUsername", if_username.text);
         form.AddField("sPassword", if_password.text);
@@ -31,14 +36,19 @@ public class Login : MonoBehaviour
         {
             case UnityWebRequest.Result.Success:
                 displayTxt.text = webreq.downloadHandler.text;
-                //set the username to saved to following scenes
-                //MainManager.Instance.Username = if_username.text;
                 GlobalSettings.Username = if_username.text;
                 if (webreq.downloadHandler.text == "Login success")
-                    SceneManager.LoadScene("sc_MainMenu");
+                {
+                    //Set player name
+                    string playerName = if_username.text;
+                    PhotonNetwork.LocalPlayer.NickName = playerName;
+                    PlayerNameDisplayTxt.text = playerName;
+                    //photon connect to server
+                    PhotonNetwork.ConnectUsingSettings();
+                }
                 break;
             default:
-                displayTxt.text = "server error";
+                displayTxt.text = "Server Error";
                 break;
         }
     }
