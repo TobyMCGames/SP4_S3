@@ -341,7 +341,8 @@ namespace Photon.Pun.Demo.Asteroids
         private void SetActivePanel(string activePanel)
         {
             LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
-            RegisterPanel.SetActive(activePanel.Equals(RegisterPanel.name));
+            if (RegisterPanel != null)
+                RegisterPanel.SetActive(activePanel.Equals(RegisterPanel.name));
             SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
             CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
             JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));

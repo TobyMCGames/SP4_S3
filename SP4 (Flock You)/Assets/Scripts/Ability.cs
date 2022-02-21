@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Ability
 {
+    protected Transform player;
+
     public float cooldown = 0;
     public float CurCooldown = 0;
     public string AbilityName;
@@ -17,6 +19,11 @@ public class Ability
         }
         else
             return true;
+    }
+
+    public void SetPlayer(Transform _player)
+    {
+        player = _player;
     }
 
     public virtual void UseAbility()
