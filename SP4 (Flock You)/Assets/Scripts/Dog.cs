@@ -28,6 +28,11 @@ public class Dog : Enemy
     //protected override void Update()
     //{
     //    base.Update();
+    //    distanceBetweenPlayer = Vector3.Distance(transform.position, player.position); //finds distance
+    //    if (distanceBetweenPlayer <= 2.6f)
+    //    {
+    //        Debug.Log("distanceBetweenPlayer: " + distanceBetweenPlayer);
+    //    }
     //}
 
     protected override void AgroState()
@@ -42,6 +47,7 @@ public class Dog : Enemy
             navMeshAgent.SetDestination(player.position);
             // If dog is within range, pounce on player
             distanceBetweenPlayer = Vector3.Distance(transform.position, player.position); //finds distance
+
             //if (distanceBetweenPlayer <= 2.6f)
             //{
             //    if (!isPouncing)
@@ -82,7 +88,6 @@ public class Dog : Enemy
         {
             isPouncing = true;
             GetComponent<NavMeshAgent>().enabled = false; // turn off NavMeshAgent
-            //WaitFor1To2s();
             //Debug.Log("Distance between dog and player: " + distanceBetweenPlayer);
             // Look towards player direction
             transform.LookAt(player.position);
@@ -90,8 +95,6 @@ public class Dog : Enemy
             transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
             rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             rigidbody.AddForce(Vector3.forward, ForceMode.Impulse);
-            // When dog touches floor, re-enable NavMeshAgent
-
         }
         //transform.LookAt(player.position);
         //if ((controller.collisionFlags & CollisionFlags.Below) != 0)
