@@ -25,7 +25,6 @@ public class Enemy : MonoBehaviour
     protected float DistractTime;
 
 
-
     void Awake()
     {
         photonView = GetComponent<PhotonView>();
@@ -146,9 +145,9 @@ public class Enemy : MonoBehaviour
 
     public void Distracted(Vector3 PlayerLastPos)
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
-            if (!PhotonNetwork.IsMasterClient)
-                return;
+        //if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        //    if (!PhotonNetwork.IsMasterClient)
+        //        return;
         curState = FSM.DISTRACTED;
         Distract_Timer = DistractTime;
         //waypointController.MoveToLocation(PlayerLastPos);

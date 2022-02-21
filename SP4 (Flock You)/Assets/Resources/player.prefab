@@ -355,8 +355,9 @@ MonoBehaviour:
   playerState: 0
   camera: {fileID: 0}
   Lookat: {fileID: 8714987993477327268}
+  BarrelRollSpeed: 5
   DiveBombDirection: {x: 0, y: 0, z: 0}
-  baserotation: {x: 0, y: 0, z: 0}
+  baserotation: {x: 0, y: 90, z: 0}
   directiontext: {fileID: 0}
   orientationtext: {fileID: 0}
 --- !u!114 &6220354295224625069

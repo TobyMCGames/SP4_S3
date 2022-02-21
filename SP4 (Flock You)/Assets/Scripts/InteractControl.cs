@@ -14,14 +14,14 @@ public class InteractControl : MonoBehaviour
     private float speedChange;
     private float playerSpeed;
 
-    private void Awake()
+    void Awake()
     {
         // init variables
         player = gameObject;
         photonView = gameObject.GetPhotonView();
     }
 
-    private void Start()
+    void Start()
     {
         
     }
@@ -32,19 +32,20 @@ public class InteractControl : MonoBehaviour
             if (!photonView.IsMine)
                 return;
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            Debug.Log("Released L Mouse btn in interactable controls");
-            //default speed
-            player.GetComponent<MovePlayer>().movemul = player.GetComponent<MovePlayer>().GetDefaultMoveMul();
-        }
-
         if(Input.GetMouseButtonDown(0))
         {
             peckableObject = player.GetComponentInChildren<InteractDetection>().GetPeckable();
             if (peckableObject != null)
             {
-                peckableObject.GetComponent<Peckable>().SetCanBeDamaged(true);
+                if(peckableObject.name == "NestSpawn(Clone)")
+                {
+                    if(peckableObject.GetComponent<NestSpawnScript>().GetWhoSpawnMe() != gameObject)
+                    {
+                        peckableObject.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
+                    }
+                }
+                else
+                    peckableObject.GetComponent<Peckable>().SetCanBeDamaged(true);
             }
 
         }
@@ -53,20 +54,28 @@ public class InteractControl : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             heldObject = GetComponentInChildren<InteractDetection>().GetInteractable();
-            if (heldObject != null)
+            if (heldObject != null && heldObject.transform.parent != touchPointLight.transform && heldObject.transform.parent != touchPointHeavy.transform)
             {
                 heldObjectWeight = heldObject.GetComponent<Rigidbody>().mass;
 
                 //light object
                 if (heldObjectWeight >= 1 && heldObjectWeight <= 7)
-                {         
-                    heldObject.transform.position = touchPointLight.transform.position;
+                {
+                    if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+                        heldObject.GetPhotonView().RPC("SetHolder", RpcTarget.AllViaServer, photonView.ViewID, 2);
+                    else
+                        heldObject.GetComponent<InteractItem>().SetHolder(touchPointLight.transform);
+                    //heldObject.transform.position = touchPointLight.transform.position;
                     heldObject.GetComponent<Collider>().enabled = false;
                 }
                 //heavy object
                 else if (heldObjectWeight > 7)
                 {
-                    heldObject.transform.position = touchPointHeavy.transform.position;
+                    if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+                        heldObject.GetPhotonView().RPC("SetHolder", RpcTarget.AllViaServer, photonView.ViewID, 3);
+                    else
+                        heldObject.GetComponent<InteractItem>().SetHolder(touchPointHeavy.transform);
+                    //heldObject.transform.position = touchPointHeavy.transform.position;
                 }
 
                 //change player speed according to weight of object
@@ -75,11 +84,20 @@ public class InteractControl : MonoBehaviour
                 player.GetComponent<MovePlayer>().movemul = speedChange;
             }
         }
-        else
+        else if(Input.GetMouseButtonUp(0))
         {
+            Debug.Log("Released L Mouse btn in interactable controls");
+
             if (heldObject != null)
             {
+                if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+                    heldObject.GetPhotonView().RPC("DropItem", RpcTarget.AllViaServer);
+                else
+                    heldObject.GetComponent<InteractItem>().DropItem();
+
                 heldObject.GetComponent<Collider>().enabled = true;
+                //default speed
+                player.GetComponent<MovePlayer>().movemul = player.GetComponent<MovePlayer>().GetDefaultMoveMul();
             }
         }
     }

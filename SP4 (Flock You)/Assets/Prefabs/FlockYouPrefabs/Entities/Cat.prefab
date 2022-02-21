@@ -287,6 +287,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51db8f7ff0296074695c9b0417f447ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  navMeshAgent: {fileID: 0}
+  curState: 0
+  enemyObserver: {fileID: 3311036639648362237}
 --- !u!1 &5907923897786182271
 GameObject:
   m_ObjectHideFlags: 0

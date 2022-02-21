@@ -44,6 +44,5 @@ public class Dog : Enemy
             Debug.Log("Enemy switching to DISTRACTED state");
         }
     }
-
 }
 
