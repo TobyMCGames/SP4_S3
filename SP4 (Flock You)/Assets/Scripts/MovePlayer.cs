@@ -7,28 +7,6 @@ using Photon.Pun;
 public class MovePlayer : MonoBehaviour
 {
 
-    public struct doubletappair
-    {
-        public doubletapchecktype keytype;
-        public bool keyStatus;
-        public double firsttaptime;
-
-        public doubletappair(doubletapchecktype _keytype)
-        {
-            keytype = _keytype;
-            keyStatus = false;
-            firsttaptime = 0;
-        }
-        public void setStatus(bool _keyStatus)
-        {
-            keyStatus = _keyStatus;
-        }
-        public void setTapTime(double _firsttaptime)
-        {
-            firsttaptime = _firsttaptime;
-        }
-    }
-
     public enum PlayerState
     {
         IDLE,
@@ -44,8 +22,6 @@ public class MovePlayer : MonoBehaviour
     public enum doubletapchecktype
     {
         DOUBLE_SPACE,
-        DOUBLE_A,
-        DOUBLE_D,
         DOUBLE_NONE,
     }
 
@@ -119,9 +95,8 @@ public class MovePlayer : MonoBehaviour
     public Text orientationtext;
 
     //private doubletapchecktype doublechecktype = doubletapchecktype.DOUBLE_NONE;
-
-    public List<doubletappair> doubletapchecklist = new List<doubletappair>();
-
+    Dictionary<doubletapchecktype, double> keyfirsttaptimelist = new Dictionary<doubletapchecktype, double>();
+    Dictionary<doubletapchecktype, bool> keyfirsttapstatus = new Dictionary<doubletapchecktype, bool>();
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
@@ -151,9 +126,9 @@ public class MovePlayer : MonoBehaviour
         roll = baserotation.z;
         m_Rigidbody.MoveRotation(Quaternion.Euler(pitch, yaw, roll));
 
-        doubletapchecklist.Add(new doubletappair(doubletapchecktype.DOUBLE_A));
-        doubletapchecklist.Add(new doubletappair(doubletapchecktype.DOUBLE_D));
-        doubletapchecklist.Add(new doubletappair(doubletapchecktype.DOUBLE_SPACE));
+        keyfirsttapstatus.Add(doubletapchecktype.DOUBLE_SPACE, false);
+
+        keyfirsttaptimelist.Add(doubletapchecktype.DOUBLE_SPACE, 0);
     }
 
     private void Update()
@@ -171,7 +146,7 @@ public class MovePlayer : MonoBehaviour
         }
         else
             m_Rigidbody.useGravity = true;
-        //checkdoubletap();
+        //checkDoubletap();
         checkJump(); // checks if player jumps
         if (Input.GetKeyUp(KeyCode.C))
         {
@@ -209,11 +184,11 @@ public class MovePlayer : MonoBehaviour
         inputed= hasHorizontalInput || hasVerticalInput;
         
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.D))
         {
             playerState = PlayerState.FLYING_BARREL_RIGHT;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.A))
         {
             playerState = PlayerState.FLYING_BARREL_LEFT;
         }
@@ -319,7 +294,8 @@ public class MovePlayer : MonoBehaviour
 
     public void Fly()
     {
-        checkdoubletap();
+        //checkdoubletap();
+        checkDoubletap();
         if (playerState == PlayerState.FLYING_DIVEBOMB)
         {
             divebomb();
@@ -334,7 +310,8 @@ public class MovePlayer : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             //m_Movement.y += Time.deltaTime * flyverticalforce;
-            playerState = PlayerState.FLYING_HEIGHTCHANGE;
+            if (playerState != PlayerState.FLYING_DIVEBOMB)
+                playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // striaght up
                 m_Rigidbody.AddForce((Vector3.up * flyverticalforce) * Time.deltaTime, ForceMode.VelocityChange);
 
@@ -360,9 +337,10 @@ public class MovePlayer : MonoBehaviour
         }
 
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-            playerState = PlayerState.FLYING_HEIGHTCHANGE;
+            if (playerState != PlayerState.FLYING_DIVEBOMB)
+                playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // fly striaght down;
             {
                 m_Rigidbody.AddForce((flyverticalforce * Vector3.down) * Time.deltaTime, ForceMode.VelocityChange);
@@ -436,142 +414,62 @@ public class MovePlayer : MonoBehaviour
         }
     }
 
-    /*public void checkdoubletap()
+    void checkDoubletap()
     {
-        if (doubletapcheck)
+        for (doubletapchecktype i=0;i < doubletapchecktype.DOUBLE_NONE;i++)
         {
-            elapsedtaptime += Time.deltaTime;
-            if (elapsedtaptime > doubletaptimeframe)
-            {
-                doubletapcheck = false;
-                elapsedtaptime = 0;
-                Debug.Log("single tap");
-            }
-        }
-        if (Input.GetButtonUp("Jump") && playerState > PlayerState.FLYING)
-        {
-            if (doubletapcheck)
-            {
-                if (Time.time - firsttaptime < doubletaptimeframe)
-                {
-                    doubletapcheck = false;
-                    elapsedtaptime = 0;
-                    Orientation.Set(0, 0, 0);
-                    if (playerState > PlayerState.FLYING && playerState != PlayerState.FLYING_DIVEBOMB)
-                    {
-                        playerState = PlayerState.FLYING_DIVEBOMB;
-                        DiveBombDirection = vec3front;
-                        fallspeed = 0;
-                    }
-                    else if (playerState == PlayerState.FLYING_DIVEBOMB) // recover divebomb
-                    {
-                        playerState = PlayerState.FLYING_HEIGHTCHANGE;
-                        movemul -= fallspeed;
-                    }
-                }
-                else
-                {
-                    doubletapcheck = false;
-                    Debug.Log("single tap");
-                }
-            }
-            else
-            {
-                firsttaptime = Time.time;
-                doubletapcheck = true;
-            }
-        }
-    }*/
-
-    
-    public void checkdoubletap()
-    {
-        doubletapchecktype type = doubletapchecktype.DOUBLE_NONE;
-        bool doubletapstatus;
-        double doublefirsttaptime;
-        for (int i = 0; i < doubletapchecklist.Count; i++)
-        {
-            type = doubletapchecklist[i].keytype;
-            doubletapstatus = doubletapchecklist[i].keyStatus;
-            doublefirsttaptime = doubletapchecklist[i].firsttaptime;
-            switch (type)
+            switch (i)
             {
                 case doubletapchecktype.DOUBLE_SPACE:
                     if (Input.GetKeyUp(KeyCode.Space))
                     {
-                         if (!doubletapstatus)
+                        if (keyfirsttapstatus[i] == true)
                         {
-                            doubletapstatus = true;
-                            doublefirsttaptime = Time.time;
+                            if (Time.time - keyfirsttaptimelist[i] < doubletaptimeframe)
+                            {
+                                doubletapcheck = false;
+                                elapsedtaptime = 0;
+                                Orientation.Set(0, 0, 0);
+                                if (playerState > PlayerState.FLYING && playerState != PlayerState.FLYING_DIVEBOMB)
+                                {
+                                    playerState = PlayerState.FLYING_DIVEBOMB;
+                                    DiveBombDirection = vec3front;
+                                    fallspeed = 0;
+                                }
+                                else if (playerState == PlayerState.FLYING_DIVEBOMB) // recover divebomb
+                                {
+                                    playerState = PlayerState.FLYING_HEIGHTCHANGE;
+                                }
+                            }
+                            else // single tap jump
+                            {
+                                keyfirsttapstatus[i] = false;
+                            }
                         }
-                        else if (playerState == PlayerState.FLYING_DIVEBOMB)
+                        else
                         {
-                            playerState = PlayerState.FLYING;
-                            doubletapstatus = false;
+                            keyfirsttaptimelist[i] = Time.time;
+                            keyfirsttapstatus[i] = true;
                         }
                     }
-                    else if (Input.GetKey(KeyCode.Space)) // divebomb
+                    else if (Input.GetKey(KeyCode.Space))
                     {
-                        if (doubletapstatus)
+                        if (keyfirsttapstatus[i] == true && playerState > PlayerState.FLYING)
                         {
                             playerState = PlayerState.FLYING_DIVEBOMB;
-                            doubletapchecklist[i].setStatus(!doubletapstatus);
-                            doubletapchecklist[i].setTapTime(doublefirsttaptime);
-                        }
-                        return; // we do not want it to continue checking for the second up input as we want doubletapcheck to be true
-                    }
-                    break;
-                case doubletapchecktype.DOUBLE_A:
-                    if (Input.GetKeyUp(KeyCode.A))
-                    {
-                        if (!doubletapstatus)
-                        {
-                            doubletapstatus = true;
-                            doublefirsttaptime = Time.time;
-                        }
-                        else
-                        {
-                            if (Time.time - doublefirsttaptime < doubletaptimeframe)
-                            {
-                                doubletapstatus = false;
-                                elapsedtaptime = 0;
-                                Orientation.Set(0, 0, 0);
-                            }
-                            else
-                            {
-                                doubletapstatus = false;
-                                Debug.Log("single tap");
-                            }
                         }
                     }
-                    break;
-                case doubletapchecktype.DOUBLE_D:
-                    if (Input.GetKeyUp(KeyCode.D))
+                    else if (playerState == PlayerState.FLYING_DIVEBOMB)
                     {
-                        if (!doubletapstatus)
-                        {
-                            doubletapstatus = true;
-                            doublefirsttaptime = Time.time;
-                        }
-                        else
-                        {
-                            if (Time.time - doublefirsttaptime < doubletaptimeframe)
-                            {
-                                doubletapstatus = false;
-                                elapsedtaptime = 0;
-                                Orientation.Set(0, 0, 0);
-                            }
-                            else
-                            {
-                                doubletapstatus = false;
-                                Debug.Log("single tap");
-                            }
-                        }
+                        playerState = PlayerState.FLYING;
+                        movemul += -fallspeed * Time.deltaTime;
                     }
                     break;
             }
-            doubletapchecklist[i].setStatus(doubletapstatus);
-            doubletapchecklist[i].setTapTime(doublefirsttaptime);
+            if (Time.time - keyfirsttaptimelist[i] > doubletaptimeframe)
+            {
+                keyfirsttapstatus[i] = false;
+            }
         }
     }
 
@@ -602,21 +500,6 @@ public class MovePlayer : MonoBehaviour
             currenflaptimer += Time.deltaTime;
     }
 
-    public void ChangePlayerState(PlayerState nextplayerState)
-    {
-        switch (playerState) // check what is the current state and change the values according to what is the next state
-        {
-            case PlayerState.IDLE:
-                break;
-            case PlayerState.JUMPING:
-                break;
-            case PlayerState.FLYING:
-                break;
-            
-            case PlayerState.FLYING_DIVEBOMB:
-                break;
-        }
-    }
     public void handleLanding()
     {
         if (islanding)
@@ -655,12 +538,12 @@ public class MovePlayer : MonoBehaviour
         m_Rigidbody.AddForce(m_Movement* Time.deltaTime * movemul, ForceMode.Impulse);
         
         if (fallspeed > birdterminalvelocity)
-            fallspeed += -0.05f;
-        if (islanding)
+            fallspeed += Physics.gravity.y * Time.deltaTime * 0.2f;
+        /*(if (islanding)
         {
             playerState = PlayerState.FLYING_HEIGHTCHANGE;
-            movemul += -fallspeed * 5;
-        }
+            movemul += -fallspeed * Time.deltaTime;
+        }*/
     }
 
     void BarrelRoll()

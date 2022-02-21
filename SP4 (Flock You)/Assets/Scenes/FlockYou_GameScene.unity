@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: ccd73e39406f389468daa184d17048b4, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: c9215d702007cfd40b40a5b80cf243b0, type: 2}
 --- !u!1 &193360770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1536,7 +1536,7 @@ PrefabInstance:
     - target: {fileID: 62555332821048599, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: sceneViewId
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 960609029140289524, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1946,7 +1946,7 @@ PrefabInstance:
     - target: {fileID: 7775912684759609873, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: sceneViewId
-      value: 1
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8216566085948366739, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}

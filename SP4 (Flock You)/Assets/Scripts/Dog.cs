@@ -6,11 +6,19 @@ public class Dog : Enemy
 {
     float distanceBetweenPlayer;
     //Vector3;
+    Rigidbody rigidbody;
+    float jumpPower = 20f;
 
-    protected override void Update()
+    protected void Start()
     {
-        base.Update();
+        //Fetch the Rigidbody from the GameObject with this script attached
+        rigidbody = GetComponent<Rigidbody>();
     }
+
+    //protected override void Update()
+    //{
+    //    base.Update();
+    //}
 
     protected override void AgroState()
     {
@@ -26,7 +34,7 @@ public class Dog : Enemy
             {
                 Debug.Log("Distance between dog and player: " + distanceBetweenPlayer);
                 // Add more script here to start pouncing
-
+                rigidbody.AddForce(0, jumpPower, 0, ForceMode.Impulse);
             }
         }
         else
