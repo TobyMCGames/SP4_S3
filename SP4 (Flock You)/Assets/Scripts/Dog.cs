@@ -9,9 +9,9 @@ public class Dog : Enemy
     //Vector3;
     Rigidbody rigidbody;
     //CharacterController controller;
-    float jumpPower = 20f;
+    float jumpPower = 5f;
     Enemy enemy;
-    bool isPouncing;
+    public bool isPouncing;
     private GameObject playerObj = null;
 
     protected void Start()
@@ -29,6 +29,8 @@ public class Dog : Enemy
 
     protected override void AgroState()
     {
+        if (isPouncing)
+            return;
         if (enemyObserver.isPlayerInRange)
         {
             // Make enemy chase player
@@ -46,7 +48,8 @@ public class Dog : Enemy
             }
             else
             {
-                navMeshAgent.SetDestination(player.position);
+                if (isPouncing == false)
+                    navMeshAgent.SetDestination(player.position);
             }
         }
         else
@@ -57,10 +60,10 @@ public class Dog : Enemy
         }
     }
 
-    IEnumerator WaitFor1To2s()
-    {
-        yield return new WaitForSeconds(Random.Range(1f, 2f));
-    }
+    //IEnumerator WaitFor1To2s()
+    //{
+    //    yield return new WaitForSeconds(Random.Range(1f, 2f));
+    //}
 
     protected void Pounce()
     {
@@ -73,6 +76,7 @@ public class Dog : Enemy
             // Look towards player direction
             transform.LookAt(player.position);
             // Pounce!
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
             rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             rigidbody.AddForce(Vector3.forward, ForceMode.Impulse);
             // When dog touches floor, re-enable NavMeshAgent

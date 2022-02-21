@@ -48,7 +48,6 @@ public class WaypointController : MonoBehaviour
 
     public void WaypointUpdate()
     {
-
         if (currentTarget != null)
         {
             //Check if the agent has arrived the target position
