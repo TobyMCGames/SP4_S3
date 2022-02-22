@@ -19,7 +19,7 @@ public class Projectile_Poop : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
 
@@ -36,7 +36,7 @@ public class Projectile_Poop : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
-            if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             {
                 PhotonView _enemy = other.gameObject.GetPhotonView();
                 _enemy.RPC("SetStunRPC", RpcTarget.MasterClient, _enemy.ViewID, 5.0f);
@@ -46,7 +46,7 @@ public class Projectile_Poop : MonoBehaviour
         }
         Debug.Log("Poop drop on non-enemy");
 
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             PhotonNetwork.Destroy(gameObject);
         else
             Destroy(gameObject);

@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!PhotonNetwork.IsMasterClient)
                 return;
 
@@ -113,7 +113,7 @@ public class Enemy : MonoBehaviour
         else
         {
             curState = FSM.DISTRACTED;
-            Distract_Timer = DistractTime; //Consider removing this line if causing issues at your own risk
+            Distract_Timer = DistractTime;
             Debug.Log("Enemy switching to DISTRACTED state");
         }
     }
@@ -157,7 +157,7 @@ public class Enemy : MonoBehaviour
     [PunRPC]
     private void SetStunRPC(int viewID, float stunTime)
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!PhotonNetwork.IsMasterClient)
                 return;
 

@@ -45,7 +45,7 @@ public class DropLoadControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
         if (curAmmo < MaxAmmo)
@@ -98,14 +98,14 @@ public class DropLoadControl : MonoBehaviour
             return;
         }
 
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
             GameObject poop = Instantiate(PoopPrefab, ProjectileList);
             poop.transform.position = gameObject.transform.position;
             poop.GetComponent<Projectile_Poop>().AssignPooper(transform);
             poop.GetComponent<Rigidbody>().AddForce(gameObject.GetComponent<Rigidbody>().velocity);
         }
-        else if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             GameObject poop = PhotonNetwork.Instantiate("Bird_Poop", gameObject.transform.position, Quaternion.Euler(0.0f, 0.0f, 0.0f));
             poop.GetComponent<Projectile_Poop>().AssignPooper(transform);

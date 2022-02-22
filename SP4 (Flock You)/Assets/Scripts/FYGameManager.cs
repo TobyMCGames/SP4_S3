@@ -17,16 +17,6 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public static FYGameManager Instance = null;
     private PhotonView photonView;
 
-    // Game Modes
-    public enum GAMEMODES
-    {
-        SINGLE_PLAYER,
-        MULTIPLAYER,
-        NUM_GAME_MODES
-    }
-
-    public GAMEMODES curMode;
-
     // Game Timer
     public float curTimer;
 
@@ -90,14 +80,14 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
             Initialize();
             UI_Screen.SetActive(true);
             AssignSpawnPoints();
             player.ResetSpawnPoint();
         }
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             Loading_Screen.SetActive(true);
             Hashtable props = new Hashtable
@@ -192,7 +182,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (curMode == GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             if (!AllPlayersAssigned)
                 if (PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length == PlayerList.childCount)
@@ -233,7 +223,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             Debug.Log("No SpawnPoints are set");
             return;
         }
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
             if (player == null)
             {
@@ -245,7 +235,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             player.setDefaultSpawn(SpawnPoints[0].position);
             AllPlayersAssigned = true;
         }
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             if (!PhotonNetwork.IsMasterClient)
                 return;
@@ -285,12 +275,12 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
 
         GameObject ClientPlayer = null;
-        if (curMode == GAMEMODES.SINGLE_PLAYER && player == null)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER && player == null)
         {
             ClientPlayer = Instantiate(PlayerPrefab, PlayerList);
             ClientPlayer.GetComponent<PhotonTransformView>().enabled = false;
         }
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             ClientPlayer = PhotonNetwork.Instantiate("player_online", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
 
         if (player != null)
@@ -315,7 +305,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         SetUpUI();
         //photonView.RPC("RegisterPlayerID", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID);
 
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             photonView.RPC("SetToPlayerList", RpcTarget.AllViaServer, player.gameObject.GetPhotonView().ViewID);
     }
 

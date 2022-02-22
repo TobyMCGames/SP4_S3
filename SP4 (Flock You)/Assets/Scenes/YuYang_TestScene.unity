@@ -862,7 +862,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!195 &1418905377 stripped
 NavMeshAgent:
@@ -1017,7 +1017,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a792c6ee6b6a84fb03bdc0d88306ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curMode: 0
   curTimer: 65
   UI_Screen: {fileID: 2043670230}
   Loading_Screen: {fileID: 274018344}
@@ -1539,6 +1538,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 62555332821048599, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 684323528345322168, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 960609029140289524, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: sceneViewId
@@ -1549,6 +1558,16 @@ PrefabInstance:
       propertyPath: ProjectileList
       value: 
       objectReference: {fileID: 1717723799}
+    - target: {fileID: 1473214748934468342, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502287666922627806, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1887408464682180715, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: sceneViewId
@@ -1568,6 +1587,11 @@ PrefabInstance:
         type: 3}
       propertyPath: curState
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231930916497376527, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4006190002733468391, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1598,6 +1622,11 @@ PrefabInstance:
         type: 3}
       propertyPath: sceneViewId
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5033030192790779012, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Floor
       objectReference: {fileID: 0}
     - target: {fileID: 5049350245078227108, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1752,7 +1781,7 @@ PrefabInstance:
     - target: {fileID: 6455223400408770669, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6455223400408770669, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1837,7 +1866,7 @@ PrefabInstance:
     - target: {fileID: 6877641834323163963, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.599233
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835054059402, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1872,7 +1901,7 @@ PrefabInstance:
     - target: {fileID: 6877641835054059403, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.599233
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835400412570, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1897,7 +1926,7 @@ PrefabInstance:
     - target: {fileID: 6877641835400412571, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.599233
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835838080388, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1942,12 +1971,17 @@ PrefabInstance:
     - target: {fileID: 7451826532183156654, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7602759982286005531, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: sceneViewId
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775912684759609873, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8216566085948366739, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
