@@ -19,6 +19,7 @@ public class Dog : Enemy
         rigidbody = GetComponent<Rigidbody>();
         isPouncing = false;
         pounceSuccess = false;
+        enemyType = EnemyType.DOG;
     }
 
     protected override void AgroState()
@@ -74,7 +75,7 @@ public class Dog : Enemy
             if (isPouncing == true)
             {
                 isPouncing = false;
-                GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
+                GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true; // resume NavMeshAgent
             }
             //GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
         }

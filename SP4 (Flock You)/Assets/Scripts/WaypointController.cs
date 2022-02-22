@@ -27,7 +27,7 @@ public class WaypointController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         photonView = GetComponent<PhotonView>();
 
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!PhotonNetwork.IsMasterClient)
                 return;
 

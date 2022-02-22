@@ -44,7 +44,7 @@ public class FYPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
 
@@ -58,12 +58,6 @@ public class FYPlayer : MonoBehaviour
             ResetSpawnPoint();
             UI_Manager.Instance.UpdateHealth();
             UI_Manager.Instance.UpdateLives();
-        }
-
-        // Testing
-        if (Input.GetButtonDown("Jump"))
-        {
-            Damaged(0);
         }
     }
 
@@ -94,8 +88,13 @@ public class FYPlayer : MonoBehaviour
             gameObject.transform.position = DefaultSpawnPoint;
     }
 
+    [PunRPC]
     public void Damaged(int _damage)
     {
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+            if (!photonView.IsMine)
+                return;
+
         curHealth -= _damage;
         UI_Manager.Instance.UpdateHealth();
     }

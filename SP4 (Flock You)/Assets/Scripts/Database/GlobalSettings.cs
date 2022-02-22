@@ -15,4 +15,19 @@ public class GlobalSettings : MonoBehaviour
     public static int XP;
     public static int Cash;
     public static string ShopFirstPage = "skin";
+    
+    // Game Modes
+    public enum GAMEMODES
+    {
+        SINGLE_PLAYER,
+        MULTIPLAYER,
+        NUM_GAME_MODES
+    }
+
+    public static GAMEMODES curMode = GAMEMODES.SINGLE_PLAYER;
+
+    public void Awake()
+    {
+        curMode = GAMEMODES.SINGLE_PLAYER;
+    }
 }

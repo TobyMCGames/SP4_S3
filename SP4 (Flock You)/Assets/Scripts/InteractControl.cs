@@ -28,24 +28,24 @@ public class InteractControl : MonoBehaviour
 
     void Update()
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
 
         if(Input.GetMouseButtonDown(0))
         {
             peckableObject = player.GetComponentInChildren<InteractDetection>().GetPeckable();
-            if (peckableObject != null)
+            if (peckableObject != null) // if object is peckable
             {
-                if(peckableObject.name == "NestSpawn(Clone)")
+                if(peckableObject.name == "NestSpawn(Clone)") // if object is a nest
                 {
-                    if(peckableObject.GetComponent<NestSpawnScript>().GetWhoSpawnMe() != gameObject)
+                    if(peckableObject.GetComponent<NestSpawnScript>().GetWhoSpawnMe() != gameObject) //If the nest owner is different from the current player
                     {
-                        peckableObject.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
+                        peckableObject.GetComponent<NestSpawnScript>().SetCanBeDamaged(true); // Deals damage to nest
                     }
                 }
                 else
-                    peckableObject.GetComponent<Peckable>().SetCanBeDamaged(true);
+                    peckableObject.GetComponent<Peckable>().SetCanBeDamaged(true); // Deals damage to any peckable object
             }
 
         }
@@ -61,7 +61,7 @@ public class InteractControl : MonoBehaviour
                 //light object
                 if (heldObjectWeight >= 1 && heldObjectWeight <= 7)
                 {
-                    if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+                    if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                         heldObject.GetPhotonView().RPC("SetHolder", RpcTarget.AllViaServer, photonView.ViewID, 2);
                     else
                         heldObject.GetComponent<InteractItem>().SetHolder(touchPointLight.transform);
@@ -71,7 +71,7 @@ public class InteractControl : MonoBehaviour
                 //heavy object
                 else if (heldObjectWeight > 7)
                 {
-                    if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+                    if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                         heldObject.GetPhotonView().RPC("SetHolder", RpcTarget.AllViaServer, photonView.ViewID, 3);
                     else
                         heldObject.GetComponent<InteractItem>().SetHolder(touchPointHeavy.transform);
@@ -90,7 +90,7 @@ public class InteractControl : MonoBehaviour
 
             if (heldObject != null)
             {
-                if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+                if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                     heldObject.GetPhotonView().RPC("DropItem", RpcTarget.AllViaServer);
                 else
                     heldObject.GetComponent<InteractItem>().DropItem();

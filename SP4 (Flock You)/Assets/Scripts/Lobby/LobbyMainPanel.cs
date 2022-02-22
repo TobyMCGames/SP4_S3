@@ -283,6 +283,8 @@ namespace Photon.Pun.Demo.Asteroids
             {
                 PhotonNetwork.LocalPlayer.NickName = playerName;
                 PhotonNetwork.ConnectUsingSettings();
+
+                GlobalSettings.curMode = GlobalSettings.GAMEMODES.MULTIPLAYER; // Player playing online
             }
             else
             {

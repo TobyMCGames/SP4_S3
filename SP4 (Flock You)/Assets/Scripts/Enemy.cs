@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
     public EnemyObserver enemyObserver;
     protected float DistractTime;
 
+    public enum EnemyType{HUMAN, DOG, CAT}
+    public EnemyType enemyType;
 
     void Awake()
     {
@@ -45,7 +47,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!PhotonNetwork.IsMasterClient)
                 return;
 
@@ -113,7 +115,7 @@ public class Enemy : MonoBehaviour
         else
         {
             curState = FSM.DISTRACTED;
-            Distract_Timer = DistractTime; //Consider removing this line if causing issues at your own risk
+            Distract_Timer = DistractTime;
             Debug.Log("Enemy switching to DISTRACTED state");
         }
     }
@@ -129,7 +131,8 @@ public class Enemy : MonoBehaviour
             Stun_Timer -= Time.deltaTime;
         else
         {
-            curState = FSM.PATROL;
+            curState = FSM.DISTRACTED;
+            Distract_Timer = DistractTime;
             GetComponent<NavMeshAgent>().speed = 3.5f;
             Debug.Log("Enemy Woke up");
         }
@@ -152,16 +155,5 @@ public class Enemy : MonoBehaviour
         Distract_Timer = DistractTime;
         //waypointController.MoveToLocation(PlayerLastPos);
         navMeshAgent.SetDestination(PlayerLastPos);
-    }
-
-    [PunRPC]
-    private void SetStunRPC(int viewID, float stunTime)
-    {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
-            if (!PhotonNetwork.IsMasterClient)
-                return;
-
-        GameObject _enemy = PhotonNetwork.GetPhotonView(viewID).gameObject;
-        _enemy.GetComponent<Enemy>().SetStun(stunTime);
     }
 }

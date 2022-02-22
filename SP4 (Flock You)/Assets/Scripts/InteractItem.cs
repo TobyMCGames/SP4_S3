@@ -21,7 +21,7 @@ public class InteractItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
 
@@ -34,6 +34,11 @@ public class InteractItem : MonoBehaviour
     public void SetHolder(Transform _holder)
     {
         transform.SetParent(_holder);
+        FetchEvent fetchscript = InteractableList.GetComponent<FetchEvent>();
+        if (fetchscript != null) // check if this object is a fetch item
+        {
+            fetchscript.setSingleCarriedby(_holder.parent);
+        }
     }
 
     [PunRPC]
@@ -41,6 +46,11 @@ public class InteractItem : MonoBehaviour
     {
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         transform.SetParent(InteractableList);
+        FetchEvent fetchscript = InteractableList.GetComponent<FetchEvent>();
+        if (fetchscript != null)
+        {
+            fetchscript.setSingleCarriedby(null);
+        }
     }
 
     [PunRPC]
@@ -48,20 +58,6 @@ public class InteractItem : MonoBehaviour
     {
         GameObject _holder = PhotonNetwork.GetPhotonView(ViewID).gameObject;
         transform.SetParent(_holder.transform.GetChild(child));
-        GameObject baseEventobj = EventManager.Instance.getEventobj(PhotonNetwork.GetPhotonView(ViewID));
-        if (baseEventobj == null)
-            return;
-        else
-        {
-            switch (baseEventobj.GetComponent<BaseEvent>().GetEventType())
-            {
-                case BaseEvent.EventType.EVENT_FETCH:
-                    baseEventobj.GetComponent<FetchEvent>().setCarriedby(PhotonNetwork.GetPhotonView(ViewID));
-                    EventManager.Instance.UpdateEventobj(PhotonNetwork.GetPhotonView(ViewID), baseEventobj);
-                    break;
-            }
-
-        }
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
     }
 }
