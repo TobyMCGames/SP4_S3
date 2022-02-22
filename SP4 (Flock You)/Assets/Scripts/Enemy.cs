@@ -113,7 +113,7 @@ public class Enemy : MonoBehaviour
         else
         {
             curState = FSM.DISTRACTED;
-            Distract_Timer = DistractTime; //Consider removing this line if causing issues at your own risk
+            Distract_Timer = DistractTime;
             Debug.Log("Enemy switching to DISTRACTED state");
         }
     }
