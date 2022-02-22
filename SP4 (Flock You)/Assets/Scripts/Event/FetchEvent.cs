@@ -53,7 +53,7 @@ public class FetchEvent : BaseEvent
     public override void Update()
     {
         base.Update();
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
             if (!Completed)
             {
@@ -79,15 +79,15 @@ public class FetchEvent : BaseEvent
                 TextDistanceCheck.text = "";
             }
         }
-        else if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
-
+            
         }
     }
 
     public void Init()
     {
-        if (IsfetchGlobal && FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (IsfetchGlobal && GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             foreach (Transform player in FYGameManager.Instance.PlayerList)
             {
@@ -126,7 +126,7 @@ public class FetchEvent : BaseEvent
 
     public void calculateDistance(bool Item)
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
             if (Item)
             {
@@ -152,7 +152,7 @@ public class FetchEvent : BaseEvent
         // if not multiplayer dont need check whose nest isit 
         float nearestNest = -1;
         float currdistance;
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
             currdistance = -1;
             foreach (Transform nest in FYGameManager.Instance.SpawnPoints)

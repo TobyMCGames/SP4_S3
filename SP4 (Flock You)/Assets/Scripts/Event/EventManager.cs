@@ -48,11 +48,11 @@ public class EventManager : MonoBehaviour
             case BaseEvent.GameEventType.EVENT_CAPTURE:
                 break;
             case BaseEvent.GameEventType.EVENT_FETCH:
-                if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+                if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                 {
                     
                 }
-                else if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+                else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
                 {
                     GameObject FetchEvent = Instantiate(EventfetchPrefab, gameObject.transform);
                     FetchEvent.transform.localPosition = position;

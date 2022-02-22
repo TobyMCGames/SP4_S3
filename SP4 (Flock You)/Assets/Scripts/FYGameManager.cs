@@ -188,7 +188,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 if (PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length == PlayerList.childCount)
                     AssignSpawnPoints();
         }
-        else if (curMode == GAMEMODES.SINGLE_PLAYER)
+        else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
             if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null) // create a event
             {
