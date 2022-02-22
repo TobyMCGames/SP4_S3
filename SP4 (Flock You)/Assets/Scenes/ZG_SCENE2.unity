@@ -2089,6 +2089,12 @@ PrefabInstance:
       propertyPath: EventText
       value: 
       objectReference: {fileID: 1548526230}
+    - target: {fileID: 6479499962615632937, guid: 36a9a8571df7866488a1f0690d59cf9d,
+        type: 3}
+      propertyPath: EventcapturePrefab
+      value: 
+      objectReference: {fileID: 1063727481913639406, guid: b6fbc7e833f7cc64e964ba9b7067f178,
+        type: 3}
     - target: {fileID: 6479499962615632938, guid: 36a9a8571df7866488a1f0690d59cf9d,
         type: 3}
       propertyPath: m_Name

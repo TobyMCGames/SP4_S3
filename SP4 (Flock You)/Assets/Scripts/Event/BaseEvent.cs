@@ -15,6 +15,7 @@ public class BaseEvent :MonoBehaviour
     [SerializeField] protected Collider EventArea;
     [SerializeField] protected List<PhotonView> EventTarget;
     [SerializeField] protected List<Transform> TargetTransform;
+    [SerializeField] protected GameObject canvas;
     protected bool Completed;
     protected double Destructiontimer; 
     public virtual bool IsReqMet()
@@ -27,6 +28,11 @@ public class BaseEvent :MonoBehaviour
     }
 
     public virtual void RunEvent()
+    {
+
+    }
+
+    public virtual void Init()
     {
 
     }
@@ -64,10 +70,10 @@ public class BaseEvent :MonoBehaviour
         Completed = _Completed;
     }
 
-    public virtual void returnText()
+    public virtual void returnEventobj()
     {
-
     }
+    
 
     public virtual void ToggleDestruction()
     {
@@ -80,5 +86,15 @@ public class BaseEvent :MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    public virtual void OnTriggerEnter(Collider other)
+    {
+        
+    }
+
+    public virtual void OnTriggerExit(Collider other)
+    {
+        
     }
 }

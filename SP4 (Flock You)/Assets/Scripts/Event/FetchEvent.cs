@@ -16,7 +16,6 @@ public class FetchEvent : BaseEvent
     public float Distance;
     public float timebeforeDestruction =5f;
     // Event Information
-    public GameObject canvas;
     public Text TextDistanceCheck;
     public Text TextCarriedby;
 
@@ -85,7 +84,7 @@ public class FetchEvent : BaseEvent
         }
     }
 
-    public void Init()
+    public override void Init()
     {
         if (IsfetchGlobal && GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
@@ -112,7 +111,7 @@ public class FetchEvent : BaseEvent
         SingleCarriedby = holder;
     }
 
-    public override void returnText()
+    public override void returnEventobj()
     {
         TextDistanceCheck.transform.parent = canvas.transform;
         TextCarriedby.transform.parent = canvas.transform;

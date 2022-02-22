@@ -192,6 +192,13 @@ public class MovePlayer : MonoBehaviour
         {
             playerState = PlayerState.FLYING_BARREL_LEFT;
         }
+
+        if (Input.GetKeyUp(KeyCode.Alpha0))
+        {
+            Vector3 Eventpos = Vector3.zero;
+            Eventpos.Set(10, 1, 10);
+            EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_CAPTURE, Eventpos);
+        }
     }
 
     private void FixedUpdate()

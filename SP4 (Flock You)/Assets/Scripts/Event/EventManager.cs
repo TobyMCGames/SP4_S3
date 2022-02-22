@@ -29,7 +29,7 @@ public class EventManager : MonoBehaviour
             eventobj = ActiveEventList[i];
             if (ActiveEventList[i].GetComponent<BaseEvent>().IsTobeDestroyed())
             {
-                ActiveEventList[i].GetComponent<BaseEvent>().returnText();
+                ActiveEventList[i].GetComponent<BaseEvent>().returnEventobj();
                 ActiveEventList.RemoveAt(i);
                 Destroy(eventobj);
             }
@@ -46,6 +46,17 @@ public class EventManager : MonoBehaviour
         switch (eventType)
         {
             case BaseEvent.GameEventType.EVENT_CAPTURE:
+                if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                {
+
+                }
+                else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+                {
+                    GameObject CaptureEvent = Instantiate(EventcapturePrefab, gameObject.transform);
+                    CaptureEvent.transform.localPosition = position;
+                    CaptureEvent.GetComponent<CaptureEvent>().Init();
+                    //AddEvent(FetchEvent);
+                }
                 break;
             case BaseEvent.GameEventType.EVENT_FETCH:
                 if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
@@ -70,6 +81,11 @@ public class EventManager : MonoBehaviour
     public void TextToDisplay(Text _Text)
     {
         _Text.transform.SetParent(EventText.transform);
+    }
+
+    public void ObjectToDisplay(GameObject _object)
+    {
+        _object.transform.SetParent(EventText.transform);
     }
 
     public GameObject GetEvent(BaseEvent.GameEventType _type)
