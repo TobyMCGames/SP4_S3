@@ -50,6 +50,9 @@ public class Login : MonoBehaviour
                     PlayerNameDisplayTxt.text = playerName;
                     //photon connect to server
                     PhotonNetwork.ConnectUsingSettings();
+
+                    //load player stats
+                    transform.GetComponent<ReadPlayerStats>().LoadStats();
                 }
                 break;
             default:
