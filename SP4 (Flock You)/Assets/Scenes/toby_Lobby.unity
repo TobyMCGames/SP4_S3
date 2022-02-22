@@ -3345,6 +3345,7 @@ MonoBehaviour:
   PlayerNameInput: {fileID: 328590478}
   RegisterPanel: {fileID: 0}
   SelectionPanel: {fileID: 1771933899}
+  ShopPanel: {fileID: 0}
   CreateRoomPanel: {fileID: 1406502566}
   RoomNameInputField: {fileID: 1541721128}
   MaxPlayersInputField: {fileID: 1856119463}

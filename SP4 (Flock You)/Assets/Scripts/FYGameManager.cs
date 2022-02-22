@@ -34,11 +34,13 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public CinemachineFreeLook MainCamera;
     public Transform PlayerList;
     public Transform ProjectileList;
+    private PlayerGameValues playerGameInfo = new PlayerGameValues();
 
     [Header("Server Settings")]
     bool AllPlayersAssigned = false;
-    // Player List
-    //FYPlayer[] playerList;
+
+    [Header("Player List")]
+    List<PlayerGameValues> playerGameList;
 
     // Spawn Points
     public Transform[] SpawnPoints;
@@ -302,7 +304,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
         // Set up UI now
         SetUpUI();
-        //photonView.RPC("RegisterPlayerID", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID);
+
+        photonView.RPC("RegisterPlayerList", RpcTarget.AllViaServer, GlobalSettings.Username, GlobalSettings.Level);
 
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             photonView.RPC("SetToPlayerList", RpcTarget.AllViaServer, player.gameObject.GetPhotonView().ViewID);
@@ -331,5 +334,22 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         player.setDefaultSpawn(SpawnPoints[nestID].position);
         SpawnPoints[nestID].GetChild(0).GetComponent<SpawnPointScript>().owner = player;
         player.ResetSpawnPoint();
+    }
+
+    [PunRPC]
+    private void RegisterPlayerList(string _username, int level)
+    {
+        PlayerGameValues _playerInfo = new PlayerGameValues();
+        _playerInfo.sUsername = _username;
+        _playerInfo.ilevel = level;
+        _playerInfo.iPoints = 0;
+
+        playerGameList.Add(_playerInfo);
+
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+            if (!photonView.IsMine)
+                return;
+
+        playerGameInfo = _playerInfo;
     }
 }

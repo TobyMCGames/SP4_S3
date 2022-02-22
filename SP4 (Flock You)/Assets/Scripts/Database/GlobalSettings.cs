@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GlobalSettings : MonoBehaviour
 {
@@ -30,4 +31,12 @@ public class GlobalSettings : MonoBehaviour
     {
         curMode = GAMEMODES.SINGLE_PLAYER;
     }
+}
+
+[Serializable]
+public class PlayerGameValues
+{
+    public string sUsername;
+    public int ilevel;
+    public int iPoints;
 }
