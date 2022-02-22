@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6085842425276159472}
   - component: {fileID: 3017652947777773765}
   - component: {fileID: 1896682447112623664}
+  - component: {fileID: 2003621306746764896}
+  - component: {fileID: 3203390089089227891}
   m_Layer: 0
   m_Name: DatabaseManager
   m_TagString: Untagged
@@ -66,3 +68,41 @@ MonoBehaviour:
   if_username: {fileID: 0}
   if_password: {fileID: 0}
   if_confirmPassword: {fileID: 0}
+--- !u!114 &2003621306746764896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6085842425276159477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa42b880819c984ba1a9e097edd4ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  URL: 
+  ShopList: {fileID: 0}
+  ItemIconPrefab: {fileID: 0}
+  itemList:
+    items: []
+  ShopPanel: {fileID: 0}
+--- !u!114 &3203390089089227891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6085842425276159477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7e7b8ae692945949bd2054b389048df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  URL: 
+  playerStats:
+    cash: 0
+    xp: 0
+    level: 0
+  PlayerLevelTxt: {fileID: 0}
+  PlayerXPTxt: {fileID: 0}
+  PlayerCashtxt: {fileID: 0}
