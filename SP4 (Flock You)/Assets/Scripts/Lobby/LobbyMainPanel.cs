@@ -293,6 +293,8 @@ namespace Photon.Pun.Demo.Asteroids
             //PhotonNetwork.LoadLevel("FlockYou_GameScene");
             PhotonNetwork.LoadLevel("Toby_Scene");
             //PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
+
+            GlobalSettings.curMode = GlobalSettings.GAMEMODES.MULTIPLAYER;
         }
 
         #endregion

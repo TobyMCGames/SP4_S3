@@ -28,7 +28,7 @@ public class LayEggAbility : Ability
         if (NestPrefab == null)
             NestPrefab = Resources.Load("NestSpawn") as GameObject;
 
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
             if (InitNest == null)
             {
@@ -46,7 +46,7 @@ public class LayEggAbility : Ability
                 InitNest.GetComponent<NestSpawnScript>().SetMine(player.gameObject);
             }
         }
-        else if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             if (InitNest == null)
             {
