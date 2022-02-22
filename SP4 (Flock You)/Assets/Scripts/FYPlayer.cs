@@ -15,9 +15,9 @@ public class FYPlayer : MonoBehaviour
     public int MaxLives = 3;
     public int curHealth;
     public int curLives;
-    public float InvincibilityDuration = 1.5f;
+    public float InvincibilityDuration;
     public float InvincibilityTimer;
-    public float BlinkFrame = 0.1f;
+    public float BlinkFrame;
     public float BlinkTimer;
 
     // Player scripts
@@ -63,6 +63,23 @@ public class FYPlayer : MonoBehaviour
             UI_Manager.Instance.UpdateHealth();
             UI_Manager.Instance.UpdateLives();
         }
+
+        if (InvincibilityTimer > 0)
+        {
+            InvincibilityTimer -= Time.deltaTime;
+            if (BlinkTimer > 0)
+            {
+                BlinkTimer -= Time.deltaTime;
+                if (BlinkTimer <= 0)
+                {
+                    GetComponent<MeshRenderer>().enabled = !GetComponent<MeshRenderer>().enabled;
+                    BlinkTimer = BlinkFrame;
+                }
+            }
+
+            if (InvincibilityTimer <= 0)
+                GetComponent<MeshRenderer>().enabled = true;
+        }
     }
 
     public bool hasHealth()
@@ -99,7 +116,16 @@ public class FYPlayer : MonoBehaviour
             if (!photonView.IsMine)
                 return;
 
+        if (InvincibilityTimer > 0)
+            return;
+
         curHealth -= _damage;
         UI_Manager.Instance.UpdateHealth();
+
+        if (curLives <= 0)
+            return;
+
+        InvincibilityTimer = InvincibilityDuration;
+        BlinkTimer = BlinkFrame;
     }
 }
