@@ -110,7 +110,7 @@ public class MovePlayer : MonoBehaviour
             Debug.Log("Player does not have PhotonView");
         else
         {
-            if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             {
                 if (!photonView.IsMine)
                 {
@@ -133,7 +133,7 @@ public class MovePlayer : MonoBehaviour
 
     private void Update()
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
         PlayerInput();
@@ -196,7 +196,7 @@ public class MovePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
         // check player grounded

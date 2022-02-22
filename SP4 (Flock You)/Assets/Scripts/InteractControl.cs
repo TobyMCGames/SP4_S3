@@ -28,7 +28,7 @@ public class InteractControl : MonoBehaviour
 
     void Update()
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
 
@@ -61,7 +61,7 @@ public class InteractControl : MonoBehaviour
                 //light object
                 if (heldObjectWeight >= 1 && heldObjectWeight <= 7)
                 {
-                    if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+                    if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                         heldObject.GetPhotonView().RPC("SetHolder", RpcTarget.AllViaServer, photonView.ViewID, 2);
                     else
                         heldObject.GetComponent<InteractItem>().SetHolder(touchPointLight.transform);
@@ -71,7 +71,7 @@ public class InteractControl : MonoBehaviour
                 //heavy object
                 else if (heldObjectWeight > 7)
                 {
-                    if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+                    if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                         heldObject.GetPhotonView().RPC("SetHolder", RpcTarget.AllViaServer, photonView.ViewID, 3);
                     else
                         heldObject.GetComponent<InteractItem>().SetHolder(touchPointHeavy.transform);
@@ -90,7 +90,7 @@ public class InteractControl : MonoBehaviour
 
             if (heldObject != null)
             {
-                if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+                if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                     heldObject.GetPhotonView().RPC("DropItem", RpcTarget.AllViaServer);
                 else
                     heldObject.GetComponent<InteractItem>().DropItem();

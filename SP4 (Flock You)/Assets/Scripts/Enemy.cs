@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!PhotonNetwork.IsMasterClient)
                 return;
 
@@ -157,7 +157,7 @@ public class Enemy : MonoBehaviour
     [PunRPC]
     private void SetStunRPC(int viewID, float stunTime)
     {
-        if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!PhotonNetwork.IsMasterClient)
                 return;
 

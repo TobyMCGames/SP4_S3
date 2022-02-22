@@ -32,9 +32,9 @@ public class NestSpawnScript : Peckable
         if (curHealth <= 0)
         {
             //destroy nest if zero health
-            if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.SINGLE_PLAYER)
+            if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
                 Destroy(gameObject);
-            else if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
+            else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                 photonView.RPC("NestDestroyed", RpcTarget.AllViaServer);
                 
         }
