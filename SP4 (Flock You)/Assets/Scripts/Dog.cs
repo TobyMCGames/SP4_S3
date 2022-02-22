@@ -67,7 +67,7 @@ public class Dog : Enemy
         //if (isPouncing == false)
         {
             isPouncing = true;
-            GetComponent<NavMeshAgent>().enabled = false; // turn off NavMeshAgent
+            GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false; // turn off NavMeshAgent
             //WaitFor1To2s();
             //Debug.Log("Distance between dog and player: " + distanceBetweenPlayer);
             // Look towards player direction
@@ -96,7 +96,7 @@ public class Dog : Enemy
             {
                 //print("touched the floor");
                 isPouncing = false;
-                GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
+                GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true; // resume NavMeshAgent
             }
 
         }

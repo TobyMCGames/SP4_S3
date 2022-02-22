@@ -53,6 +53,10 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     // Spawn Points
     public Transform[] SpawnPoints;
 
+
+    // floor cube
+    public GameObject floor;
+    
     public void Awake()
     {
         Instance = this;
@@ -194,6 +198,22 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 if (PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length == PlayerList.childCount)
                     AssignSpawnPoints();
         }
+        else if (curMode == GAMEMODES.SINGLE_PLAYER)
+        {
+            if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null) // create a event
+            {
+                float randx, randy, randz;
+                Vector3 Eventpos = Vector3.zero;
+                Vector3 floorpos = floor.transform.position;
+                Vector3 floorscale = floor.transform.localScale;
+                randx = Random.Range(floor.transform.position.x - floorscale.x * 0.25f, floor.transform.position.x + floorscale.x * 0.25f);
+                randy = Random.Range(floor.transform.position.y + floorscale.y * 0.5f, floor.transform.position.y + floorscale.y);
+                randz = Random.Range(floor.transform.position.z - floorscale.z * 0.25f, floor.transform.position.z + floorscale.z * 0.25f);
+                
+                Eventpos.Set(randx, randy, randz);
+                EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_FETCH, Eventpos);
+            }
+        }
 
         if (!isOver())
         {
@@ -254,6 +274,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             UI_Manager.Instance.Init();
         }
     }
+
 
     [PunRPC]
     private void Initialize()

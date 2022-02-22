@@ -15,10 +15,19 @@ public class SpawnPointScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+       
+        if (other.gameObject.CompareTag("Interactable"))
+        {
+            FetchEvent fetchScript = other.gameObject.GetComponent<InteractItem>().InteractableList.GetComponent<FetchEvent>();
+            if (fetchScript != null)
+            {
+                fetchScript.SetCompleted(true);
+                fetchScript.ToggleDestruction();
+                fetchScript.FetchItem.SetActive(false);
+            }
+        }
         if (owner == null)
             return;
-
-
     }
 
     private void OnTriggerExit(Collider other)
