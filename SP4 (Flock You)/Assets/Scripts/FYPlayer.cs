@@ -15,6 +15,10 @@ public class FYPlayer : MonoBehaviour
     public int MaxLives = 3;
     public int curHealth;
     public int curLives;
+    public float InvincibilityDuration = 1.5f;
+    public float InvincibilityTimer;
+    public float BlinkFrame = 0.1f;
+    public float BlinkTimer;
 
     // Player scripts
     public DropLoadControl DropLoadControl_script;
