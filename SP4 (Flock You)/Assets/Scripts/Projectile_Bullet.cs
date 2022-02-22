@@ -9,10 +9,12 @@ public class Projectile_Bullet : MonoBehaviour
     private Vector3 ShootDir;
     float moveSpeed = 50f;
     float tillDelete = 3f;
+    Enemy enemy;
 
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -35,7 +37,23 @@ public class Projectile_Bullet : MonoBehaviour
         }
         else if (other.CompareTag("Enemy"))
         {
-            // Reduce health of Dog/Cat
+            // Stun Dog/Cat if hit
+            if (enemy = other.GetComponent<Enemy>())
+            {
+                switch (enemy.enemyType)
+                {
+                    case Enemy.EnemyType.DOG:
+                        enemy.SetStun(2);
+                        Debug.Log("Dog stuned!");
+                        break;
+                    case Enemy.EnemyType.CAT:
+                        enemy.SetStun(2);
+                        Debug.Log("Cat stuned!");
+                        break;
+                    default:
+                        break;
+                }
+            }
             return;
         }
         else

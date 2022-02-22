@@ -19,6 +19,7 @@ public class Dog : Enemy
         rigidbody = GetComponent<Rigidbody>();
         isPouncing = false;
         pounceSuccess = false;
+        enemyType = EnemyType.DOG;
     }
 
     protected override void AgroState()

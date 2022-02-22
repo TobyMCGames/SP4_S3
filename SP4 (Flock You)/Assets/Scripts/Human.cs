@@ -10,6 +10,11 @@ public class Human : Enemy
     private GameObject HeldWeapon;
     private bool pickupWeapon;
 
+    protected void Start()
+    {
+        enemyType = EnemyType.HUMAN;
+    }
+
     protected override void OverridenInit()
     {
         DistractTime = 6f;

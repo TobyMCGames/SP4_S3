@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
     public EnemyObserver enemyObserver;
     protected float DistractTime;
 
+    public enum EnemyType{HUMAN, DOG, CAT}
+    public EnemyType enemyType;
 
     void Awake()
     {
