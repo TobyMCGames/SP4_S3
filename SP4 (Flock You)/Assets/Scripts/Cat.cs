@@ -25,10 +25,12 @@ public class Cat : Enemy
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "SpawnPoint")
+        //if (other.name == "NestSpawn_model")
+        //if (other.tag == "NestSpawn")
+        if (other.tag == "Peckable") // Only affects Nestspawn at time of writing
         {
-            // Destroys the spawnpoint
-
+            // Deals damage to spawnpoint
+            other.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
         }
     }
 }
