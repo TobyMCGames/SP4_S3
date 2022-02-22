@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Cat : Enemy
 {
+    protected void Start()
+    {
+        enemyType = EnemyType.CAT;
+    }
+
     protected override void AgroState()
     {
         if (enemyObserver.isPlayerInRange)
@@ -25,11 +30,9 @@ public class Cat : Enemy
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.name == "NestSpawn_model")
-        //if (other.tag == "NestSpawn")
         if (other.tag == "Peckable") // Only affects Nestspawn at time of writing
         {
-            // Deals damage to spawnpoint
+            // Deals damage to nest
             other.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
         }
     }

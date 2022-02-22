@@ -39,7 +39,7 @@ public class Projectile_Poop : MonoBehaviour
             if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             {
                 PhotonView _enemy = other.gameObject.GetPhotonView();
-                _enemy.RPC("SetStunRPC", RpcTarget.MasterClient, _enemy.ViewID, 5.0f);
+                photonView.RPC("SetStunRPC", RpcTarget.MasterClient, _enemy.ViewID, 5.0f);
             }
             else
                 other.transform.GetComponent<Enemy>().SetStun(5.0f);
@@ -61,5 +61,16 @@ public class Projectile_Poop : MonoBehaviour
     public void AssignPooper(Transform _pooper)
     {
         pooper = _pooper;
+    }
+
+    [PunRPC]
+    private void SetStunRPC(int viewID, float stunTime)
+    {
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+
+        GameObject _enemy = PhotonNetwork.GetPhotonView(viewID).gameObject;
+        _enemy.GetComponent<Enemy>().SetStun(stunTime);
     }
 }

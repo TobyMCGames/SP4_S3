@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
     public EnemyObserver enemyObserver;
     protected float DistractTime;
 
+    public enum EnemyType{HUMAN, DOG, CAT}
+    public EnemyType enemyType;
 
     void Awake()
     {
@@ -129,7 +131,8 @@ public class Enemy : MonoBehaviour
             Stun_Timer -= Time.deltaTime;
         else
         {
-            curState = FSM.PATROL;
+            curState = FSM.DISTRACTED;
+            Distract_Timer = DistractTime;
             GetComponent<NavMeshAgent>().speed = 3.5f;
             Debug.Log("Enemy Woke up");
         }
@@ -152,16 +155,5 @@ public class Enemy : MonoBehaviour
         Distract_Timer = DistractTime;
         //waypointController.MoveToLocation(PlayerLastPos);
         navMeshAgent.SetDestination(PlayerLastPos);
-    }
-
-    [PunRPC]
-    private void SetStunRPC(int viewID, float stunTime)
-    {
-        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
-            if (!PhotonNetwork.IsMasterClient)
-                return;
-
-        GameObject _enemy = PhotonNetwork.GetPhotonView(viewID).gameObject;
-        _enemy.GetComponent<Enemy>().SetStun(stunTime);
     }
 }

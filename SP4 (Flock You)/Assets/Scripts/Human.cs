@@ -10,6 +10,11 @@ public class Human : Enemy
     private GameObject HeldWeapon;
     private bool pickupWeapon;
 
+    protected void Start()
+    {
+        enemyType = EnemyType.HUMAN;
+    }
+
     protected override void OverridenInit()
     {
         DistractTime = 6f;
@@ -64,7 +69,7 @@ public class Human : Enemy
 
     private void OnTriggerEnter(Collider other)
     {
-        if(pickupWeapon)
+        if(pickupWeapon && other.CompareTag("Weapon"))
         {
             GameObject weapon = other.gameObject;
             //set the weapon that is picked up as held weapon
