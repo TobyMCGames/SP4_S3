@@ -18,7 +18,7 @@ public class Projectile_Bullet : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
 
-        if (other.CompareTag("Projectile") || other.CompareTag("Non-collidable") || other.CompareTag("Enemy"))
+        if (other.CompareTag("Projectile") || other.CompareTag("Non-collidable"))
             return;
 
         if (other.CompareTag("Player"))
@@ -32,6 +32,11 @@ public class Projectile_Bullet : MonoBehaviour
                 other.GetComponent<FYPlayer>().Damaged(1);
 
             Debug.Log("Bullet Shot a player");
+        }
+        else if (other.CompareTag("Enemy"))
+        {
+            // Reduce health of Dog/Cat
+            return;
         }
         else
             Debug.Log("Bullet Shot something");

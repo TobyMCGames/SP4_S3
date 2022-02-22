@@ -1032,6 +1032,7 @@ MonoBehaviour:
   - {fileID: 5033030191947368744}
   - {fileID: 5033030191947368743}
   - {fileID: 5033030191947368742}
+  floor: {fileID: 0}
 --- !u!4 &1517933914
 Transform:
   m_ObjectHideFlags: 0
@@ -1543,6 +1544,11 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 563441940843073629, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 684323528345322168, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_UseGravity
@@ -1561,12 +1567,12 @@ PrefabInstance:
     - target: {fileID: 1473214748934468342, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1502287666922627806, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1887408464682180715, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1587,6 +1593,11 @@ PrefabInstance:
         type: 3}
       propertyPath: curState
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867534577220930112, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3231930916497376527, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -1767,6 +1778,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5826392992141899755, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6061232703347076683, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
