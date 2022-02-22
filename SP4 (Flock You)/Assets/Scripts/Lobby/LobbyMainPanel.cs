@@ -268,6 +268,8 @@ namespace Photon.Pun.Demo.Asteroids
             {
                 PhotonNetwork.LocalPlayer.NickName = playerName;
                 PhotonNetwork.ConnectUsingSettings();
+
+                GlobalSettings.curMode = GlobalSettings.GAMEMODES.MULTIPLAYER; // Player playing online
             }
             else
             {
@@ -293,8 +295,6 @@ namespace Photon.Pun.Demo.Asteroids
             //PhotonNetwork.LoadLevel("FlockYou_GameScene");
             PhotonNetwork.LoadLevel("Toby_Scene");
             //PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
-
-            GlobalSettings.curMode = GlobalSettings.GAMEMODES.MULTIPLAYER;
         }
 
         #endregion

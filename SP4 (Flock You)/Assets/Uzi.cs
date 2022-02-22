@@ -6,6 +6,7 @@ public class Uzi : Weapon
 {
     protected override void Start()
     {
+        base.Start();
         //init variables (can be overriden)
         numShots = 0;
         firerate = 0.2f;

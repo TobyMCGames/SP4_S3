@@ -64,7 +64,7 @@ public class Human : Enemy
 
     private void OnTriggerEnter(Collider other)
     {
-        if(pickupWeapon)
+        if(pickupWeapon && other.CompareTag("Weapon"))
         {
             GameObject weapon = other.gameObject;
             //set the weapon that is picked up as held weapon
