@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class Dog : Enemy
 {
-    float distanceBetweenPlayer;
+    
     Rigidbody rigidbody;
     float jumpPower = 20f;
     Enemy enemy;
@@ -33,7 +34,7 @@ public class Dog : Enemy
             SetDetectionRange(defaultDetectionRadius * 4f);
             navMeshAgent.SetDestination(player.position);
             // If dog is within range, pounce on player
-            distanceBetweenPlayer = Vector3.Distance(transform.position, player.position); //finds distance
+            //distanceBetweenPlayer = Vector3.Distance(transform.position, player.position); //finds distance
             if (distanceBetweenPlayer <= 2.6f)
             {
                 Pounce();
@@ -70,7 +71,7 @@ public class Dog : Enemy
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Floor")
+        if (other.CompareTag("Floor"))
         {
             if (isPouncing == true)
             {
@@ -79,13 +80,25 @@ public class Dog : Enemy
             }
             //GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
         }
+        if (other.CompareTag("Player"))
+        {
+            isMeleeAttacking = true;
+            playerInvolved = other;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (isPouncing)
+        if (other.CompareTag("Floor"))
         {
-            //Pounce successful!
+            if (isPouncing)
+            {
+                //Pounce successful!
+            }
+        }
+        if (other.CompareTag("Player"))
+        {
+            isMeleeAttacking = false;
         }
     }
 }
