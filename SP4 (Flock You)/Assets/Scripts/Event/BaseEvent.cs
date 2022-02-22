@@ -5,17 +5,18 @@ using Photon.Pun;
 
 public class BaseEvent :MonoBehaviour
 {
-    public enum EventType
+    public enum GameEventType
     {
         EVENT_FETCH,
         EVENT_CAPTURE,
         NUM_EVENTS,
     }
-
-    [SerializeField] protected EventType Eventtype;
+    [SerializeField] protected GameEventType Eventtype;
     [SerializeField] protected Collider EventArea;
     [SerializeField] protected List<PhotonView> EventTarget;
-    [SerializeField] protected PhotonView EventView;
+    [SerializeField] protected List<Transform> TargetTransform;
+    protected bool Completed;
+    protected double Destructiontimer; 
     public virtual bool IsReqMet()
     {
         return false;
@@ -32,6 +33,10 @@ public class BaseEvent :MonoBehaviour
 
     public virtual void Update()
     {
+        if (Completed)
+        {
+            Destructiontimer -= Time.deltaTime;
+        }
     }
 
     public virtual void Start()
@@ -44,9 +49,36 @@ public class BaseEvent :MonoBehaviour
 
     }
     
-    public EventType GetEventType()
+    public GameEventType GetEventType()
     {
         return Eventtype;
     }
 
+    public bool IsCompleted()
+    {
+        return Completed;
+    }
+
+    public void SetCompleted(bool _Completed)
+    {
+        Completed = _Completed;
+    }
+
+    public virtual void returnText()
+    {
+
+    }
+
+    public virtual void ToggleDestruction()
+    {
+        Destructiontimer = 0;
+    }
+    
+    public bool IsTobeDestroyed()
+    {
+        if (Completed && Destructiontimer <= 0)
+            return true;
+        else
+            return false;
+    }
 }

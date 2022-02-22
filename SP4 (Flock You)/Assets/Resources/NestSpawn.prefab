@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 8266628696447403648}
   - component: {fileID: 3267947674722400484}
   - component: {fileID: 4396186106477467285}
+  - component: {fileID: 804204451937566388}
   m_Layer: 0
   m_Name: NestSpawn
   m_TagString: Peckable
@@ -211,6 +212,22 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!54 &804204451937566388
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336154155944584813}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 6
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2336154156236695919
 GameObject:
   m_ObjectHideFlags: 0

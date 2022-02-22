@@ -74,7 +74,7 @@ public class Dog : Enemy
             if (isPouncing == true)
             {
                 isPouncing = false;
-                GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
+                GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true; // resume NavMeshAgent
             }
             //GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
         }

@@ -35,17 +35,17 @@ public class InteractControl : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             peckableObject = player.GetComponentInChildren<InteractDetection>().GetPeckable();
-            if (peckableObject != null)
+            if (peckableObject != null) // if object is peckable
             {
-                if(peckableObject.name == "NestSpawn(Clone)")
+                if(peckableObject.name == "NestSpawn(Clone)") // if object is a nest
                 {
-                    if(peckableObject.GetComponent<NestSpawnScript>().GetWhoSpawnMe() != gameObject)
+                    if(peckableObject.GetComponent<NestSpawnScript>().GetWhoSpawnMe() != gameObject) //If the nest owner is different from the current player
                     {
-                        peckableObject.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
+                        peckableObject.GetComponent<NestSpawnScript>().SetCanBeDamaged(true); // Deals damage to nest
                     }
                 }
                 else
-                    peckableObject.GetComponent<Peckable>().SetCanBeDamaged(true);
+                    peckableObject.GetComponent<Peckable>().SetCanBeDamaged(true); // Deals damage to any peckable object
             }
 
         }
