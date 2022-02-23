@@ -18,11 +18,21 @@ public class Cat : Enemy
             nest = enemyObserver.peckable;
             if (nest != null) // nest is present
             {
-                navMeshAgent.SetDestination(nest.position);
-                if (Vector3.Distance(transform.position, nest.position) <= 1f)
+                if (Vector3.Distance(transform.position, nest.position) <= 1.8f)
                 {
+                    navMeshAgent.speed = 0f;
                     nest.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
                 }
+                else // went out of range
+                {
+                    navMeshAgent.speed = 3.5f;
+                    navMeshAgent.SetDestination(nest.position);
+                }
+            }
+            else // nest gon
+            {
+                enemyObserver.isNestInRange = false;
+                navMeshAgent.speed = 3.5f;
             }
             curState = FSM.DISTRACTED;
             Debug.Log("Cat switching to DISTRACTED state");
