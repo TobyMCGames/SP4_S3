@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Cat : Enemy
 {
@@ -30,14 +31,23 @@ public class Cat : Enemy
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Peckable") // Only affects Nestspawn at time of writing
+        if (other.CompareTag("Peckable")) // Only affects Nestspawn at time of writing
         {
             // Deals damage to nest
             other.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
         }
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
+            isMeleeAttacking = true;
+            playerInvolved = other;
+        }
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isMeleeAttacking = false;
         }
     }
 }

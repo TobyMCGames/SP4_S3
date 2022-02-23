@@ -15,22 +15,26 @@ public class Enemy : MonoBehaviour
     // Finite State Machine
     public enum FSM { IDLE, PATROL, DISTRACTED, AGRO, STUN };
     public FSM curState;
-    protected float Stun_Timer;
-    protected float Distract_Timer;
-    protected float defaultDetectionRadius;
 
     //Init Variables
+    public Collider playerInvolved;
     protected WaypointController waypointController;
     public EnemyObserver enemyObserver;
     protected float DistractTime;
+    protected float Stun_Timer;
+    protected float Distract_Timer;
+    protected float defaultDetectionRadius;
+    public float distanceBetweenPlayer;
+    protected bool isMeleeAttacking;
 
     public enum EnemyType{HUMAN, DOG, CAT}
     public EnemyType enemyType;
 
     void Awake()
     {
-        photonView = GetComponent<PhotonView>();
         curState = FSM.PATROL;
+        isMeleeAttacking = false;
+        photonView = GetComponent<PhotonView>();
         waypointController = GetComponent<WaypointController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         defaultDetectionRadius = enemyObserver.GetComponent<CapsuleCollider>().radius;
@@ -69,6 +73,12 @@ public class Enemy : MonoBehaviour
                 StunState();
                 break;
         }
+
+        distanceBetweenPlayer = Vector3.Distance(transform.position, player.position);
+
+        //Deal damage to player
+        if (isMeleeAttacking == true && distanceBetweenPlayer <= 1f)
+            DealDamageToPlayer(playerInvolved);
     }
 
     protected virtual void PatrolState()
@@ -155,5 +165,18 @@ public class Enemy : MonoBehaviour
         Distract_Timer = DistractTime;
         //waypointController.MoveToLocation(PlayerLastPos);
         navMeshAgent.SetDestination(PlayerLastPos);
+    }
+
+    public void DealDamageToPlayer(Collider playerInvolved)
+    {
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+        {
+            if (playerInvolved.GetComponent<PhotonView>().IsMine)
+                playerInvolved.GetComponent<FYPlayer>().Damaged(1);
+        }
+        else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            playerInvolved.GetComponent<FYPlayer>().Damaged(1);
+
+        Debug.Log("Enemy melee attacked a player");
     }
 }
