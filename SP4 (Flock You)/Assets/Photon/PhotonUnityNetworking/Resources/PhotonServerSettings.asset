@@ -70,6 +70,8 @@ MonoBehaviour:
   - Damaged
   - CreateEvent
   - FixedUpdate
+  - DistractEnemyList
+  - RegisterPlayerList
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -36,7 +36,10 @@ public class AbilityControl : MonoBehaviour
         AbilityCount = AbilitiesList.Count;
 
         for (int i = 0; i < AbilityCount; i++)
+        {
             AbilitiesList[i].SetPlayer(transform);
+            AbilitiesList[i].SetPhotonView(photonView);
+        }
     }
 
     private void Start()
@@ -98,4 +101,16 @@ public class AbilityControl : MonoBehaviour
         distactAbility.Update();
     }
 
+    [PunRPC]
+    private void DistractEnemyList(int[] IDList, Vector3 _pos)
+    {
+        for (int i = 0; i < IDList.Length; i++)
+        {
+            PhotonView enemyView = PhotonNetwork.GetPhotonView(IDList[i]);
+            if (!enemyView.IsMine)
+                continue;
+            Enemy enemy = enemyView.GetComponent<Enemy>();
+            enemy.Distracted(_pos);
+        }
+    }
 }

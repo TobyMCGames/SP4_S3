@@ -21,6 +21,9 @@ namespace Photon.Pun.Demo.Asteroids
         [Header("Selection Panel")]
         public GameObject SelectionPanel;
 
+        [Header("Shop Panel")]
+        public GameObject ShopPanel;
+
         [Header("Create Room Panel")]
         public GameObject CreateRoomPanel;
 
@@ -226,6 +229,18 @@ namespace Photon.Pun.Demo.Asteroids
         {
             RegisterPanel.SetActive(true);
             LoginPanel.SetActive(false);
+        }
+
+        public void OpenShopPanel()
+        {
+            ShopPanel.SetActive(true);
+            SelectionPanel.SetActive(false);
+        }
+
+        public void CloseShopPanel()
+        {
+            ShopPanel.SetActive(false);
+            SelectionPanel.SetActive(true);
         }
 
         public void OpenLoginPanel()

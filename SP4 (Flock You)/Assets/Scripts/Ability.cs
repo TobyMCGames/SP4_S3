@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Ability
 {
+    protected PhotonView photonView;
     protected Transform player;
 
     public float cooldown = 0;
@@ -24,6 +26,11 @@ public class Ability
     public void SetPlayer(Transform _player)
     {
         player = _player;
+    }
+
+    public void SetPhotonView(PhotonView _photonView)
+    {
+        photonView = _photonView;
     }
 
     public virtual void UseAbility()

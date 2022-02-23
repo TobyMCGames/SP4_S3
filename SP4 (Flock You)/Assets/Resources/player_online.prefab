@@ -405,10 +405,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee769a6a59a9c63499b3e3f0748e2346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerGameInfo:
+    sUsername: 
+    ilevel: 0
+    iPoints: 0
   MaxHealth: 5
   MaxLives: 3
   curHealth: 0
   curLives: 0
+  InvincibilityDuration: 2
+  InvincibilityTimer: 0
+  BlinkFrame: 0.1
+  BlinkTimer: 0
   DropLoadControl_script: {fileID: 3433376927388911469}
 --- !u!114 &6581013264930199746
 MonoBehaviour:
