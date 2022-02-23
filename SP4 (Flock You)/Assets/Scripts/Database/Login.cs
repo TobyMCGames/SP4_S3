@@ -51,6 +51,8 @@ public class Login : MonoBehaviour
                     //photon connect to server
                     PhotonNetwork.ConnectUsingSettings();
 
+                    GlobalSettings.curMode = GlobalSettings.GAMEMODES.MULTIPLAYER; // Player playing online
+
                     //load player stats
                     transform.GetComponent<ReadPlayerStats>().LoadStats();
                 }

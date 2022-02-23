@@ -10,6 +10,7 @@ public class UI_Manager : MonoBehaviour
     public FYPlayer player;
 
     public Text UI_Timer;
+    public Transform scoreboard;
     //Temporary use text instead of image
     public Text UI_Health;
     public Text UI_Ammo;
@@ -46,6 +47,15 @@ public class UI_Manager : MonoBehaviour
             else
                 UI_Timer.text = min + ":0" + sec; 
         }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            scoreboard.gameObject.SetActive(true);
+        }
+        else if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            scoreboard.gameObject.SetActive(false);
+        }
     }
 
     public void UpdateHealth()
@@ -79,5 +89,18 @@ public class UI_Manager : MonoBehaviour
         }
 
         UI_Lives.text = "x " + player.curLives;
+    }
+
+    public void SetupScoreboard()
+    {
+        List<PlayerGameValues> playerValues = FYGameManager.Instance.playerGameList;
+
+        for (int i = 0; i < playerValues.Count; i++)
+        {
+            scoreboard.GetChild(i + 1).gameObject.SetActive(true);
+            scoreboard.GetChild(i + 1).GetChild(0).GetComponent<Text>().text = playerValues[i].sUsername;
+            scoreboard.GetChild(i + 1).GetChild(1).GetComponent<Text>().text = playerValues[i].ilevel.ToString();
+            scoreboard.GetChild(i + 1).GetChild(2).GetComponent<Text>().text = playerValues[i].iPoints.ToString();
+        }
     }
 }
