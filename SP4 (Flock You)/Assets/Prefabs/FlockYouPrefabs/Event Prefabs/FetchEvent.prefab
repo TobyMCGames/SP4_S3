@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 1252143883209121786}
   - component: {fileID: 5362179835915214610}
   - component: {fileID: 5733934239865731779}
+  - component: {fileID: 7447099923614627147}
   m_Layer: 0
   m_Name: FetchEvent
   m_TagString: Untagged
@@ -307,14 +308,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Eventtype: 0
   EventArea: {fileID: 5733934239865731779}
-  EventTarget: []
-  TargetTransform: []
+  canvas: {fileID: 4014394120183719388}
   IsfetchGlobal: 0
   FetchItem: {fileID: 4861449029122004512}
   carriedby: {fileID: 0}
   SingleCarriedby: {fileID: 0}
-  itemDistance: 0
-  canvas: {fileID: 4014394120183719388}
+  PreviousCarriedby: {fileID: 0}
+  Distance: 0
+  timebeforeDestruction: 5
   TextDistanceCheck: {fileID: 4542365098326356589}
   TextCarriedby: {fileID: 326081201560459996}
 --- !u!65 &5733934239865731779
@@ -330,6 +331,29 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7447099923614627147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8826730325308337277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5362179835915214610}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &8471703349182819170
 PrefabInstance:
   m_ObjectHideFlags: 0

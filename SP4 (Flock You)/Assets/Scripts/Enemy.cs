@@ -125,6 +125,7 @@ public class Enemy : MonoBehaviour
             Debug.Log("Enemy lose interest");
             waypointController.GetClosestWaypoint();
             curState = FSM.PATROL;
+            Distract_Timer = DistractTime;
         }
     }
 

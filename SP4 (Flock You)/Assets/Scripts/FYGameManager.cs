@@ -147,6 +147,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 if (!startTimeIsSet)
                 {
                     photonView.RPC("Initialize", RpcTarget.AllViaServer);
+                    AssignSpawnPoints();
                 }
             }
             else
@@ -198,7 +199,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         }
         else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
-            if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null) // create a event
+           /* if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null) // create a event
             {
                 float randx, randy, randz;
                 Vector3 Eventpos = Vector3.zero;
@@ -210,7 +211,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 
                 Eventpos.Set(randx, randy, randz);
                 EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_FETCH, Eventpos);
-            }
+            }*/
         }
 
         if (!isOver())

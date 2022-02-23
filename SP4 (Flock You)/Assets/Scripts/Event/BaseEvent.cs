@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class BaseEvent :MonoBehaviour
+public class BaseEvent :MonoBehaviourPun,IPunObservable
 {
     public enum GameEventType
     {
@@ -13,10 +13,14 @@ public class BaseEvent :MonoBehaviour
     }
     [SerializeField] protected GameEventType Eventtype;
     [SerializeField] protected Collider EventArea;
-    [SerializeField] protected List<PhotonView> EventTarget;
-    [SerializeField] protected List<Transform> TargetTransform;
+    //[SerializeField] protected List<PhotonView> EventTarget;
+    //[SerializeField] protected List<Transform> TargetTransform;
+    [SerializeField] protected GameObject canvas;
+
+    protected PhotonView EventView;
     protected bool Completed;
     protected double Destructiontimer; 
+
     public virtual bool IsReqMet()
     {
         return false;
@@ -27,6 +31,11 @@ public class BaseEvent :MonoBehaviour
     }
 
     public virtual void RunEvent()
+    {
+
+    }
+
+    public virtual void Init()
     {
 
     }
@@ -46,7 +55,7 @@ public class BaseEvent :MonoBehaviour
 
     public virtual void Awake()
     {
-
+        EventView = GetComponent<PhotonView>();
     }
     
     public GameEventType GetEventType()
@@ -64,10 +73,10 @@ public class BaseEvent :MonoBehaviour
         Completed = _Completed;
     }
 
-    public virtual void returnText()
+    public virtual void returnEventobj()
     {
-
     }
+    
 
     public virtual void ToggleDestruction()
     {
@@ -80,5 +89,36 @@ public class BaseEvent :MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    public virtual void OnTriggerEnter(Collider other)
+    {
+        
+    }
+
+    public virtual void OnTriggerExit(Collider other)
+    {
+        
+    }
+
+    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                stream.SendNext(Destructiontimer);
+                stream.SendNext(Completed);
+                stream.SendNext(canvas);
+                //stream.SendNext(EventArea);
+            }
+        }
+        else if (stream.IsReading)
+        {
+            Destructiontimer = (float)stream.ReceiveNext();
+            Completed = (bool)stream.ReceiveNext();
+            canvas = (GameObject)stream.ReceiveNext();
+            
+        }
     }
 }

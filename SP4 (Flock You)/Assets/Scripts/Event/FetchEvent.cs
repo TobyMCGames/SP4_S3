@@ -16,7 +16,6 @@ public class FetchEvent : BaseEvent
     public float Distance;
     public float timebeforeDestruction =5f;
     // Event Information
-    public GameObject canvas;
     public Text TextDistanceCheck;
     public Text TextCarriedby;
 
@@ -85,13 +84,13 @@ public class FetchEvent : BaseEvent
         }
     }
 
-    public void Init()
+    public override void Init()
     {
         if (IsfetchGlobal && GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             foreach (Transform player in FYGameManager.Instance.PlayerList)
             {
-                EventTarget.Add(player.GetComponent<PhotonView>());
+                //EventTarget.Add(player.GetComponent<PhotonView>());
             }
         }
         else // target the main player 
@@ -112,10 +111,15 @@ public class FetchEvent : BaseEvent
         SingleCarriedby = holder;
     }
 
-    public override void returnText()
+    public override void returnEventobj()
     {
-        TextDistanceCheck.transform.parent = canvas.transform;
-        TextCarriedby.transform.parent = canvas.transform;
+        if (canvas != null)
+        {
+            TextDistanceCheck.transform.parent = canvas.transform;
+            TextCarriedby.transform.parent = canvas.transform;
+        }
+        else
+            Debug.Log("Canvas is null in eventbase");
     }
 
     public override void ToggleDestruction()
@@ -168,5 +172,9 @@ public class FetchEvent : BaseEvent
         if (nearestNest == -1)
             Debug.Log("No nests foudn in the game manager");
         return Mathf.Round(nearestNest);
+    }
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        base.OnPhotonSerializeView(stream, info);
     }
 }

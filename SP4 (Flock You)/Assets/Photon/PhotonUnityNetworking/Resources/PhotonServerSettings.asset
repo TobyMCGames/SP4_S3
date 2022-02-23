@@ -68,6 +68,8 @@ MonoBehaviour:
   - NestDestroyed
   - LoadBulletProperties
   - Damaged
+  - CreateEvent
+  - FixedUpdate
   - DistractEnemyList
   - RegisterPlayerList
   DisableAutoOpenWizard: 1
