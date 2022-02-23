@@ -12,29 +12,21 @@ public class Cat : Enemy
 
     protected override void IdleState()
     {
-        if (enemyObserver.isPlayerInRange)
+        if (enemyObserver.isNestInRange)
         {
-            curState = FSM.AGRO;
-            Debug.Log("Cat switching to AGRO state");
-        }
-        else if (enemyObserver.isNestInRange)
-        {
+            //this runs when the cat hits the nest once
             nest = enemyObserver.peckable;
-            if (nest == null)
+            if (nest != null) // nest is present
             {
-                curState = FSM.DISTRACTED;
-                Debug.Log("Cat switching to DISTRACTED state");
-                Distract_Timer = DistractTime * 3;
-                enemyObserver.isNestInRange = false;
-                return;
+                navMeshAgent.SetDestination(nest.position);
+                if (Vector3.Distance(transform.position, nest.position) <= 1f)
+                {
+                    nest.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
+                }
             }
-            
-            navMeshAgent.SetDestination(nest.position);
-            //waypointController.WaitForSecondsRandom(3f, 6f);
-            if (Vector3.Distance(transform.position, nest.position) <= 1f)
-            {
-                nest.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
-            }
+            curState = FSM.DISTRACTED;
+            Debug.Log("Cat switching to DISTRACTED state");
+            Distract_Timer = DistractTime;
         }
         else
         {
