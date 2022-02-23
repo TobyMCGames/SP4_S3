@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class Login : MonoBehaviour
 {
-    public string URL;
+    private string URL;
     public Text displayTxt; //must add using UnityEngine.UI
     public InputField if_username, if_password; //to link to the inpufields
 
@@ -41,11 +41,12 @@ public class Login : MonoBehaviour
         {
             case UnityWebRequest.Result.Success:
                 displayTxt.text = webreq.downloadHandler.text;
-                GlobalSettings.Username = if_username.text;
+                //GlobalSettings.Username = if_username.text;
                 if (webreq.downloadHandler.text == "Login success")
                 {
                     //Set player name
                     string playerName = if_username.text;
+                    GlobalSettings.Username = playerName;
                     PhotonNetwork.LocalPlayer.NickName = playerName;
                     PlayerNameDisplayTxt.text = playerName;
                     //photon connect to server

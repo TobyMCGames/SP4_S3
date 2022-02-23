@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 public class Register : MonoBehaviour
 {
-    public string URL;
+    private string URL;
     public Text displayTxt; //must add using UnityEngine.UI
     public InputField if_username, if_password, if_confirmPassword; //to link to the inpufields
 
