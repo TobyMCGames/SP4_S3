@@ -6,7 +6,7 @@ using Photon.Pun;
 public class InteractControl : MonoBehaviour
 {
     private PhotonView photonView;
-    private GameObject heldObject;
+    public GameObject heldObject;
     private GameObject peckableObject;
     private GameObject player;
     private float heldObjectWeight;
@@ -53,7 +53,9 @@ public class InteractControl : MonoBehaviour
         //if click and hold
         if (Input.GetMouseButton(0))
         {
-            heldObject = GetComponentInChildren<InteractDetection>().GetInteractable();
+            if (heldObject == null)
+                heldObject = GetComponentInChildren<InteractDetection>().GetInteractable();
+
             if (heldObject != null && heldObject.transform.parent != touchPointLight.transform && heldObject.transform.parent != touchPointHeavy.transform)
             {
                 heldObjectWeight = heldObject.GetComponent<Rigidbody>().mass;
@@ -98,6 +100,8 @@ public class InteractControl : MonoBehaviour
                 heldObject.GetComponent<Collider>().enabled = true;
                 //default speed
                 player.GetComponent<MovePlayer>().movemul = player.GetComponent<MovePlayer>().GetDefaultMoveMul();
+
+                heldObject = null;
             }
         }
     }
