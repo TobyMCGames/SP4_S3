@@ -15,11 +15,20 @@ public class Cat : Enemy
         if (enemyObserver.isPlayerInRange)
         {
             curState = FSM.AGRO;
-            Debug.Log("Enemy switching to AGRO state");
+            Debug.Log("Cat switching to AGRO state");
         }
         else if (enemyObserver.isNestInRange)
         {
             nest = enemyObserver.peckable;
+            if (nest == null)
+            {
+                curState = FSM.DISTRACTED;
+                Debug.Log("Cat switching to DISTRACTED state");
+                Distract_Timer = DistractTime * 3;
+                enemyObserver.isNestInRange = false;
+                return;
+            }
+            
             navMeshAgent.SetDestination(nest.position);
             //waypointController.WaitForSecondsRandom(3f, 6f);
             if (Vector3.Distance(transform.position, nest.position) <= 1f)
