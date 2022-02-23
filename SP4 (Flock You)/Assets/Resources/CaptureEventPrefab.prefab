@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2546675020700076099}
   - component: {fileID: 7732448253466565821}
   - component: {fileID: 1416380664980592485}
+  - component: {fileID: 144391248191756892}
   m_Layer: 0
   m_Name: CaptureEventPrefab
   m_TagString: Untagged
@@ -162,10 +163,28 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 3464287508305301235}
+  - {fileID: 144391248191756892}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &144391248191756892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063727481913639406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &1684345972741822589
 GameObject:
   m_ObjectHideFlags: 0

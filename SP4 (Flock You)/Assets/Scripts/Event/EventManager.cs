@@ -44,7 +44,6 @@ public class EventManager : MonoBehaviourPun,IPunObservable
         ActiveEventList.Remove(_object);
     }
     
-    [PunRPC]
     public void CreateEvent(BaseEvent.GameEventType eventType,Vector3 position)
     {
         switch (eventType)
@@ -53,10 +52,8 @@ public class EventManager : MonoBehaviourPun,IPunObservable
                 if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                 {
                     GameObject CaptureEvent = PhotonNetwork.Instantiate("CaptureEventPrefab", gameObject.transform.position, Quaternion.identity);
-                    CaptureEvent.transform.SetParent(gameObject.transform);
-
                     CaptureEvent.transform.localPosition = position;
-                    CaptureEvent.GetComponent<CaptureEvent>().Init();
+                    photonView.RPC("InitEvent", RpcTarget.AllViaServer, CaptureEvent, eventType);
                 }
                 else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
                 {
@@ -75,6 +72,19 @@ public class EventManager : MonoBehaviourPun,IPunObservable
                     FetchEvent.transform.localPosition = position;
                     //AddEvent(FetchEvent);
                 }
+                break;
+        }
+    }
+    [PunRPC]
+    public void InitEvent(GameObject obj,BaseEvent.GameEventType eventType)
+    {
+        switch(eventType)
+        {
+            case BaseEvent.GameEventType.EVENT_CAPTURE:
+                obj.transform.SetParent(gameObject.transform);
+                obj.GetComponent<CaptureEvent>().Init();
+                break;
+            case BaseEvent.GameEventType.EVENT_FETCH:
                 break;
         }
     }
