@@ -35,5 +35,9 @@ public class Cat : Enemy
             // Deals damage to nest
             other.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
         }
+        if (other.tag == "Player")
+        {
+
+        }
     }
 }

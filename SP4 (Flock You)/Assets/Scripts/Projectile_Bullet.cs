@@ -44,11 +44,11 @@ public class Projectile_Bullet : MonoBehaviour
                 {
                     case Enemy.EnemyType.DOG:
                         enemy.SetStun(2);
-                        Debug.Log("Dog stuned!");
+                        Debug.Log("Bullet Shot a dog");
                         break;
                     case Enemy.EnemyType.CAT:
                         enemy.SetStun(2);
-                        Debug.Log("Cat stuned!");
+                        Debug.Log("Bullet Shot a cat");
                         break;
                     default:
                         break;
