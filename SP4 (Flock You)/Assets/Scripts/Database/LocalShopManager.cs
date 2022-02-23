@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class LocalShopManager : MonoBehaviour
 {
     public GameObject ShopList;
+    public Button buyButton;
+    public Button equipButton;
     public Text ItemName;
     public Text ItemCost;
     public Text LockedStatus;
@@ -24,12 +26,19 @@ public class LocalShopManager : MonoBehaviour
         //get item's name
         ItemName.text = thisItem.GetChild(0).GetComponentInChildren<Text>().text;
         //get item's cost
-        ItemCost.text = "Cost: " + thisItem.GetChild(3).GetComponentInChildren<Text>().text;
+        ItemCost.text = thisItem.GetChild(3).GetComponentInChildren<Text>().text;
         //get item's lock status
+
         if (thisItem.GetChild(2).gameObject.activeSelf == true)
+        {
             LockedStatus.text = "Locked";
+            buyButton.enabled = false;
+        }
         else
+        {
+            buyButton.enabled = true;
             LockedStatus.text = "";
+        }
     }
 
 }
