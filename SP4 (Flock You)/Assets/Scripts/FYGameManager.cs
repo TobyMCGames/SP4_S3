@@ -34,13 +34,14 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public CinemachineFreeLook MainCamera;
     public Transform PlayerList;
     public Transform ProjectileList;
-    private PlayerGameValues playerGameInfo = new PlayerGameValues();
+    public PlayerGameValues playerGameInfo = new PlayerGameValues();
 
     [Header("Server Settings")]
     bool AllPlayersAssigned = false;
+    bool AllPlayerInfo = false;
 
     [Header("Player List")]
-    List<PlayerGameValues> playerGameList;
+    public List<PlayerGameValues> playerGameList = new List<PlayerGameValues>();
 
     // Spawn Points
     public Transform[] SpawnPoints;
@@ -88,6 +89,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             UI_Screen.SetActive(true);
             AssignSpawnPoints();
             player.ResetSpawnPoint();
+            UI_Manager.Instance.SetupScoreboard();
         }
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
@@ -189,6 +191,11 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             if (!AllPlayersAssigned)
                 if (PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length == PlayerList.childCount)
                     AssignSpawnPoints();
+
+            if (!AllPlayerInfo)
+                if (playerGameList.Count == PhotonNetwork.PlayerList.Length)
+                    UI_Manager.Instance.SetupScoreboard();
+
         }
         else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
@@ -267,7 +274,6 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         }
     }
 
-
     [PunRPC]
     private void Initialize()
     {
@@ -306,10 +312,14 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         // Set up UI now
         SetUpUI();
 
-        photonView.RPC("RegisterPlayerList", RpcTarget.AllViaServer, GlobalSettings.Username, GlobalSettings.Level);
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            RegisterPlayerList(GlobalSettings.Username, GlobalSettings.Level);
 
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+        {
+            photonView.RPC("RegisterPlayerList", RpcTarget.AllViaServer, GlobalSettings.Username, GlobalSettings.Level);
             photonView.RPC("SetToPlayerList", RpcTarget.AllViaServer, player.gameObject.GetPhotonView().ViewID);
+        }
     }
 
     [PunRPC]
