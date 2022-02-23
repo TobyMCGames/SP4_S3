@@ -143,6 +143,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 if (!startTimeIsSet)
                 {
                     photonView.RPC("Initialize", RpcTarget.AllViaServer);
+                    AssignSpawnPoints();
                 }
             }
             else

@@ -90,7 +90,7 @@ public class FetchEvent : BaseEvent
         {
             foreach (Transform player in FYGameManager.Instance.PlayerList)
             {
-                EventTarget.Add(player.GetComponent<PhotonView>());
+                //EventTarget.Add(player.GetComponent<PhotonView>());
             }
         }
         else // target the main player 
@@ -113,8 +113,13 @@ public class FetchEvent : BaseEvent
 
     public override void returnEventobj()
     {
-        TextDistanceCheck.transform.parent = canvas.transform;
-        TextCarriedby.transform.parent = canvas.transform;
+        if (canvas != null)
+        {
+            TextDistanceCheck.transform.parent = canvas.transform;
+            TextCarriedby.transform.parent = canvas.transform;
+        }
+        else
+            Debug.Log("Canvas is null in eventbase");
     }
 
     public override void ToggleDestruction()
@@ -167,5 +172,9 @@ public class FetchEvent : BaseEvent
         if (nearestNest == -1)
             Debug.Log("No nests foudn in the game manager");
         return Mathf.Round(nearestNest);
+    }
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        base.OnPhotonSerializeView(stream, info);
     }
 }
