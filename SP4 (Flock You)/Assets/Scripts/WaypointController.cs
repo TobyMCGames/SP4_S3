@@ -126,6 +126,15 @@ public class WaypointController : MonoBehaviour
     {
         currentTarget = waypoints[index];
         navMeshAgent.SetDestination(currentTarget.position);
+    }
 
+    public void WaitForSecondsRandom(float minValue, float maxValue)
+    {
+        StartCoroutine(WaitForSecondsRandomCoroutine(minValue,maxValue));
+    }
+
+    IEnumerator WaitForSecondsRandomCoroutine(float minValue, float maxValue)
+    {
+        yield return new WaitForSeconds(Random.Range(minValue, maxValue));
     }
 }

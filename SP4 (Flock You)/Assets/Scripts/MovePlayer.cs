@@ -192,6 +192,20 @@ public class MovePlayer : MonoBehaviour
         {
             playerState = PlayerState.FLYING_BARREL_LEFT;
         }
+
+        if (Input.GetKeyUp(KeyCode.Alpha0) && PhotonNetwork.IsMasterClient)
+        {
+            Vector3 Eventpos = Vector3.zero;
+            Eventpos.Set(20, 1, 20);
+            photonView.RPC("CreateEvent", RpcTarget.AllViaServer,BaseEvent.GameEventType.EVENT_CAPTURE, Eventpos);
+        }
+    }
+
+    [PunRPC]
+    public void CreateEvent(BaseEvent.GameEventType eventType, Vector3 position)
+    {
+        if (photonView.IsMine)
+            EventManager.Instance.CreateEvent(eventType, position);
     }
 
     private void FixedUpdate()
@@ -526,7 +540,6 @@ public class MovePlayer : MonoBehaviour
         else
             pitch = divebombminpitch;
         fallspeed += -verticalmovement * Time.deltaTime;
-        yaw = Mathf.Rad2Deg * Mathf.Atan2(vec3front.x,vec3front.z);
         Orientation.Set(pitch, yaw, roll);
         m_Movement = (verticalmovement *vec3front) + (horizontalmovement * vec3right);
         m_Movement.y = fallspeed;

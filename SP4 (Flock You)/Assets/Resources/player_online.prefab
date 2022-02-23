@@ -409,6 +409,10 @@ MonoBehaviour:
   MaxLives: 3
   curHealth: 0
   curLives: 0
+  InvincibilityDuration: 2
+  InvincibilityTimer: 0
+  BlinkFrame: 0.1
+  BlinkTimer: 0
   DropLoadControl_script: {fileID: 3433376927388911469}
 --- !u!114 &6581013264930199746
 MonoBehaviour:

@@ -34,11 +34,14 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public CinemachineFreeLook MainCamera;
     public Transform PlayerList;
     public Transform ProjectileList;
+    public PlayerGameValues playerGameInfo = new PlayerGameValues();
 
     [Header("Server Settings")]
     bool AllPlayersAssigned = false;
-    // Player List
-    //FYPlayer[] playerList;
+    bool AllPlayerInfo = false;
+
+    [Header("Player List")]
+    public List<PlayerGameValues> playerGameList = new List<PlayerGameValues>();
 
     // Spawn Points
     public Transform[] SpawnPoints;
@@ -86,6 +89,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             UI_Screen.SetActive(true);
             AssignSpawnPoints();
             player.ResetSpawnPoint();
+            UI_Manager.Instance.SetupScoreboard();
         }
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
@@ -143,6 +147,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 if (!startTimeIsSet)
                 {
                     photonView.RPC("Initialize", RpcTarget.AllViaServer);
+                    AssignSpawnPoints();
                 }
             }
             else
@@ -186,10 +191,15 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             if (!AllPlayersAssigned)
                 if (PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length == PlayerList.childCount)
                     AssignSpawnPoints();
+
+            if (!AllPlayerInfo)
+                if (playerGameList.Count == PhotonNetwork.PlayerList.Length)
+                    UI_Manager.Instance.SetupScoreboard();
+
         }
         else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
-            if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null) // create a event
+           /* if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null) // create a event
             {
                 float randx, randy, randz;
                 Vector3 Eventpos = Vector3.zero;
@@ -201,7 +211,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 
                 Eventpos.Set(randx, randy, randz);
                 EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_FETCH, Eventpos);
-            }
+            }*/
         }
 
         if (!isOver())
@@ -264,7 +274,6 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         }
     }
 
-
     [PunRPC]
     private void Initialize()
     {
@@ -302,10 +311,15 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
         // Set up UI now
         SetUpUI();
-        //photonView.RPC("RegisterPlayerID", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID);
+
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            RegisterPlayerList(GlobalSettings.Username, GlobalSettings.Level);
 
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+        {
+            photonView.RPC("RegisterPlayerList", RpcTarget.AllViaServer, GlobalSettings.Username, GlobalSettings.Level);
             photonView.RPC("SetToPlayerList", RpcTarget.AllViaServer, player.gameObject.GetPhotonView().ViewID);
+        }
     }
 
     [PunRPC]
@@ -331,5 +345,22 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         player.setDefaultSpawn(SpawnPoints[nestID].position);
         SpawnPoints[nestID].GetChild(0).GetComponent<SpawnPointScript>().owner = player;
         player.ResetSpawnPoint();
+    }
+
+    [PunRPC]
+    private void RegisterPlayerList(string _username, int level)
+    {
+        PlayerGameValues _playerInfo = new PlayerGameValues();
+        _playerInfo.sUsername = _username;
+        _playerInfo.ilevel = level;
+        _playerInfo.iPoints = 0;
+
+        playerGameList.Add(_playerInfo);
+
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+            if (!photonView.IsMine)
+                return;
+
+        playerGameInfo = _playerInfo;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class DistractAbility : Ability
 {
@@ -16,18 +17,28 @@ public class DistractAbility : Ability
     override public void UseAbility()
     {
         CurCooldown = cooldown;
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
         //get list from DistractDetection and assign as own
         Enemies = player.GetComponentInChildren<DistractDetection>().GetEnemyList();
 
         //Distract enemies in the list
-        foreach(GameObject enemy in Enemies)
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
-            if (enemy != null)
+            foreach (GameObject enemy in Enemies)
             {
-                enemy.GetComponent<Enemy>().Distracted(player.transform.position);
-                Debug.Log(enemy.name + " distracted!");
+                if (enemy != null)
+                {
+                    enemy.GetComponent<Enemy>().Distracted(player.transform.position);
+                    Debug.Log(enemy.name + " distracted!");
+                }
             }
+        }
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+        {
+            List<int> IDList = new List<int>();
+            for (int i = 0; i < Enemies.Count; i++)
+                IDList.Add(Enemies[i].GetPhotonView().ViewID);
+
+            photonView.RPC("DistractEnemyList", RpcTarget.AllViaServer, IDList.ToArray(), player.transform.position);
         }
     }
 }

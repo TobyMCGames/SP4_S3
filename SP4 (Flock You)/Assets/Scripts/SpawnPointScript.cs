@@ -32,7 +32,7 @@ public class SpawnPointScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-
+        
     }
 
     // Start is called before the first frame update

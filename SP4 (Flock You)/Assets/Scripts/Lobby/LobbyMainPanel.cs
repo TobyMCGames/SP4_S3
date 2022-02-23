@@ -308,7 +308,8 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
             //PhotonNetwork.LoadLevel("FlockYou_GameScene");
-            PhotonNetwork.LoadLevel("Toby_Scene");
+            //PhotonNetwork.LoadLevel("Toby_Scene");
+            PhotonNetwork.LoadLevel("ZG_SCENE2");
             //PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
         }
 
