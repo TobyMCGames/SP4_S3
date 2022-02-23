@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     private PhotonView photonView;
 
     protected Transform player;
+    protected Transform nest;
     protected int MoveSpeed = 1;
     public NavMeshAgent navMeshAgent;
 
@@ -59,6 +60,7 @@ public class Enemy : MonoBehaviour
         switch (curState)
         {
             case FSM.IDLE:
+                IdleState();
                 break;
             case FSM.PATROL:
                 PatrolState();
@@ -74,11 +76,12 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
-        distanceBetweenPlayer = Vector3.Distance(transform.position, player.position);
+        
+    }
 
-        //Deal damage to player
-        if (isMeleeAttacking == true && distanceBetweenPlayer <= 1f)
-            DealDamageToPlayer(playerInvolved);
+    protected virtual void IdleState() // cat exclusive
+    {
+        return;
     }
 
     protected virtual void PatrolState()
@@ -89,6 +92,18 @@ public class Enemy : MonoBehaviour
         {
             curState = FSM.AGRO;
             Debug.Log("Enemy switching to AGRO state");
+        }
+        else if (enemyType == Enemy.EnemyType.CAT)
+        {
+            if (enemyObserver.isNestInRange)
+            {
+                curState = FSM.IDLE;
+                Debug.Log("Cat switching to [Nest destroying] state");
+            }
+            else
+            {
+                waypointController.WaypointUpdate();
+            }
         }
         else
             waypointController.WaypointUpdate();
@@ -118,9 +133,26 @@ public class Enemy : MonoBehaviour
         if (enemyObserver.isPlayerInRange)
         {
             // Make enemy chase player
+            distanceBetweenPlayer = Vector3.Distance(transform.position, player.position);
+            
             player = enemyObserver.player;
             SetDetectionRange(defaultDetectionRadius * 4f);
             navMeshAgent.SetDestination(player.position);
+
+            //Deal damage to player
+            if (isMeleeAttacking == true && distanceBetweenPlayer <= 1f)
+            {
+                if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                {
+                    if (playerInvolved.GetComponent<PhotonView>().IsMine)
+                        playerInvolved.GetComponent<FYPlayer>().Damaged(1);
+                }
+                else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+                    playerInvolved.GetComponent<FYPlayer>().Damaged(1);
+
+                Debug.Log("Enemy melee attacked a player");
+            }
+
         }
         else
         {

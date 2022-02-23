@@ -10,6 +10,9 @@ public class EnemyObserver : MonoBehaviour
     private bool isWeaponInRange;
     private Transform weapon;
 
+    public bool isNestInRange; // cat exclusive
+    public Transform peckable;
+
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +23,7 @@ public class EnemyObserver : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //detect player
-        if (other.tag == "Player") {
+        if (other.CompareTag("Player")) {
             if (player == null)
             {
                 player = other.transform;
@@ -28,7 +31,7 @@ public class EnemyObserver : MonoBehaviour
             isPlayerInRange = true;
         }
         //detect weapon
-        else if (other.tag == "Weapon")
+        else if (other.CompareTag("Weapon"))
         {
             if (weapon == null)
             {
@@ -36,22 +39,36 @@ public class EnemyObserver : MonoBehaviour
             }
             isWeaponInRange = true;
         }
+        //detect nest (cat exclusive)
+        else if (other.CompareTag("Peckable"))
+        {
+            if (peckable == null)
+            {
+                peckable = other.transform;
+            }
+            isNestInRange = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player" && other.transform == player)
+        if (other.CompareTag("Player") && other.transform == player)
         {
             player = null;
             isPlayerInRange = false;
         }
-        else if (other.tag == "Weapon")
+        else if (other.CompareTag("Weapon"))
         {
             if(weapon != null)
             {
                 weapon = null;
             }
             isWeaponInRange = false;
+        }
+        else if (other.CompareTag("Peckable"))
+        {
+            peckable = null;
+            isNestInRange = false;
         }
     }
 
