@@ -640,4 +640,9 @@ public class MovePlayer : MonoBehaviour
         else if (pitch > 0.5)
             pitch -= Time.deltaTime * flyverticalforce * 0.5f;
     }
+
+    public float getYaw()
+    {
+        return yaw;
+    }
 }

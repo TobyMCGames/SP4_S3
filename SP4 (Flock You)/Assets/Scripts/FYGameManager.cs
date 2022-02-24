@@ -45,6 +45,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     // Spawn Points
     public Transform[] SpawnPoints;
 
+    // Minimap
+    public GameObject MinimapCam;
 
     // floor cube
     public GameObject floor;
@@ -290,10 +292,17 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         {
             ClientPlayer = Instantiate(PlayerPrefab, PlayerList);
             ClientPlayer.GetComponent<PhotonTransformView>().enabled = false;
+            MinimapCam.GetComponent<MinimapScript>().setPlayertoFollow(ClientPlayer);
+            MinimapCam.GetComponent<MinimapScript>().settpc(MainCamera);
+            
         }
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+        {
             ClientPlayer = PhotonNetwork.Instantiate("player_online", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
-
+            MinimapCam.GetComponent<MinimapScript>().setPlayertoFollow(ClientPlayer);
+            MinimapCam.GetComponent<MinimapScript>().settpc(MainCamera);
+        }
+    
         if (player != null)
         {
             SetUpUI();
