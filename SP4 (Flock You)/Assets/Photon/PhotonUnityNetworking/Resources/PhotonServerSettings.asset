@@ -73,6 +73,15 @@ MonoBehaviour:
   - DistractEnemyList
   - RegisterPlayerList
   - InitEvent
+  - addTimeBoundary
+  - AddviewBoundary
+  - removeTimeBoundary
+  - RemoveviewBoundary
+  - SyncPlayerTime
+  - SyncPoints
+  - Syncviewboundary
+  - SyncLedaingPlayer
+  - SyncEventPosition
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

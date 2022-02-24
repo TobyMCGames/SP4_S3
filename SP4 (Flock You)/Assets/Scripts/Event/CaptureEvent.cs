@@ -16,16 +16,66 @@ public class CaptureEvent : BaseEvent
 
     public float CaptureTimelimit;
     // viewid: points
-    private Dictionary<int,Progressbar > playerProgresslist = new Dictionary<int,Progressbar>(); // keep track of who has the most points 
-
-    private List<int> viewwithinBoundary = new List<int>();
-    private List<float> timewithinBoundary = new List<float>();
+    
+    [SerializeField]private Dictionary<int,Progressbar > playerProgresslist = new Dictionary<int,Progressbar>(); // keep track of who has the most points 
+    [SerializeField]private List<int> viewwithinBoundary = new List<int>();
+    [SerializeField]private List<float> timewithinBoundary = new List<float>();
 
     public float PointsTimer = 0.5f;
     public float ElapsedTime = 0f;
     public float rateofCapture = 0.5f;
     public float maxaddedprogress = 2f;
     public float progressbaryOffset = 50;
+
+    [PunRPC]
+    public void SyncPoints(int Playerview,float currentprogress)
+    {
+        playerProgresslist[Playerview].setProgress(currentprogress);
+    }
+
+    [PunRPC]
+    public void SyncPlayerTime(int index,float time)
+    {
+        timewithinBoundary[index] = time;
+    }
+
+    [PunRPC]
+    public void Syncviewboundary(int index,int playerview)
+    {
+        viewwithinBoundary[index] = playerview;
+    }
+
+    [PunRPC]
+    public void AddviewBoundary(int playerview)
+    {
+        viewwithinBoundary.Add(playerview);
+    }
+
+    [PunRPC]
+    public void RemoveviewBoundary(int playerview)
+    {
+        if (viewwithinBoundary.Contains(playerview))
+            viewwithinBoundary.Remove(playerview);
+    }
+
+    [PunRPC]
+    public void addTimeBoundary(float timeboundary)
+    {
+        timewithinBoundary.Add(timeboundary);
+    }
+
+    [PunRPC]
+    public void removeTimeBoundary(int index)
+    {
+        timewithinBoundary.RemoveAt(index);
+    }
+
+    // sync text
+    [PunRPC]
+    public void SyncLedaingPlayer(string leadingtext)
+    {
+        Leadingplayer.text = leadingtext;
+    }
 
 
     public override void Init()
@@ -81,10 +131,16 @@ public class CaptureEvent : BaseEvent
                     addedprogress = (rateofCapture * timewithinBoundary[i]) *Time.deltaTime * 0.01f;
                     if (addedprogress > maxaddedprogress)
                         addedprogress = maxaddedprogress;
-                    playerProgresslist[viewwithinBoundary[i]].addProgress(addedprogress);
-                    ElapsedTime = 0;
-                    if (playerProgresslist[viewwithinBoundary[i]].getProgress() >= 1)
-                        Completed = true;
+                    if (playerProgresslist.ContainsKey(viewwithinBoundary[i]))
+                    {
+                        playerProgresslist[viewwithinBoundary[i]].addProgress(addedprogress);
+                        ElapsedTime = 0;
+                        // sync with other clients
+                        photonView.RPC("SyncPoints", RpcTarget.OthersBuffered, viewwithinBoundary[i], playerProgresslist[viewwithinBoundary[i]].getProgress());
+
+                        if (playerProgresslist[viewwithinBoundary[i]].getProgress() >= 1)
+                            Completed = true;
+                    }
                     if (i == 0)
                     {
                         mostprogressViewID= viewwithinBoundary[i];
@@ -111,12 +167,14 @@ public class CaptureEvent : BaseEvent
                 {
                     Leadingplayer.text = "Playername: " + "has captured the point";
                 }
+                photonView.RPC("SyncLeadingPlayer", RpcTarget.OthersBuffered, Leadingplayer);
             }
             else
             {
                 for (int i=0;i<viewwithinBoundary.Count;i++)
                 {
                     timewithinBoundary[i] += Time.deltaTime;
+                    photonView.RPC("SyncPlayerTime", RpcTarget.Others,i, timewithinBoundary[i]);
                 }
                 ElapsedTime += Time.deltaTime;
             }
@@ -139,6 +197,8 @@ public class CaptureEvent : BaseEvent
 
     public override void OnTriggerEnter(Collider other)
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if (other.gameObject.CompareTag("Player"))
         {
             if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
@@ -148,8 +208,11 @@ public class CaptureEvent : BaseEvent
                     Debug.Log("multiplayer CaptureEvent: Colliding Player does not have a photonview");
                 else if (!viewwithinBoundary.Contains(playerview.ViewID))
                 {
-                    viewwithinBoundary.Add(playerview.ViewID);
-                    timewithinBoundary.Add(0f);
+                    Debug.Log("view: " + playerview.ViewID + " Added ");
+                    //viewwithinBoundary.Add(playerview.ViewID);
+                    //timewithinBoundary.Add(0f);
+                    photonView.RPC("AddviewBoundary", RpcTarget.AllViaServer, playerview.ViewID);
+                    photonView.RPC("addTimeBoundary", RpcTarget.AllViaServer, 0f);
                 }
             }
         }
@@ -158,6 +221,8 @@ public class CaptureEvent : BaseEvent
     
     public override void OnTriggerExit(Collider other)
     {
+        //if (!PhotonNetwork.IsMasterClient)
+        //    return;
         if (other.gameObject.CompareTag("Player"))
         {
             if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
@@ -168,8 +233,10 @@ public class CaptureEvent : BaseEvent
                 else if (viewwithinBoundary.Contains(playerview.ViewID))
                 {
                     int index = viewwithinBoundary.IndexOf(playerview.ViewID);
-                    viewwithinBoundary.Remove(playerview.ViewID);
-                    timewithinBoundary.RemoveAt(index);
+                    //viewwithinBoundary.Remove(playerview.ViewID);
+                    //timewithinBoundary.RemoveAt(index);
+                    photonView.RPC("RemoveviewBoundary", RpcTarget.AllViaServer, playerview.ViewID);
+                    photonView.RPC("removeTimeBoundary", RpcTarget.AllViaServer, index);
                 }
             }
         }    
@@ -182,88 +249,5 @@ public class CaptureEvent : BaseEvent
             progressbarlist[i].transform.SetParent(canvas.transform);
         }
         Leadingplayer.transform.SetParent(canvas.transform);
-    }
-
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        base.OnPhotonSerializeView(stream, info);
-        
-        if (stream.IsWriting)
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                stream.SendNext(progressbarlist);
-                stream.SendNext(Leadingplayer);
-
-                int[] arr = null;
-                
-                Progressbar[] progressarr = null;
-                int counter = 0;
-                foreach (KeyValuePair<int,Progressbar> playerprogress in playerProgresslist)
-                {
-                    arr[counter] = playerprogress.Key;
-                    progressarr[counter] = playerprogress.Value;
-                    counter++;
-                }
-                stream.SendNext(arr);
-                stream.SendNext(progressarr);
-
-                int[] viewwithinarr = null;
-                float[] timewithinarr = null;
-                for (int i =0;i < viewwithinBoundary.Count;i++)
-                {
-                    viewwithinarr[i] = viewwithinBoundary[i];
-                }
-                
-                for (int j =0;j < timewithinBoundary.Count; j++)
-                {
-                    timewithinarr[j] = timewithinBoundary[j];
-                }
-
-                stream.SendNext(viewwithinarr);
-                stream.SendNext(timewithinarr);
-            }
-        }
-        else if (stream.IsReading)
-        {
-            Array.Clear(progressbarlist, 0, progressbarlist.Length);
-            progressbarlist = (GameObject[])stream.ReceiveNext();
-            Leadingplayer = (Text)stream.ReceiveNext();
-
-            playerProgresslist.Clear();
-            int[] arr = (int[])stream.ReceiveNext();
-            Progressbar[] progressarr = (Progressbar[])stream.ReceiveNext();
-            if (arr != null && progressarr != null)
-            {
-                for (int i = 0; i < arr.Length; i++)
-                {
-                    playerProgresslist.Add(arr[i], progressarr[i]);
-                }
-            }
-           
-
-            int[] viewwithinarr = (int[])stream.ReceiveNext();
-
-            float[] timewithinarr = (float[])stream.ReceiveNext();
-
-            
-            if (viewwithinarr != null)
-            {
-                viewwithinBoundary.Clear();
-                for (int i =0;i< viewwithinarr.Length;i++)
-                {
-                    viewwithinBoundary.Add(viewwithinarr[i]);
-                }
-            }
-
-            if (timewithinarr != null)
-            {
-                timewithinBoundary.Clear();
-                for (int i =0;i< timewithinarr.Length;i++)
-                {
-                    timewithinBoundary.Add(timewithinarr[i]);
-                }
-            }
-        }
     }
 }

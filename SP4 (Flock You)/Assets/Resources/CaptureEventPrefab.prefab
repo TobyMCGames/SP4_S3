@@ -63,18 +63,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252230f9866fc5f49b750ecb3e80f354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Eventtype: 0
+  Eventtype: 1
   EventArea: {fileID: 5541677637479252464}
   canvas: {fileID: 1684345972741822589}
-  progressbarPrefab: {fileID: 4863891764752408063, guid: 1e27db8231908074a95cdb59724ee251,
-    type: 3}
+  progressbarPrefab: {fileID: 6582259209660647072}
   progressbarlist:
   - {fileID: 9166099789678900380}
   - {fileID: 7595426385649770432}
   - {fileID: 2972516607922715940}
   - {fileID: 8264911893253321989}
   Leadingplayer: {fileID: 3441178786612048893}
-  CaptureTimelimit: 0
+  CaptureTimelimit: 20
+  viewwithinBoundary: 
+  timewithinBoundary: []
   PointsTimer: 0.5
   ElapsedTime: 0
   rateofCapture: 20
@@ -90,11 +91,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
+  m_Interpolate: 1
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!33 &2546675020700076099
 MeshFilter:
@@ -157,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 0
+  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3

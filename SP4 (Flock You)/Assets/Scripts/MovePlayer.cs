@@ -202,13 +202,6 @@ public class MovePlayer : MonoBehaviour
         }
     }
 
-    [PunRPC]
-    public void CreateEvent(BaseEvent.GameEventType eventType, Vector3 position)
-    {
-        if (photonView.IsMine)
-            EventManager.Instance.CreateEvent(eventType, position);
-    }
-
     private void FixedUpdate()
     {
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
