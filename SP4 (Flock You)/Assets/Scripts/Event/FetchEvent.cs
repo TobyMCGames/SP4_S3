@@ -173,8 +173,4 @@ public class FetchEvent : BaseEvent
             Debug.Log("No nests foudn in the game manager");
         return Mathf.Round(nearestNest);
     }
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        base.OnPhotonSerializeView(stream, info);
-    }
 }
