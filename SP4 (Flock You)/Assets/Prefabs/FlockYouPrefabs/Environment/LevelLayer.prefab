@@ -1010,17 +1010,17 @@ PrefabInstance:
     - target: {fileID: 4967154475190431383, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9693878
+      value: 2.0152907
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476088973863, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9693878
+      value: 2.0152907
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476267677751, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9693878
+      value: 2.0152907
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476839047209, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
@@ -1030,14 +1030,15 @@ PrefabInstance:
     - target: {fileID: 4967154476839047209, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9693878
+      value: 2.0152907
       objectReference: {fileID: 0}
     - target: {fileID: 8917505357998334060, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Name
       value: Camera Level
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7582291640410545062, guid: 7291dfad709b8084a89e077c15d6311a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7291dfad709b8084a89e077c15d6311a, type: 3}
 --- !u!4 &3384586030617434055 stripped
 Transform:

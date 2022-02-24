@@ -971,6 +971,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3781320595998085824, guid: 36a9a8571df7866488a1f0690d59cf9d,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 6479499962615632936, guid: 36a9a8571df7866488a1f0690d59cf9d,
         type: 3}
       propertyPath: m_RootOrder
@@ -2037,6 +2042,7 @@ MonoBehaviour:
   - {fileID: 5033030191947368744}
   - {fileID: 5033030191947368743}
   - {fileID: 5033030191947368742}
+  MinimapCam: {fileID: 0}
   floor: {fileID: 5033030191947368745}
 --- !u!4 &1517933914
 Transform:

@@ -41,6 +41,8 @@ public class UI_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (FYGameManager.Instance.isOver())
+            return;
         if (UI_Timer != null)
         {
             int min = (int)FYGameManager.Instance.curTimer / 60;
