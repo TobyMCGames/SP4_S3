@@ -34,7 +34,6 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public CinemachineFreeLook MainCamera;
     public Transform PlayerList;
     public Transform ProjectileList;
-    public PlayerGameValues playerGameInfo = new PlayerGameValues();
 
     [Header("Server Settings")]
     bool AllPlayersAssigned = false;
@@ -242,6 +241,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
             // Do if single player vvv
             player.setDefaultSpawn(SpawnPoints[0].position);
+            SpawnPoints[0].GetChild(0).GetComponent<SpawnPointScript>().owner = player;
             AllPlayersAssigned = true;
         }
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
@@ -361,6 +361,6 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             if (!photonView.IsMine)
                 return;
 
-        playerGameInfo = _playerInfo;
+        player.playerGameInfo = _playerInfo;
     }
 }

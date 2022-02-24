@@ -17,6 +17,7 @@ TagManager:
   - Peckable
   - InteractDetect
   - Floor
+  - FetchItem
   layers:
   - Default
   - TransparentFX
