@@ -114,14 +114,19 @@ public class UI_Manager : MonoBehaviour
     }
 
     [PunRPC]
-    public void UpdatePlayerScore(string _name, int _points)
+    public void UpdatePlayerScore(string _name, int _points, int _objectViewID)
     {
-        for (int i = 1; i < scoreboard.childCount; i++)
+        for (int i = 0; i < FYGameManager.Instance.playerGameList.Count; i++)
         {
-            if (scoreboard.GetChild(i).GetChild(0).GetComponent<Text>().text != _name)
+            if (FYGameManager.Instance.playerGameList[i].sUsername != _name)
                 continue;
-
-            scoreboard.GetChild(i).GetChild(2).GetComponent<Text>().text = _points.ToString();
+            Debug.Log("Player: " + _name + " has now " + _points + " points");
+            FYGameManager.Instance.playerGameList[i].iPoints = _points;
+            scoreboard.GetChild(i + 1).GetChild(2).GetComponent<Text>().text = _points.ToString();
         }
+
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+            if (PhotonNetwork.IsMasterClient)
+                PhotonNetwork.Destroy(PhotonNetwork.GetPhotonView(_objectViewID).gameObject);
     }
 }
