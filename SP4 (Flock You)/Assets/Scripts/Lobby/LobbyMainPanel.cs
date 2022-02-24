@@ -8,21 +8,13 @@ namespace Photon.Pun.Demo.Asteroids
 {
     public class LobbyMainPanel : MonoBehaviourPunCallbacks
     {
-        [Header("Database Manager")]
-        public GameObject databaseManager;
-
         [Header("Login Panel")]
         public GameObject LoginPanel;
-        public InputField PlayerNameInput;
 
-        [Header("Register Panel")]
-        public GameObject RegisterPanel;
+        public InputField PlayerNameInput;
 
         [Header("Selection Panel")]
         public GameObject SelectionPanel;
-
-        [Header("Shop Panel")]
-        public GameObject ShopPanel;
 
         [Header("Create Room Panel")]
         public GameObject CreateRoomPanel;
@@ -58,8 +50,7 @@ namespace Photon.Pun.Demo.Asteroids
             cachedRoomList = new Dictionary<string, RoomInfo>();
             roomListEntries = new Dictionary<string, GameObject>();
             
-            //random player name
-            //PlayerNameInput.text = "Player " + Random.Range(1000, 10000);
+            PlayerNameInput.text = "Player " + Random.Range(1000, 10000);
         }
 
         #endregion
@@ -225,30 +216,6 @@ namespace Photon.Pun.Demo.Asteroids
             SetActivePanel(SelectionPanel.name);
         }
 
-        public void OpenRegisterPanel()
-        {
-            RegisterPanel.SetActive(true);
-            LoginPanel.SetActive(false);
-        }
-
-        public void OpenShopPanel()
-        {
-            ShopPanel.SetActive(true);
-            SelectionPanel.SetActive(false);
-        }
-
-        public void CloseShopPanel()
-        {
-            ShopPanel.SetActive(false);
-            SelectionPanel.SetActive(true);
-        }
-
-        public void OpenLoginPanel()
-        {
-            RegisterPanel.SetActive(false);
-            LoginPanel.SetActive(true);
-        }
-
         public void OnCreateRoomButtonClicked()
         {
             string roomName = RoomNameInputField.text;
@@ -283,8 +250,6 @@ namespace Photon.Pun.Demo.Asteroids
             {
                 PhotonNetwork.LocalPlayer.NickName = playerName;
                 PhotonNetwork.ConnectUsingSettings();
-
-                GlobalSettings.curMode = GlobalSettings.GAMEMODES.MULTIPLAYER; // Player playing online
             }
             else
             {
@@ -307,9 +272,7 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            //PhotonNetwork.LoadLevel("FlockYou_GameScene");
-            PhotonNetwork.LoadLevel("Toby_Scene");
-            //PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
+            PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
         }
 
         #endregion
@@ -358,8 +321,6 @@ namespace Photon.Pun.Demo.Asteroids
         private void SetActivePanel(string activePanel)
         {
             LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
-            if (RegisterPanel != null)
-                RegisterPanel.SetActive(activePanel.Equals(RegisterPanel.name));
             SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
             CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
             JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));

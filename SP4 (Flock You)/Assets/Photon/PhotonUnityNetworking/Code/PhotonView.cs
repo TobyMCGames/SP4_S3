@@ -44,14 +44,9 @@ namespace Photon.Pun
 
             DestroyImmediate(go); 
         }
+        #endif
 
-        public static explicit operator PhotonView(int v)
-        {
-            throw new NotImplementedException();
-        }
-#endif
-
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         [ContextMenu("Open PUN Wizard")]
         void OpenPunWizard()
         {
