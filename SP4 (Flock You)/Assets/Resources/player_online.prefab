@@ -371,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac43d606ef59f49468115d8b9d3595aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heldObject: {fileID: 0}
   touchPointLight: {fileID: 4189169062673136737}
   touchPointHeavy: {fileID: 8013924091098126131}
 --- !u!114 &3433376927388911469
@@ -413,6 +414,10 @@ MonoBehaviour:
   BlinkFrame: 0.1
   BlinkTimer: 0
   DropLoadControl_script: {fileID: 3433376927388911469}
+  playerGameInfo:
+    sUsername: 
+    ilevel: 0
+    iPoints: 0
 --- !u!114 &3893016045467955555
 MonoBehaviour:
   m_ObjectHideFlags: 0

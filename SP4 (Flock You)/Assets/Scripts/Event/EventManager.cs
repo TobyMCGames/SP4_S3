@@ -27,8 +27,6 @@ public class EventManager : MonoBehaviourPun
     private void Update()
     {
         GameObject eventobj;
-        if (!PhotonNetwork.IsMasterClient)
-            return;
         for (int i = ActiveEventList.Count-1; i >= 0;i--)
         {
             eventobj = ActiveEventList[i];
@@ -36,7 +34,8 @@ public class EventManager : MonoBehaviourPun
             {
                 ActiveEventList[i].GetComponent<BaseEvent>().returnEventobj();
                 ActiveEventList.RemoveAt(i);
-                Destroy(eventobj);
+                if (PhotonNetwork.IsMasterClient)
+                    PhotonNetwork.Destroy(eventobj);
             }
         }
     }
@@ -60,7 +59,6 @@ public class EventManager : MonoBehaviourPun
                 }
                 else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
                 {
-                    
                     //AddEvent(FetchEvent);
                 }
                 break;

@@ -27,51 +27,43 @@ public class CaptureEvent : BaseEvent
     public float maxaddedprogress = 2f;
     public float progressbaryOffset = 50;
 
-    [PunRPC]
     public void SyncPoints(int Playerview,float currentprogress)
     {
         playerProgresslist[Playerview].setProgress(currentprogress);
     }
 
-    [PunRPC]
     public void SyncPlayerTime(int index,float time)
     {
         timewithinBoundary[index] = time;
     }
 
-    [PunRPC]
     public void Syncviewboundary(int index,int playerview)
     {
         viewwithinBoundary[index] = playerview;
     }
 
-    [PunRPC]
     public void AddviewBoundary(int playerview)
     {
         viewwithinBoundary.Add(playerview);
     }
 
-    [PunRPC]
     public void RemoveviewBoundary(int playerview)
     {
         if (viewwithinBoundary.Contains(playerview))
             viewwithinBoundary.Remove(playerview);
     }
 
-    [PunRPC]
     public void addTimeBoundary(float timeboundary)
     {
         timewithinBoundary.Add(timeboundary);
     }
 
-    [PunRPC]
     public void removeTimeBoundary(int index)
     {
         timewithinBoundary.RemoveAt(index);
     }
 
     // sync text
-    [PunRPC]
     public void SyncLedaingPlayer(string leadingtext)
     {
         Leadingplayer.text = leadingtext;
@@ -136,7 +128,7 @@ public class CaptureEvent : BaseEvent
                         playerProgresslist[viewwithinBoundary[i]].addProgress(addedprogress);
                         ElapsedTime = 0;
                         // sync with other clients
-                        photonView.RPC("SyncPoints", RpcTarget.OthersBuffered, viewwithinBoundary[i], playerProgresslist[viewwithinBoundary[i]].getProgress());
+                        //photonView.RPC("SyncPoints", RpcTarget.OthersBuffered, viewwithinBoundary[i], playerProgresslist[viewwithinBoundary[i]].getProgress());
 
                         if (playerProgresslist[viewwithinBoundary[i]].getProgress() >= 1)
                             Completed = true;
@@ -167,14 +159,14 @@ public class CaptureEvent : BaseEvent
                 {
                     Leadingplayer.text = "Playername: " + "has captured the point";
                 }
-                photonView.RPC("SyncLeadingPlayer", RpcTarget.OthersBuffered, Leadingplayer);
+                //photonView.RPC("SyncLeadingPlayer", RpcTarget.OthersBuffered, Leadingplayer);
             }
             else
             {
                 for (int i=0;i<viewwithinBoundary.Count;i++)
                 {
                     timewithinBoundary[i] += Time.deltaTime;
-                    photonView.RPC("SyncPlayerTime", RpcTarget.Others,i, timewithinBoundary[i]);
+                   // photonView.RPC("SyncPlayerTime", RpcTarget.Others,i, timewithinBoundary[i]);
                 }
                 ElapsedTime += Time.deltaTime;
             }
@@ -209,11 +201,11 @@ public class CaptureEvent : BaseEvent
                 else if (!viewwithinBoundary.Contains(playerview.ViewID))
                 {
                     Debug.Log("view: " + playerview.ViewID + " Added ");
-                    //viewwithinBoundary.Add(playerview.ViewID);
-                    //timewithinBoundary.Add(0f);
-                    photonView.RPC("AddviewBoundary", RpcTarget.AllViaServer, playerview.ViewID);
-                    photonView.RPC("addTimeBoundary", RpcTarget.AllViaServer, 0f);
-                }
+                    viewwithinBoundary.Add(playerview.ViewID);
+                    timewithinBoundary.Add(0f);
+                    //photonView.RPC("AddviewBoundary", RpcTarget.AllViaServer, playerview.ViewID);
+                    //photonView.RPC("addTimeBoundary", RpcTarget.AllViaServer, 0f);
+                }   
             }
         }
     }
@@ -221,8 +213,8 @@ public class CaptureEvent : BaseEvent
     
     public override void OnTriggerExit(Collider other)
     {
-        //if (!PhotonNetwork.IsMasterClient)
-        //    return;
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         if (other.gameObject.CompareTag("Player"))
         {
             if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
@@ -233,10 +225,10 @@ public class CaptureEvent : BaseEvent
                 else if (viewwithinBoundary.Contains(playerview.ViewID))
                 {
                     int index = viewwithinBoundary.IndexOf(playerview.ViewID);
-                    //viewwithinBoundary.Remove(playerview.ViewID);
-                    //timewithinBoundary.RemoveAt(index);
-                    photonView.RPC("RemoveviewBoundary", RpcTarget.AllViaServer, playerview.ViewID);
-                    photonView.RPC("removeTimeBoundary", RpcTarget.AllViaServer, index);
+                    viewwithinBoundary.Remove(playerview.ViewID);
+                    timewithinBoundary.RemoveAt(index);
+                    //photonView.RPC("RemoveviewBoundary", RpcTarget.AllViaServer, playerview.ViewID);
+                    //photonView.RPC("removeTimeBoundary", RpcTarget.AllViaServer, index);
                 }
             }
         }    
@@ -249,5 +241,47 @@ public class CaptureEvent : BaseEvent
             progressbarlist[i].transform.SetParent(canvas.transform);
         }
         Leadingplayer.transform.SetParent(canvas.transform);
+    }
+
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                float[] prog = new float[playerProgresslist.Count];
+                int[] view = new int[playerProgresslist.Count];
+                
+                int counter = 0;
+                foreach (KeyValuePair<int, Progressbar> pair in playerProgresslist)
+                {
+                    prog[counter] = pair.Value.getProgress();
+                    view[counter] = pair.Key;
+                    counter++;
+                }
+                stream.SendNext(prog);
+                stream.SendNext(view);
+            }
+            string LeadText = Leadingplayer.text;
+            stream.SendNext(LeadText);
+            stream.SendNext(Completed);
+            stream.SendNext(Destructiontimer);
+        }
+        else if (stream.IsReading)
+        {
+            if (PhotonNetwork.IsMasterClient)
+                return;
+            float[] prog = (float[])stream.ReceiveNext();
+            int[] view = (int[])stream.ReceiveNext();
+            for (int i=0;i< view.Length;i++)
+            {
+                playerProgresslist[view[i]].setProgress(prog[i]);
+            }
+            // receive the leading player text 
+            Leadingplayer.text = (string)stream.ReceiveNext();
+            Completed = (bool)stream.ReceiveNext();
+            Destructiontimer = (double)stream.ReceiveNext();
+
+        }
     }
 }

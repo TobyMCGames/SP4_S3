@@ -19,8 +19,9 @@ public class BaseEvent :MonoBehaviourPun,IPunObservable
 
     protected PhotonView EventView;
     protected bool Completed;
-    protected double Destructiontimer; 
+    protected double Destructiontimer;
 
+    protected float pointsAwarded=0;
     public virtual bool IsReqMet()
     {
         return false;
@@ -103,6 +104,10 @@ public class BaseEvent :MonoBehaviourPun,IPunObservable
 
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+    }
+
+    /*public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
         if (stream.IsWriting)
         {
             if (PhotonNetwork.IsMasterClient)
@@ -120,5 +125,5 @@ public class BaseEvent :MonoBehaviourPun,IPunObservable
             canvas = (GameObject)stream.ReceiveNext();
             
         }
-    }
+    }*/
 }
