@@ -16,6 +16,7 @@ public class GlobalSettings : MonoBehaviour
     public static int XP;
     public static int Cash;
     public static string ShopFirstPage = "skin";
+    public static string itemname;
     
     // Game Modes
     public enum GAMEMODES

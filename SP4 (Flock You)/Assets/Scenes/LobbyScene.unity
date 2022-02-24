@@ -4174,8 +4174,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1986829662}
-        m_TargetAssemblyTypeName: LocalShopManager, Assembly-CSharp
+      - m_Target: {fileID: 1986829663}
+        m_TargetAssemblyTypeName: ShopItemManager, Assembly-CSharp
         m_MethodName: DisplayFirstItem
         m_Mode: 1
         m_Arguments:
@@ -5880,7 +5880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6204,6 +6204,7 @@ GameObject:
   - component: {fileID: 1347879453}
   - component: {fileID: 1347879452}
   - component: {fileID: 1347879451}
+  - component: {fileID: 1347879454}
   m_Layer: 5
   m_Name: EquipButton
   m_TagString: Untagged
@@ -6228,7 +6229,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1578, y: -838}
+  m_AnchoredPosition: {x: 1578, y: -764.01}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1347879451
@@ -6274,7 +6275,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1347879452}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1347879454}
+        m_TargetAssemblyTypeName: EquipUnequipButton, Assembly-CSharp
+        m_MethodName: EquipUnequipItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1347879452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6313,6 +6326,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347879449}
   m_CullTransparentMesh: 1
+--- !u!114 &1347879454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347879449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3758eb0a2fd264645b183ea5e7e36164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buyButton: {fileID: 1197592821}
+  ShopPanel: {fileID: 1986829658}
 --- !u!1 &1370510199
 GameObject:
   m_ObjectHideFlags: 0
@@ -10281,7 +10308,6 @@ GameObject:
   - component: {fileID: 1986829659}
   - component: {fileID: 1986829661}
   - component: {fileID: 1986829660}
-  - component: {fileID: 1986829662}
   - component: {fileID: 1986829663}
   m_Layer: 5
   m_Name: ShopPanel
@@ -10355,24 +10381,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986829658}
   m_CullTransparentMesh: 1
---- !u!114 &1986829662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1986829658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bdc398d0b387c445be303386b825f2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShopList: {fileID: 1823544924}
-  buyButton: {fileID: 1197592823}
-  equipButton: {fileID: 0}
-  ItemName: {fileID: 2112857560}
-  ItemCost: {fileID: 1115917900}
-  LockedStatus: {fileID: 761311001}
 --- !u!114 &1986829663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10387,6 +10395,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopItemList:
     items: []
+  ShopList: {fileID: 1823544924}
+  buyButton: {fileID: 1197592823}
+  equipButton: {fileID: 1347879451}
+  ItemNameText: {fileID: 2112857560}
+  ItemCostText: {fileID: 1115917900}
+  LockedStatus: {fileID: 761311001}
 --- !u!1 &2032610748
 GameObject:
   m_ObjectHideFlags: 0
