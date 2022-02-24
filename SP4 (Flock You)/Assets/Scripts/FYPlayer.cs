@@ -123,8 +123,6 @@ public class FYPlayer : MonoBehaviour
         curHealth -= _damage;
         UI_Manager.Instance.UpdateHealth();
 
-        if (curLives <= 0)
-            return;
 
         InvincibilityTimer = InvincibilityDuration;
         BlinkTimer = BlinkFrame;
