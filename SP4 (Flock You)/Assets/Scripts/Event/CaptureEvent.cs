@@ -140,7 +140,7 @@ public class CaptureEvent : BaseEvent
                     else
                     {
                         // compare who has the higher progress
-                        if (playerProgresslist[viewwithinBoundary[i]].getProgress() > playerProgresslist[viewwithinBoundary[mostprogressViewID]].getProgress())
+                        if (playerProgresslist[viewwithinBoundary[i]].getProgress() > playerProgresslist[mostprogressViewID].getProgress())
                         {
                             mostprogressViewID = viewwithinBoundary[i];
                         }
@@ -269,8 +269,6 @@ public class CaptureEvent : BaseEvent
         }
         else if (stream.IsReading)
         {
-            if (PhotonNetwork.IsMasterClient)
-                return;
             float[] prog = (float[])stream.ReceiveNext();
             int[] view = (int[])stream.ReceiveNext();
             for (int i=0;i< view.Length;i++)
@@ -281,7 +279,6 @@ public class CaptureEvent : BaseEvent
             Leadingplayer.text = (string)stream.ReceiveNext();
             Completed = (bool)stream.ReceiveNext();
             Destructiontimer = (double)stream.ReceiveNext();
-
         }
     }
 }

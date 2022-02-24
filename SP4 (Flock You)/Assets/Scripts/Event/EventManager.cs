@@ -33,11 +33,19 @@ public class EventManager : MonoBehaviourPun
             if (ActiveEventList[i].GetComponent<BaseEvent>().IsTobeDestroyed())
             {
                 ActiveEventList[i].GetComponent<BaseEvent>().returnEventobj();
+                photonView.RPC("RemoveFromList", RpcTarget.Others, i);
                 ActiveEventList.RemoveAt(i);
                 if (PhotonNetwork.IsMasterClient)
                     PhotonNetwork.Destroy(eventobj);
             }
         }
+    }
+
+    [PunRPC]
+    public void RemoveFromList(int index)
+    {
+        ActiveEventList[index].GetComponent<BaseEvent>().returnEventobj();
+        ActiveEventList.RemoveAt(index);
     }
 
     public void RemoveEvent(GameObject _object)
