@@ -10,6 +10,7 @@ public class BuyItem : MonoBehaviour
     private string URL;
     public Text purchaseStatus;
     public GameObject ShopPanel;
+    public Text playerCashText;
 
     private void Awake()
     {
@@ -22,13 +23,16 @@ public class BuyItem : MonoBehaviour
         if (Difference < 0)
             purchaseStatus.text = "Not Enough Cash!";
         else
-            StartCoroutine(SendLoginInfo());
+            StartCoroutine(SenditemInfo());
     }
 
-    IEnumerator SendLoginInfo()
+    public void UpdateCashDisplay()
     {
-        //update player cash locally
-        GlobalSettings.Cash -= ShopPanel.GetComponent<ShopItemManager>().GetItemCost();
+        playerCashText.text = "Cash: $" + GlobalSettings.Cash;
+    }
+
+    IEnumerator SenditemInfo()
+    {
         purchaseStatus.text = "Processing...";
 
         //update player inv and cash on datatbase
@@ -42,6 +46,10 @@ public class BuyItem : MonoBehaviour
         switch (webreq.result)
         {
             case UnityWebRequest.Result.Success:
+                //update player cash locally
+                GlobalSettings.Cash -= ShopPanel.GetComponent<ShopItemManager>().GetItemCost();
+                ShopPanel.GetComponent<ShopItemManager>().SetItembought();
+                UpdateCashDisplay();
                 purchaseStatus.text = webreq.downloadHandler.text;
                 break;
             default:

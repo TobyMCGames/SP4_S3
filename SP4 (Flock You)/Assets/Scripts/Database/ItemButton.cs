@@ -12,5 +12,6 @@ public class ItemButton : MonoBehaviour
         ShopPanel.GetComponent<LocalShopManager>().ChangeStats(transform);
         //to set the item stats based on which object selected
         ShopPanel.GetComponent<ShopItemManager>().SetItemValues(transform.GetSiblingIndex());
+        ShopPanel.GetComponent<ShopItemManager>().SetCurrentItem(transform);
     }
 }

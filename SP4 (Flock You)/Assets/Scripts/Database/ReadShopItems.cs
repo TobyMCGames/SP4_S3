@@ -79,6 +79,9 @@ public class ReadShopItems : MonoBehaviour
                 LockPanel.gameObject.SetActive(false);
             }
         }
+
+        //get owned items
+        transform.GetComponent<ReadOwnedItems>().LoadOwneditems();
     }
 }
 
