@@ -277,8 +277,9 @@ namespace Photon.Pun.Demo.Asteroids
 
             //PhotonNetwork.LoadLevel("FlockYou_GameScene");
             //PhotonNetwork.LoadLevel("Toby_Scene");
-            PhotonNetwork.LoadLevel("ZG_SCENE2");
+            //PhotonNetwork.LoadLevel("ZG_SCENE2");
             //PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
+            PhotonNetwork.LoadLevel("YuYang_TestScene");
         }
 
         #endregion

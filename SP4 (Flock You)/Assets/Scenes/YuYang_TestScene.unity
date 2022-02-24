@@ -674,7 +674,6 @@ GameObject:
   - component: {fileID: 1133752372}
   - component: {fileID: 1133752373}
   - component: {fileID: 1133752374}
-  - component: {fileID: 1133752376}
   m_Layer: 0
   m_Name: VoiceManager
   m_TagString: Untagged
@@ -710,14 +709,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisconnectAfterKeepAlive: 0
   KeepAliveInBackground: 60000
-  ApplyDontDestroyOnLoad: 0
+  ApplyDontDestroyOnLoad: 1
   logLevel: 1
   enableSupportLogger: 0
   updateInterval: 50
   runInBackground: 1
   statsResetInterval: 1000
-  speakerPrefab: {fileID: 1987478240769630004, guid: 008496d9bc1b228409b68881800d8ec3,
-    type: 3}
+  speakerPrefab: {fileID: 0}
   primaryRecorder: {fileID: 1133752374}
   globalRecordersLogLevel: 1
   globalSpeakersLogLevel: 1
@@ -802,102 +800,6 @@ MonoBehaviour:
   trySamplingRateMatch: 0
   useMicrophoneTypeFallback: 1
   recordOnlyWhenJoined: 1
---- !u!82 &1133752376
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1133752371}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 10
-  MaxDistance: 50
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &1293928278 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6877641835838080389, guid: 1796f246ec9d3d542bca7d71a751be1a,
@@ -1284,6 +1186,7 @@ MonoBehaviour:
   MainCamera: {fileID: 1293928278}
   PlayerList: {fileID: 1907519864}
   ProjectileList: {fileID: 5033030191947368741}
+  playerGameList: []
   SpawnPoints:
   - {fileID: 5033030191947368740}
   - {fileID: 5033030191947368744}
@@ -1316,8 +1219,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebf711f4a200864a979e528085e8717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 0}
   player: {fileID: 3727522623858185587, guid: 008496d9bc1b228409b68881800d8ec3, type: 3}
   UI_Timer: {fileID: 193360771}
+  scoreboard: {fileID: 0}
   UI_Health: {fileID: 673186660}
   UI_Ammo: {fileID: 1902265180}
   UI_Lives: {fileID: 1729423605}
