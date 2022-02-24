@@ -27,9 +27,16 @@ public class SpawnPointScript : MonoBehaviour
             FetchEvent fetchScript = other.gameObject.GetComponent<InteractItem>().InteractableList.GetComponent<FetchEvent>();
             if (fetchScript != null)
             {
-                fetchScript.SetCompleted(true);
-                fetchScript.ToggleDestruction();
-                fetchScript.FetchItem.SetActive(false);
+                if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+                {
+                    fetchScript.SetCompleted(true);
+                    fetchScript.ToggleDestruction();
+                    fetchScript.FetchItem.SetActive(false);
+                }
+                else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                {
+                    fetchScript.GetComponent<PhotonView>().RPC("CompleteEvent", RpcTarget.AllViaServer);
+                }
             }
         }
 
@@ -44,7 +51,7 @@ public class SpawnPointScript : MonoBehaviour
             }
             else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             {
-                UI_Manager.Instance.photonView.RPC("UpdatePlayerScore",RpcTarget.AllViaServer, owner.playerGameInfo.sUsername, owner.playerGameInfo.iPoints);
+                UI_Manager.Instance.photonView.RPC("UpdatePlayerScore", RpcTarget.AllViaServer, owner.playerGameInfo.sUsername, owner.playerGameInfo.iPoints);
                 PhotonNetwork.Destroy(other.gameObject);
             }
         }
@@ -52,18 +59,18 @@ public class SpawnPointScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

@@ -259,6 +259,22 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Pick up the Item
+--- !u!114 &7813679611749340133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4861449029122004512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &8826730325308337277
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,6 +387,16 @@ PrefabInstance:
       propertyPath: m_TagString
       value: FetchItem
       objectReference: {fileID: 0}
+    - target: {fileID: 4031744431840655962, guid: aff10b41f1e8114499edf3fbb2112c66,
+        type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031744431840655962, guid: aff10b41f1e8114499edf3fbb2112c66,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 7813679611749340133}
     - target: {fileID: 4224374837956612482, guid: aff10b41f1e8114499edf3fbb2112c66,
         type: 3}
       propertyPath: m_RootOrder

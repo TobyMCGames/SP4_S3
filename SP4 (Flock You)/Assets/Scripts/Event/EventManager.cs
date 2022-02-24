@@ -57,20 +57,20 @@ public class EventManager : MonoBehaviourPun
                     photonView.RPC("SyncEventPosition", RpcTarget.AllViaServer,CaptureEvent.GetComponent<PhotonView>().ViewID, position);
                     photonView.RPC("InitEvent", RpcTarget.AllViaServer, CaptureEvent.GetComponent<PhotonView>().ViewID, eventType);
                 }
-                else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
-                {
-                    //AddEvent(FetchEvent);
-                }
                 break;
             case BaseEvent.GameEventType.EVENT_FETCH:
+                GameObject FetchEvent;
                 if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                 {
-                    
+                    FetchEvent = PhotonNetwork.Instantiate("FetchEvent", position, Quaternion.identity);
+                    photonView.RPC("SyncEventPosition", RpcTarget.AllViaServer, FetchEvent.GetComponent<PhotonView>().ViewID, position);
+                    photonView.RPC("InitEvent", RpcTarget.AllViaServer, FetchEvent.GetComponent<PhotonView>().ViewID, eventType);
                 }
                 else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
                 {
-                    GameObject FetchEvent = Instantiate(EventfetchPrefab, gameObject.transform);
+                    FetchEvent = Instantiate(EventfetchPrefab, gameObject.transform);
                     FetchEvent.transform.localPosition = position;
+                    ActiveEventList.Add(FetchEvent);
                     //AddEvent(FetchEvent);
                 }
                 break;
@@ -87,6 +87,8 @@ public class EventManager : MonoBehaviourPun
                 obj.GetComponent<CaptureEvent>().Init();
                 break;
             case BaseEvent.GameEventType.EVENT_FETCH:
+                obj.transform.SetParent(gameObject.transform);
+                //obj.GetComponent<FetchEvent>().Init(); // currently has nothing to init
                 break;
         }
     }

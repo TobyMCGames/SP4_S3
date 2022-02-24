@@ -56,7 +56,7 @@ public class FetchEvent : BaseEvent
         {
             if (!Completed)
             {
-                
+
                 if (SingleCarriedby == null)
                 {
                     calculateDistance(true);
@@ -80,10 +80,38 @@ public class FetchEvent : BaseEvent
         }
         else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
-            
+            if (!Completed)
+            {
+                if (carriedby == null)
+                {
+                    calculateDistance(true);
+                    TextDistanceCheck.text = "Distance: " + Distance.ToString() + "m";
+                    TextCarriedby.text = "Pick up the Item and Store it in your Nest to gain points!";
+                    FetchItem.GetComponent<FetchItemScript>().stoprender(false);
+                }
+                else
+                {
+                    calculateDistance(false);
+                    TextCarriedby.text = carriedby + " is carrying the item";
+                    TextDistanceCheck.text = "Nearest Nest: " + Distance.ToString() + "m";
+                    FetchItem.GetComponent<FetchItemScript>().stoprender(true);
+                }
+            }
+            else if (Completed)
+            {
+                TextCarriedby.text = carriedby + " delivered the item";
+                TextDistanceCheck.text = "";
+            }
         }
     }
-
+    [PunRPC]
+    public void CompleteEvent()
+    {
+        Completed = true;
+        ToggleDestruction();
+        FetchItem.SetActive(false);
+    }
+    
     public override void Init()
     {
         if (IsfetchGlobal && GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
@@ -139,38 +167,51 @@ public class FetchEvent : BaseEvent
             }
             else // search for the nearest nest to the player 
             {
-                Distance = getNearestNest();
+                Distance = getNearestNest(FYGameManager.Instance.PlayerList.GetChild(0).position);
             }
         }
         else
         {
-            foreach (Transform t in FYGameManager.Instance.PlayerList)
+            foreach (Transform t in FYGameManager.Instance.PlayerList.transform)
             {
+                if (t.gameObject.GetComponent<PhotonView>().IsMine)
+                {
 
+                    if (Item)
+                    {
+                        Distance = Vector3.Distance(FetchItem.transform.position,t.position);
+                        Distance = Mathf.Round(Distance);
+                    }
+                    else if (!Item) // search for the nearest nest to the player 
+                    {
+                        Distance = getNearestNest(t.position);
+                    }
+                }
             }
         }
     }
     
-    public float getNearestNest()
+    public float getNearestNest(Vector3 playerpos)
     {
         // if not multiplayer dont need check whose nest isit 
         float nearestNest = -1;
         float currdistance;
-        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+        currdistance = -1;
+        foreach (Transform nest in FYGameManager.Instance.SpawnPoints)
         {
-            currdistance = -1;
-            foreach (Transform nest in FYGameManager.Instance.SpawnPoints)
-            {
-                currdistance = Vector3.Distance(nest.position, FYGameManager.Instance.PlayerList.GetChild(0).position);
-                if (nearestNest == -1)
+            currdistance = Vector3.Distance(nest.position,playerpos);
+            if (nearestNest == -1)
+                nearestNest = currdistance;
+            else
+                if (currdistance < nearestNest)
                     nearestNest = currdistance;
-                else
-                    if (currdistance < nearestNest)
-                        nearestNest = currdistance;
-            }
         }
         if (nearestNest == -1)
             Debug.Log("No nests foudn in the game manager");
         return Mathf.Round(nearestNest);
+    }
+    public PhotonView getView()
+    {
+        return photonView;
     }
 }
