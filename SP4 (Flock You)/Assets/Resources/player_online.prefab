@@ -220,7 +220,6 @@ GameObject:
   - component: {fileID: 6220354295224625069}
   - component: {fileID: 3433376927388911469}
   - component: {fileID: 3727522623858185587}
-  - component: {fileID: 6581013264930199746}
   - component: {fileID: 3893016045467955555}
   - component: {fileID: 5531866283144861043}
   - component: {fileID: 757627068990035695}
@@ -372,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac43d606ef59f49468115d8b9d3595aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heldObject: {fileID: 0}
   touchPointLight: {fileID: 4189169062673136737}
   touchPointHeavy: {fileID: 8013924091098126131}
 --- !u!114 &3433376927388911469
@@ -405,10 +405,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee769a6a59a9c63499b3e3f0748e2346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerGameInfo:
-    sUsername: 
-    ilevel: 0
-    iPoints: 0
   MaxHealth: 5
   MaxLives: 3
   curHealth: 0
@@ -418,18 +414,10 @@ MonoBehaviour:
   BlinkFrame: 0.1
   BlinkTimer: 0
   DropLoadControl_script: {fileID: 3433376927388911469}
---- !u!114 &6581013264930199746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1987478240769630004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58807f648bc7f0f4db8089877f3199fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  playerGameInfo:
+    sUsername: 
+    ilevel: 0
+    iPoints: 0
 --- !u!114 &3893016045467955555
 MonoBehaviour:
   m_ObjectHideFlags: 0

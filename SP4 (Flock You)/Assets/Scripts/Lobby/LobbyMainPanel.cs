@@ -12,6 +12,9 @@ namespace Photon.Pun.Demo.Asteroids
         public GameObject LoginPanel;
 
         public InputField PlayerNameInput;
+        public InputField PasswordInput;
+
+        public InputField PlayerNameInput;
 
         [Header("Selection Panel")]
         public GameObject SelectionPanel;
@@ -49,8 +52,10 @@ namespace Photon.Pun.Demo.Asteroids
 
             cachedRoomList = new Dictionary<string, RoomInfo>();
             roomListEntries = new Dictionary<string, GameObject>();
-            
-            PlayerNameInput.text = "Player " + Random.Range(1000, 10000);
+
+            //random player name
+            PlayerNameInput.text = "testplayer";
+            //PasswordInput.text = "pass1234";
         }
 
         #endregion
@@ -272,7 +277,10 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
+            //PhotonNetwork.LoadLevel("FlockYou_GameScene");
+            PhotonNetwork.LoadLevel("Toby_Scene");
+            //PhotonNetwork.LoadLevel("ZG_SCENE2");
+            //PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
         }
 
         #endregion

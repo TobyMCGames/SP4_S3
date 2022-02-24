@@ -15,8 +15,14 @@ public class SpawnPointScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       
-        if (other.gameObject.CompareTag("Interactable"))
+        // To do: use this for points
+        if (owner == null)
+            return;
+
+        if (!other.gameObject.CompareTag("FetchItem") && !other.gameObject.CompareTag("Interactable"))
+            return;
+
+        if (other.gameObject.CompareTag("FetchItem"))
         {
             FetchEvent fetchScript = other.gameObject.GetComponent<InteractItem>().InteractableList.GetComponent<FetchEvent>();
             if (fetchScript != null)
@@ -26,13 +32,27 @@ public class SpawnPointScript : MonoBehaviour
                 fetchScript.FetchItem.SetActive(false);
             }
         }
-        if (owner == null)
-            return;
+
+        if (other.gameObject.CompareTag("Interactable"))
+        {
+            owner.playerGameInfo.iPoints += (int)other.GetComponent<Rigidbody>().mass * 10;
+
+            if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            {
+                UI_Manager.Instance.UpdatePlayerScore(owner.playerGameInfo.sUsername, owner.playerGameInfo.iPoints);
+                Destroy(other.gameObject);
+            }
+            else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+            {
+                UI_Manager.Instance.photonView.RPC("UpdatePlayerScore",RpcTarget.AllViaServer, owner.playerGameInfo.sUsername, owner.playerGameInfo.iPoints);
+                PhotonNetwork.Destroy(other.gameObject);
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-
+        
     }
 
     // Start is called before the first frame update

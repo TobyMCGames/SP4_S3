@@ -6,13 +6,19 @@ using Photon.Pun;
 
 public class Login : MonoBehaviour
 {
-    public string URL;
+    private string URL;
     public Text displayTxt; //must add using UnityEngine.UI
     public InputField if_username, if_password; //to link to the inpufields
+    public GameObject LoadingStatus;
 
     private void Awake()
     {
         URL = GlobalSettings.BaseServer + "login.php";
+    }
+
+    private void Start()
+    {
+        LoadingStatus.SetActive(false);
     }
 
     [Header("From Selection Panel")]
@@ -41,21 +47,22 @@ public class Login : MonoBehaviour
         {
             case UnityWebRequest.Result.Success:
                 displayTxt.text = webreq.downloadHandler.text;
-                GlobalSettings.Username = if_username.text;
+                //GlobalSettings.Username = if_username.text;
                 if (webreq.downloadHandler.text == "Login success")
                 {
                     //Set player name
                     string playerName = if_username.text;
+                    LoadingStatus.SetActive(true);
+                    GlobalSettings.Username = playerName;
                     PhotonNetwork.LocalPlayer.NickName = playerName;
                     PlayerNameDisplayTxt.text = playerName;
-                    //photon connect to server
-                    PhotonNetwork.ConnectUsingSettings();
 
                     //load player stats
                     transform.GetComponent<ReadPlayerStats>().LoadStats();
                 }
                 break;
             default:
+                LoadingStatus.SetActive(false);
                 displayTxt.text = "Server Error";
                 break;
         }

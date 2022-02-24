@@ -11,7 +11,7 @@ public class InteractDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Interactable") && Interactable == null)
+        if((other.gameObject.CompareTag("Interactable") || other.gameObject.CompareTag("FetchItem")) && Interactable == null)
         {
             Interactable = other.gameObject;
         }
@@ -27,7 +27,7 @@ public class InteractDetection : MonoBehaviour
         if (Interactable == null && PeckableObject == null)
             return;
 
-        else if (other.gameObject.tag == "Interactable")
+        else if (other.gameObject.tag == "Interactable" || other.gameObject.CompareTag("FetchItem"))
         {
             Interactable = null;
         }

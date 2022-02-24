@@ -7,8 +7,8 @@ using System;
 
 public class ReadPlayerStats : MonoBehaviour
 {
-    public string URL;
-    public OneStat playerStats;
+    private string URL;
+    public PlayerStats playerStats;
 
     public Text PlayerLevelTxt;
     public Text PlayerXPTxt;
@@ -16,17 +16,20 @@ public class ReadPlayerStats : MonoBehaviour
 
     private void Awake()
     {
-        URL = GlobalSettings.BaseServer + "readShopItems.php";
+        URL = GlobalSettings.BaseServer + "readplayerstats.php";
     }
 
     public void LoadStats()
-    { //a function to allow reload
-        StartCoroutine(GetRequest(URL)); //load data
+    {
+        StartCoroutine(GetRequest(URL));
     }
+
 
     IEnumerator GetRequest(string uri)
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        WWWForm form = new WWWForm();
+        form.AddField("sUsername", GlobalSettings.Username);
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(uri, form))
         {
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
@@ -51,17 +54,20 @@ public class ReadPlayerStats : MonoBehaviour
 
     void Deserialize(String RawJSON)
     {
-        playerStats = JsonUtility.FromJson<OneStat>(RawJSON); //convert raw json to objects
+        playerStats = JsonUtility.FromJson<PlayerStats>(RawJSON); //convert raw json to objects
 
-        //set global settings
-        GlobalSettings.Cash = playerStats.cash;
-        GlobalSettings.XP = playerStats.xp;
-        GlobalSettings.Level = playerStats.level;
-
-        //set display variables
-        PlayerCashtxt.text = "Cash: $" + playerStats.cash;
-        PlayerXPTxt.text = "Exp:  " + playerStats.xp;
-        PlayerLevelTxt.text = "Lvl " + playerStats.level;
+        for (int a = 0; a < playerStats.stats.Count; a++)
+        {
+            //set cash
+            GlobalSettings.Cash = playerStats.stats[a].cash;
+            PlayerCashtxt.text = "Cash: $" + playerStats.stats[a].cash;
+            //set stats
+            GlobalSettings.XP = playerStats.stats[a].xp;
+            PlayerXPTxt.text = "Exp:  " + playerStats.stats[a].xp;
+            //get level
+            GlobalSettings.Level = playerStats.stats[a].level;
+            PlayerLevelTxt.text = "Lvl " + playerStats.stats[a].level;
+        }
 
         //load shop
         transform.GetComponent<ReadShopItems>().LoadShop();
@@ -74,4 +80,8 @@ public class OneStat
     public int cash;
     public int xp;
     public int level;
+}
+public class PlayerStats
+{
+    public List<OneStat> stats = new List<OneStat>();
 }

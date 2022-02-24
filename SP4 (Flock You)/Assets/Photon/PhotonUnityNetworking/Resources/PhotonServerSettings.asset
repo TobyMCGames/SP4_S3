@@ -72,6 +72,32 @@ MonoBehaviour:
   - StunEntity
   - SwitchPlayerObject
   - TurnInvisible
+  - LoadPoopProperties
+  - AssignPlayerSpawn
+  - SetToPlayerList
+  - SetStun
+  - SetStunRPC
+  - DropItem
+  - SetHolder
+  - NestDestroyed
+  - LoadBulletProperties
+  - Damaged
+  - CreateEvent
+  - FixedUpdate
+  - DistractEnemyList
+  - RegisterPlayerList
+  - UpdatePlayerScore
+  - InitEvent
+  - addTimeBoundary
+  - AddviewBoundary
+  - removeTimeBoundary
+  - RemoveviewBoundary
+  - SyncPlayerTime
+  - SyncPoints
+  - Syncviewboundary
+  - SyncLedaingPlayer
+  - SyncEventPosition
+  - completeEvent
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

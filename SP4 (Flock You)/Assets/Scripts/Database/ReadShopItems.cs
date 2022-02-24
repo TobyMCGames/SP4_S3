@@ -7,10 +7,10 @@ using System;
 
 public class ReadShopItems : MonoBehaviour
 {
-    public string URL;
+    private string URL;
     public GameObject ShopList; //must add using UnityEngine.UI and using UnityEngine.Networking on top
     public GameObject ItemIconPrefab;
-    public ItemList itemList;
+    //public ItemList itemList;
     public GameObject ShopPanel;
 
     private void Awake()
@@ -50,9 +50,8 @@ public class ReadShopItems : MonoBehaviour
 
     void Deserialize(String RawJSON)
     {
-        itemList = JsonUtility.FromJson<ItemList>(RawJSON); //convert raw json to objects
-                                                            //OPTIONAL: to show its really broken down into separate objects
-
+        ShopPanel.GetComponent<ShopItemManager>().shopItemList = JsonUtility.FromJson<ItemList>(RawJSON); //convert raw json to objects
+        ItemList itemList = ShopPanel.GetComponent<ShopItemManager>().shopItemList;                                                      
         for (int a = 0; a < itemList.items.Count; a++)
         {
             GameObject item;
@@ -81,7 +80,8 @@ public class ReadShopItems : MonoBehaviour
             }
         }
 
-        ShopPanel.transform.GetComponent<LocalShopManager>().DisplayFirstItem();
+        //get owned items
+        transform.GetComponent<ReadOwnedItems>().LoadOwneditems();
     }
 }
 
