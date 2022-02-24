@@ -81,6 +81,16 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
     }
 
+    public void ReturnToMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Testing destroy this");
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -221,6 +231,22 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         if (!isOver())
         {
             curTimer -= Time.deltaTime;
+
+            if (isOver())
+            {
+                UI_Manager.Instance.SetEndScreen();
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+
+                // Disable Freelook camera
+                player.GetComponent<MovePlayer>().camera.gameObject.SetActive(false);
+
+                // delete all players
+                if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+                    Destroy(player.gameObject);
+                else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                    PhotonNetwork.Destroy(player.gameObject);
+            }
         }
     }
 

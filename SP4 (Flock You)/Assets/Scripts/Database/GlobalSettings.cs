@@ -27,11 +27,6 @@ public class GlobalSettings : MonoBehaviour
     }
 
     public static GAMEMODES curMode = GAMEMODES.SINGLE_PLAYER;
-
-    public void Awake()
-    {
-        curMode = GAMEMODES.SINGLE_PLAYER;
-    }
 }
 
 [Serializable]

@@ -13,7 +13,8 @@ public class InteractDetection : MonoBehaviour
     {
         if((other.gameObject.CompareTag("Interactable") || other.gameObject.CompareTag("FetchItem")) && Interactable == null)
         {
-            Interactable = other.gameObject;
+            if (!other.transform.parent.parent.CompareTag("Player"))
+                Interactable = other.gameObject;
         }
 
         if (other.gameObject.CompareTag("Peckable") && PeckableObject == null)
