@@ -191,9 +191,9 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 if (PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length == PlayerList.childCount)
                     AssignSpawnPoints();
 
-            if (!AllPlayerInfo)
+            /*if (!AllPlayerInfo)
                 if (playerGameList.Count == PhotonNetwork.PlayerList.Length)
-                    UI_Manager.Instance.SetupScoreboard();
+                    UI_Manager.Instance.SetupScoreboard();*/
 
         }
         else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)

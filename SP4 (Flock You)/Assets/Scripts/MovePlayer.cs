@@ -197,15 +197,9 @@ public class MovePlayer : MonoBehaviour
         {
             Vector3 Eventpos = Vector3.zero;
             Eventpos.Set(20, 1, 20);
-            photonView.RPC("CreateEvent", RpcTarget.AllViaServer,BaseEvent.GameEventType.EVENT_CAPTURE, Eventpos);
+            //photonView.RPC("CreateEvent", RpcTarget.AllViaServer,BaseEvent.GameEventType.EVENT_CAPTURE, Eventpos);
+            EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_CAPTURE, Eventpos);
         }
-    }
-
-    [PunRPC]
-    public void CreateEvent(BaseEvent.GameEventType eventType, Vector3 position)
-    {
-        if (photonView.IsMine)
-            EventManager.Instance.CreateEvent(eventType, position);
     }
 
     private void FixedUpdate()

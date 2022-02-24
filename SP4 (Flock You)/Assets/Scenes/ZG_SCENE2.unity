@@ -1022,6 +1022,11 @@ MonoBehaviour:
   MainCamera: {fileID: 1293928278}
   PlayerList: {fileID: 1907519864}
   ProjectileList: {fileID: 5033030191947368741}
+  playerGameInfo:
+    sUsername: Default Username
+    ilevel: 0
+    iPoints: 0
+  playerGameList: []
   SpawnPoints:
   - {fileID: 5033030191947368740}
   - {fileID: 5033030191947368744}
@@ -1056,6 +1061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 3727522623858185587, guid: 008496d9bc1b228409b68881800d8ec3, type: 3}
   UI_Timer: {fileID: 193360771}
+  scoreboard: {fileID: 0}
   UI_Health: {fileID: 673186660}
   UI_Ammo: {fileID: 1902265180}
   UI_Lives: {fileID: 1729423605}

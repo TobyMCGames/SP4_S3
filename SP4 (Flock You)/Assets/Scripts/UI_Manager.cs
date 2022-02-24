@@ -100,7 +100,7 @@ public class UI_Manager : MonoBehaviour
 
         for (int i = 0; i < playerValues.Count; i++)
         {
-            scoreboard.GetChild(i + 1).gameObject.SetActive(true);
+            scoreboard.GetChild(i + 1).gameObject.SetActive(true);  
             scoreboard.GetChild(i + 1).GetChild(0).GetComponent<Text>().text = playerValues[i].sUsername;
             scoreboard.GetChild(i + 1).GetChild(1).GetComponent<Text>().text = playerValues[i].ilevel.ToString();
             scoreboard.GetChild(i + 1).GetChild(2).GetComponent<Text>().text = playerValues[i].iPoints.ToString();

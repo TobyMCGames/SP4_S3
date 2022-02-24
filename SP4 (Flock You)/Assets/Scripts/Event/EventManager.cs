@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
-public class EventManager : MonoBehaviourPun,IPunObservable
+public class EventManager : MonoBehaviourPun
 {
     public static EventManager Instance = null;
     public List<GameObject> ActiveEventList = new List<GameObject>();
@@ -27,6 +27,8 @@ public class EventManager : MonoBehaviourPun,IPunObservable
     private void Update()
     {
         GameObject eventobj;
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         for (int i = ActiveEventList.Count-1; i >= 0;i--)
         {
             eventobj = ActiveEventList[i];
@@ -44,19 +46,17 @@ public class EventManager : MonoBehaviourPun,IPunObservable
         ActiveEventList.Remove(_object);
     }
     
-    [PunRPC]
     public void CreateEvent(BaseEvent.GameEventType eventType,Vector3 position)
     {
         switch (eventType)
         {
             case BaseEvent.GameEventType.EVENT_CAPTURE:
-                if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER && PhotonNetwork.IsMasterClient)
                 {
                     GameObject CaptureEvent = PhotonNetwork.Instantiate("CaptureEventPrefab", gameObject.transform.position, Quaternion.identity);
-                    CaptureEvent.transform.SetParent(gameObject.transform);
-
                     CaptureEvent.transform.localPosition = position;
-                    CaptureEvent.GetComponent<CaptureEvent>().Init();
+                    photonView.RPC("SyncEventPosition", RpcTarget.AllViaServer,CaptureEvent.GetComponent<PhotonView>().ViewID, position);
+                    photonView.RPC("InitEvent", RpcTarget.AllViaServer, CaptureEvent.GetComponent<PhotonView>().ViewID, eventType);
                 }
                 else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
                 {
@@ -77,6 +77,26 @@ public class EventManager : MonoBehaviourPun,IPunObservable
                 }
                 break;
         }
+    }
+    [PunRPC]
+    public void InitEvent(int viewID,BaseEvent.GameEventType eventType)
+    {
+        GameObject obj = PhotonNetwork.GetPhotonView(viewID).gameObject;
+        switch(eventType)
+        {
+            case BaseEvent.GameEventType.EVENT_CAPTURE:
+                obj.transform.SetParent(gameObject.transform);
+                obj.GetComponent<CaptureEvent>().Init();
+                break;
+            case BaseEvent.GameEventType.EVENT_FETCH:
+                break;
+        }
+    }
+
+    [PunRPC]
+    public void SyncEventPosition(int viewID,Vector3 position)
+    {
+        PhotonNetwork.GetPhotonView(viewID).gameObject.transform.localPosition = position;
     }
 
     public void ToggleEventText(bool Toggle)
@@ -102,35 +122,5 @@ public class EventManager : MonoBehaviourPun,IPunObservable
                 return ActiveEventList[i];
         }
         return null;
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                
-                GameObject[] objarr = null;
-                for (int i =0;i<ActiveEventList.Count;i++)
-                {
-                    objarr[i] = ActiveEventList[i];
-                }
-                stream.SendNext(objarr);
-            }
-        }
-        else if (stream.IsReading)
-        {
-            ActiveEventList.Clear();
-            GameObject[] receivedobj = (GameObject[])stream.ReceiveNext();
-            if (receivedobj != null)
-            {
-                for (int i =0;i < receivedobj.Length;i++)
-                {
-                    ActiveEventList.Add(receivedobj[i]);
-                }
-            }
-
-        }
     }
 }

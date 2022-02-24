@@ -40,7 +40,11 @@ public class Progressbar : MonoBehaviour
     {
         PlayerName.text = playername;
     }
-
+    public void setProgress(float progress)
+    {
+        currentProgress = progress;
+        image.fillAmount = progress;
+    }
     public string GetPlayerName()
     {
         return PlayerName.text;
