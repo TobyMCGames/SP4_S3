@@ -36,8 +36,17 @@ public class SpawnPointScript : MonoBehaviour
         if (other.gameObject.CompareTag("Interactable"))
         {
             owner.playerGameInfo.iPoints += (int)other.GetComponent<Rigidbody>().mass * 10;
-            UI_Manager.Instance.UpdatePlayerScore(owner.playerGameInfo.sUsername, owner.playerGameInfo.iPoints);
-            Destroy(other.gameObject);
+
+            if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            {
+                UI_Manager.Instance.UpdatePlayerScore(owner.playerGameInfo.sUsername, owner.playerGameInfo.iPoints);
+                Destroy(other.gameObject);
+            }
+            else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+            {
+                UI_Manager.Instance.photonView.RPC("UpdatePlayerScore",RpcTarget.AllViaServer, owner.playerGameInfo.sUsername, owner.playerGameInfo.iPoints);
+                PhotonNetwork.Destroy(other.gameObject);
+            }
         }
     }
 

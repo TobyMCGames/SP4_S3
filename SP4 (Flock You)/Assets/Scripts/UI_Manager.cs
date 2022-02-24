@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class UI_Manager : MonoBehaviour
 {
     public static UI_Manager Instance = null;
 
+    public PhotonView photonView;
     public FYPlayer player;
 
     public Text UI_Timer;
@@ -20,6 +22,7 @@ public class UI_Manager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        photonView = gameObject.GetPhotonView();
     }
 
     // Start is called before the first frame update
@@ -104,6 +107,7 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
+    [PunRPC]
     public void UpdatePlayerScore(string _name, int _points)
     {
         for (int i = 1; i < scoreboard.childCount; i++)
