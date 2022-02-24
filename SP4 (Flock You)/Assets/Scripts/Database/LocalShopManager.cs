@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class LocalShopManager : MonoBehaviour
 {
+
+    // !!-----Script not in use anymore can delete later-----!!
+
     public GameObject ShopList;
     public Button buyButton;
     public Button equipButton;
@@ -32,11 +35,11 @@ public class LocalShopManager : MonoBehaviour
         if (thisItem.GetChild(2).gameObject.activeSelf == true)
         {
             LockedStatus.text = "Locked";
-            buyButton.enabled = false;
+            buyButton.gameObject.SetActive(false);
         }
         else
         {
-            buyButton.enabled = true;
+            buyButton.gameObject.SetActive(true);
             LockedStatus.text = "";
         }
     }
