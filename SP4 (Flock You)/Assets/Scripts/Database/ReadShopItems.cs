@@ -69,11 +69,6 @@ public class ReadShopItems : MonoBehaviour
             //get lockPanel
             Transform LockPanel = item.transform.GetChild(2);
             LockPanel.GetChild(0).GetComponent<Text>().text = "Unlocked at lvl: " + itemList.items[a].iLevelReq;
-            //set item to false if its not on first page
-            //if(itemList.items[a].sType != GlobalSettings.ShopFirstPage)
-            //{
-            //    item.SetActive(false);
-            //}
             if (GlobalSettings.Level >= itemList.items[a].iLevelReq) //if higher than lock level, then undisplay unlocked
             {
                 LockPanel.gameObject.SetActive(false);

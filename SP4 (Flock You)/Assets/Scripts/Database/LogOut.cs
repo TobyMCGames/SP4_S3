@@ -58,7 +58,7 @@ public class LogOut : MonoBehaviour
     {
         SelectionPanel.SetActive(false);
         LoginPanel.SetActive(true);
-        loadingStatus.text = "";
+        loadingStatus.gameObject.SetActive(false);
         LoginStatus.text = "";
     }
 }

@@ -11,11 +11,17 @@ namespace Photon.Pun.Demo.Asteroids
         [Header("Login Panel")]
         public GameObject LoginPanel;
 
+        [Header("Register Panel")]
+        public GameObject RegisterPanel;
+
         public InputField PlayerNameInput;
         public InputField PasswordInput;
 
         [Header("Selection Panel")]
         public GameObject SelectionPanel;
+
+        [Header("Shop Panel")]
+        public GameObject ShopPanel;
 
         [Header("Create Room Panel")]
         public GameObject CreateRoomPanel;
