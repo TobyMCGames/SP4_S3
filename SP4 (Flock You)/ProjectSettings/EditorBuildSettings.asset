@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/toby_Lobby.unity
     guid: aa8e4bf8b650c3f4b90c4dd2c1074ca7
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Toby_Scene.unity
     guid: 080af2770530a9b448c6cb12709c9ea9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ZG_SCENE2.unity
     guid: b855631d7fb4e5a44b029f3fd2521767
   - enabled: 0

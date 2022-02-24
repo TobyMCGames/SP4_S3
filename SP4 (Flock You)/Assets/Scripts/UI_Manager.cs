@@ -98,6 +98,12 @@ public class UI_Manager : MonoBehaviour
     {
         List<PlayerGameValues> playerValues = FYGameManager.Instance.playerGameList;
 
+        if (scoreboard == null)
+        {
+            Debug.Log("Scoreboard has not been set");
+            return;
+        }
+
         for (int i = 0; i < playerValues.Count; i++)
         {
             scoreboard.GetChild(i + 1).gameObject.SetActive(true);  
