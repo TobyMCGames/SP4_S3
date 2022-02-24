@@ -11,11 +11,17 @@ namespace Photon.Pun.Demo.Asteroids
         [Header("Login Panel")]
         public GameObject LoginPanel;
 
+        [Header("Register Panel")]
+        public GameObject RegisterPanel;
+
         public InputField PlayerNameInput;
         public InputField PasswordInput;
 
         [Header("Selection Panel")]
         public GameObject SelectionPanel;
+
+        [Header("Shop Panel")]
+        public GameObject ShopPanel;
 
         [Header("Create Room Panel")]
         public GameObject CreateRoomPanel;
@@ -217,6 +223,31 @@ namespace Photon.Pun.Demo.Asteroids
             }
 
             SetActivePanel(SelectionPanel.name);
+        }
+
+        public void OpenRegisterPanel()
+        {
+            RegisterPanel.SetActive(true);
+            LoginPanel.SetActive(false);
+        }
+
+        public void OpenShopPanel()
+        {
+            ShopPanel.SetActive(true);
+            SelectionPanel.SetActive(false);
+        }
+
+        public void CloseShopPanel()
+        {
+            ShopPanel.SetActive(false);
+            SelectionPanel.SetActive(false);
+            SelectionPanel.SetActive(true);
+        }
+
+        public void OpenLoginPanel()
+        {     
+            RegisterPanel.SetActive(false);
+            LoginPanel.SetActive(true);
         }
 
         public void OnCreateRoomButtonClicked()

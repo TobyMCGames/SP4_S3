@@ -46,7 +46,10 @@ public class ReadOwnedItems : MonoBehaviour
                     Deserialize(webRequest.downloadHandler.text);
 
                     //photon connect to server
-                    PhotonNetwork.ConnectUsingSettings();
+                    if (!PhotonNetwork.IsConnected)
+                    {
+                        PhotonNetwork.ConnectUsingSettings();
+                    }
                     GlobalSettings.curMode = GlobalSettings.GAMEMODES.MULTIPLAYER; // Player playing online
                     break;
             }
