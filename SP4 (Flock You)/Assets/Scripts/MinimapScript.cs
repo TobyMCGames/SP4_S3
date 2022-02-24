@@ -7,26 +7,37 @@ public class MinimapScript : MonoBehaviour
 {
     [SerializeField] GameObject Player;
     [SerializeField] Cinemachine.CinemachineFreeLook tpc;
+    [SerializeField] float BasecameraOffset = 20f;
     [SerializeField] float ScrollSpeed = 10f;
-    float cameraZoom = 10f;
-
+    [SerializeField] float minZoom = 5f;
+    [SerializeField] float currZoom = 10f;
+    [SerializeField] float maxZoom = 20f;
+    [SerializeField] float zoomspeed = 5f;
     Camera cam;
     Vector3 minimapPos;
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<Camera>();
-        cam.orthographicSize = cameraZoom;
+        cam.orthographicSize = currZoom;
+        
     }
 
     // Update is called once per frame  
     void LateUpdate()
     {
         minimapPos = Player.transform.position;
-        minimapPos.y = Player.transform.position.y + cameraZoom;
+        minimapPos.y = Player.transform.position.y + BasecameraOffset;
         transform.position = minimapPos;
         transform.rotation = Quaternion.Euler(90, tpc.m_XAxis.Value, 0);
-        cameraZoom += Input.mouseScrollDelta.y * ScrollSpeed * Time.deltaTime;
+
+        currZoom -= Input.mouseScrollDelta.y * ScrollSpeed * Time.deltaTime;
+
+        if (currZoom > maxZoom)
+            currZoom = maxZoom;
+        if (currZoom < minZoom)
+            currZoom = minZoom;
+        cam.orthographicSize = currZoom;
     }
 
     public void setPlayertoFollow(GameObject _player)
