@@ -366,6 +366,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FetchItem
       objectReference: {fileID: 0}
+    - target: {fileID: 3956094982623558978, guid: aff10b41f1e8114499edf3fbb2112c66,
+        type: 3}
+      propertyPath: m_TagString
+      value: FetchItem
+      objectReference: {fileID: 0}
     - target: {fileID: 4224374837956612482, guid: aff10b41f1e8114499edf3fbb2112c66,
         type: 3}
       propertyPath: m_RootOrder

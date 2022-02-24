@@ -103,4 +103,15 @@ public class UI_Manager : MonoBehaviour
             scoreboard.GetChild(i + 1).GetChild(2).GetComponent<Text>().text = playerValues[i].iPoints.ToString();
         }
     }
+
+    public void UpdatePlayerScore(string _name, int _points)
+    {
+        for (int i = 1; i < scoreboard.childCount; i++)
+        {
+            if (scoreboard.GetChild(i).GetChild(0).GetComponent<Text>().text != _name)
+                continue;
+
+            scoreboard.GetChild(i).GetChild(2).GetComponent<Text>().text = _points.ToString();
+        }
+    }
 }

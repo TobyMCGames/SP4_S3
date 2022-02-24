@@ -22,6 +22,7 @@ public class FYPlayer : MonoBehaviour
 
     // Player scripts
     public DropLoadControl DropLoadControl_script;
+    public PlayerGameValues playerGameInfo;
 
     //LayEggAbility layEggAbility = new LayEggAbility();
     LayEggAbility layEggAbility;
