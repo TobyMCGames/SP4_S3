@@ -289,7 +289,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             ClientPlayer.GetComponent<PhotonTransformView>().enabled = false;
         }
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
-            ClientPlayer = PhotonNetwork.Instantiate("player_online", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+            ClientPlayer = PhotonNetwork.Instantiate("player", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
 
         if (player != null)
         {
