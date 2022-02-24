@@ -14,8 +14,6 @@ namespace Photon.Pun.Demo.Asteroids
         public InputField PlayerNameInput;
         public InputField PasswordInput;
 
-        public InputField PlayerNameInput;
-
         [Header("Selection Panel")]
         public GameObject SelectionPanel;
 
