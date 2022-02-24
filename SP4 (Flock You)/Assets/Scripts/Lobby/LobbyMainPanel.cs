@@ -242,11 +242,12 @@ namespace Photon.Pun.Demo.Asteroids
         public void CloseShopPanel()
         {
             ShopPanel.SetActive(false);
+            SelectionPanel.SetActive(false);
             SelectionPanel.SetActive(true);
         }
 
         public void OpenLoginPanel()
-        {
+        {     
             RegisterPanel.SetActive(false);
             LoginPanel.SetActive(true);
         }
