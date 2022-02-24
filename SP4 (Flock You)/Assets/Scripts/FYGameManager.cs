@@ -193,24 +193,27 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
             if (!AllPlayerInfo)
                 if (playerGameList.Count == PhotonNetwork.PlayerList.Length)
+                {
                     UI_Manager.Instance.SetupScoreboard();
+                    AllPlayerInfo = true;
+                }
 
-        }
-        else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
-        {
-           /* if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null) // create a event
+
+            if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null)
             {
-                float randx, randy, randz;
                 Vector3 Eventpos = Vector3.zero;
                 Vector3 floorpos = floor.transform.position;
                 Vector3 floorscale = floor.transform.localScale;
-                randx = Random.Range(floor.transform.position.x - floorscale.x * 0.25f, floor.transform.position.x + floorscale.x * 0.25f);
-                randy = Random.Range(floor.transform.position.y + floorscale.y * 0.5f, floor.transform.position.y + floorscale.y);
-                randz = Random.Range(floor.transform.position.z - floorscale.z * 0.25f, floor.transform.position.z + floorscale.z * 0.25f);
-                
-                Eventpos.Set(randx, randy, randz);
-                EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_FETCH, Eventpos);
-            }*/
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    float randx, randy, randz;
+                    randx = Random.Range(floor.transform.position.x - floorscale.x * 0.25f, floor.transform.position.x + floorscale.x * 0.25f);
+                    randy = Random.Range(floor.transform.position.y + floorscale.y * 0.5f, floor.transform.position.y + floorscale.y);
+                    randz = Random.Range(floor.transform.position.z - floorscale.z * 0.25f, floor.transform.position.z + floorscale.z * 0.25f);
+                    Eventpos.Set(randx, randy, randz);
+                    EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_FETCH, Eventpos);
+                }
+            }
         }
 
         if (!isOver())
@@ -289,7 +292,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             ClientPlayer.GetComponent<PhotonTransformView>().enabled = false;
         }
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
-            ClientPlayer = PhotonNetwork.Instantiate("player_online", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+            ClientPlayer = PhotonNetwork.Instantiate("player", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
 
         if (player != null)
         {
@@ -357,9 +360,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
         playerGameList.Add(_playerInfo);
 
-        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
-            if (!photonView.IsMine)
-                return;
+        if (GlobalSettings.Username != _username)
+            return;
 
         player.playerGameInfo = _playerInfo;
     }

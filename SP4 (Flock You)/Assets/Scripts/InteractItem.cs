@@ -35,9 +35,12 @@ public class InteractItem : MonoBehaviour
     {
         transform.SetParent(_holder);
         FetchEvent fetchscript = InteractableList.GetComponent<FetchEvent>();
-        if (fetchscript != null) // check if this object is a fetch item
+        if (fetchscript != null ) // check if this object is a fetch item
         {
-            fetchscript.setSingleCarriedby(_holder.parent);
+            if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+                fetchscript.setSingleCarriedby(_holder.parent);
+            else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                fetchscript.setCarriedby(_holder.parent.GetComponent<PhotonView>());
         }
     }
 
@@ -49,7 +52,10 @@ public class InteractItem : MonoBehaviour
         FetchEvent fetchscript = InteractableList.GetComponent<FetchEvent>();
         if (fetchscript != null)
         {
-            fetchscript.setSingleCarriedby(null);
+            if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+                fetchscript.setSingleCarriedby(null);
+            else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                fetchscript.setCarriedby(null);
         }
     }
 
@@ -59,5 +65,14 @@ public class InteractItem : MonoBehaviour
         GameObject _holder = PhotonNetwork.GetPhotonView(ViewID).gameObject;
         transform.SetParent(_holder.transform.GetChild(child));
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+
+        FetchEvent fetchscript = InteractableList.GetComponent<FetchEvent>();
+        if (fetchscript != null) // check if this object is a fetch item
+        {
+            if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+                fetchscript.setSingleCarriedby(_holder.transform);
+            else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                fetchscript.setCarriedby(_holder.GetComponent<PhotonView>());
+        }
     }
 }
