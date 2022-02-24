@@ -8,22 +8,14 @@ namespace Photon.Pun.Demo.Asteroids
 {
     public class LobbyMainPanel : MonoBehaviourPunCallbacks
     {
-        [Header("Database Manager")]
-        public GameObject databaseManager;
-
         [Header("Login Panel")]
         public GameObject LoginPanel;
+
         public InputField PlayerNameInput;
         public InputField PasswordInput;
 
-        [Header("Register Panel")]
-        public GameObject RegisterPanel;
-
         [Header("Selection Panel")]
         public GameObject SelectionPanel;
-
-        [Header("Shop Panel")]
-        public GameObject ShopPanel;
 
         [Header("Create Room Panel")]
         public GameObject CreateRoomPanel;
@@ -227,30 +219,6 @@ namespace Photon.Pun.Demo.Asteroids
             SetActivePanel(SelectionPanel.name);
         }
 
-        public void OpenRegisterPanel()
-        {
-            RegisterPanel.SetActive(true);
-            LoginPanel.SetActive(false);
-        }
-
-        public void OpenShopPanel()
-        {
-            ShopPanel.SetActive(true);
-            SelectionPanel.SetActive(false);
-        }
-
-        public void CloseShopPanel()
-        {
-            ShopPanel.SetActive(false);
-            SelectionPanel.SetActive(true);
-        }
-
-        public void OpenLoginPanel()
-        {
-            RegisterPanel.SetActive(false);
-            LoginPanel.SetActive(true);
-        }
-
         public void OnCreateRoomButtonClicked()
         {
             string roomName = RoomNameInputField.text;
@@ -285,8 +253,6 @@ namespace Photon.Pun.Demo.Asteroids
             {
                 PhotonNetwork.LocalPlayer.NickName = playerName;
                 PhotonNetwork.ConnectUsingSettings();
-
-                GlobalSettings.curMode = GlobalSettings.GAMEMODES.MULTIPLAYER; // Player playing online
             }
             else
             {
@@ -361,8 +327,6 @@ namespace Photon.Pun.Demo.Asteroids
         private void SetActivePanel(string activePanel)
         {
             LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
-            if (RegisterPanel != null)
-                RegisterPanel.SetActive(activePanel.Equals(RegisterPanel.name));
             SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
             CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
             JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));

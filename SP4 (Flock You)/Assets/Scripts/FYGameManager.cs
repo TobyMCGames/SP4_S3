@@ -193,7 +193,10 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
             if (!AllPlayerInfo)
                 if (playerGameList.Count == PhotonNetwork.PlayerList.Length)
+                {
                     UI_Manager.Instance.SetupScoreboard();
+                    AllPlayerInfo = true;
+                }
 
 
             if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null)
@@ -357,9 +360,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
         playerGameList.Add(_playerInfo);
 
-        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
-            if (!photonView.IsMine)
-                return;
+        if (GlobalSettings.Username != _username)
+            return;
 
         player.playerGameInfo = _playerInfo;
     }

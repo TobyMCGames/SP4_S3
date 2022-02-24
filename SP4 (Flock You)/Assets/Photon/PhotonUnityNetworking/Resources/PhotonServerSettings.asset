@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: b71e6c0f-f474-4d61-8869-6af5847f2eac
+    AppIdRealtime: 4e1ab826-d54e-488a-ac89-d6488c01d958
     AppIdFusion: 
     AppIdChat: 
-    AppIdVoice: 
+    AppIdVoice: 4e1ab826-d54e-488a-ac89-d6488c01d958
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: asia
+    FixedRegion: 
     Server: 
     Port: 0
     ProxyServer: 
@@ -28,32 +28,46 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: asia
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - AssignPlayerSpawn
   - AssignTeam
   - CallBombed
   - CallCaughtPlayer
   - CallExplode
+  - CantHearYou
+  - ChangeColour
   - ChangePropObject
   - ClickRpc
   - CollectOrb
+  - Damaged
   - DamageEntity
   - deleteBullet
   - DestroyRpc
   - DestroySpaceship
+  - DistractEnemyList
+  - DropItem
   - Fire
+  - HeresWhy
   - Initialize
+  - LoadBulletProperties
+  - LoadPoopProperties
+  - NestDestroyed
   - PlantBomb
   - RegisterPlayerID
+  - RegisterPlayerList
   - RemoveFromList
   - RespawnSpaceship
   - SetCreatedBullet
+  - SetHolder
   - SetLightBeamToObject
+  - SetStunRPC
   - SetTeamByID
+  - SetToPlayerList
   - SpawnAbilitySphere
   - StunEntity
   - SwitchPlayerObject
@@ -87,4 +101,4 @@ MonoBehaviour:
   - CompleteEvent
   DisableAutoOpenWizard: 1
   ShowSettings: 1
-  DevRegionSetOnce: 1
+  DevRegionSetOnce: 0
