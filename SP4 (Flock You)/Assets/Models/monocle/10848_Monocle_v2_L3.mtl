@@ -1,0 +1,44 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 12.06.2011 16:26:35
+
+newmtl _10848_Monocle_v2metal_gold_untitled
+	Ns 96.0784
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.2493 0.2250 0.1215
+	Ks 0.1588 0.1550 0.1194
+	Ke 0.0000 0.0000 0.0000
+	map_Ka monocle.jpg
+	map_Kd monocle.jpg
+
+newmtl _10848_Monocle_v2metal_gold
+	Ns 96.0784
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.2493 0.2250 0.1215
+	Ks 0.1588 0.1550 0.1194
+	Ke 0.0000 0.0000 0.0000
+	map_Ka monocle.jpg
+	map_Kd monocle.jpg
+
+newmtl _10848_Monocle_v2lens_untitled
+	Ns 96.0784
+	Ni 1.5000
+	d 0.1635
+	Tr 0.8365
+	Tf 0.1635 0.1635 0.1635 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.5000 0.5000 0.5000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka monocle.jpg
+	map_Kd monocle.jpg
