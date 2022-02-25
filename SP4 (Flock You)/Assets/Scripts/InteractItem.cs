@@ -7,6 +7,7 @@ public class InteractItem : MonoBehaviour
 {
     public PhotonView photonView;
     public Transform InteractableList;
+    Rigidbody m_Rigidbody;
 
     private void Awake()
     {
@@ -15,7 +16,8 @@ public class InteractItem : MonoBehaviour
 
     void Start()
     {
-        
+        m_Rigidbody = GetComponent<Rigidbody>();
+        m_Rigidbody.useGravity = false;
     }
 
     // Update is called once per frame
@@ -35,6 +37,7 @@ public class InteractItem : MonoBehaviour
     {
         transform.SetParent(_holder);
         FetchEvent fetchscript = InteractableList.GetComponent<FetchEvent>();
+        m_Rigidbody.useGravity = true;
         if (fetchscript != null ) // check if this object is a fetch item
         {
             if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
@@ -65,7 +68,7 @@ public class InteractItem : MonoBehaviour
         GameObject _holder = PhotonNetwork.GetPhotonView(ViewID).gameObject;
         transform.SetParent(_holder.transform.GetChild(child));
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-
+        m_Rigidbody.useGravity = true;
         FetchEvent fetchscript = InteractableList.GetComponent<FetchEvent>();
         if (fetchscript != null) // check if this object is a fetch item
         {

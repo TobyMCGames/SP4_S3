@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ShopItemManager : MonoBehaviour
 {
     public ItemList shopItemList;
+    public OwnedItemList ownedItemList;
     private string ItemName;
     private int ItemCost;
     private int ItemLevelReq;

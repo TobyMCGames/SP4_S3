@@ -6596,6 +6596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buyButton: {fileID: 1197592821}
+  DatabaseManager: {fileID: 0}
   ShopPanel: {fileID: 1986829658}
   ShopList: {fileID: 1823544924}
 --- !u!1 &1370510199
@@ -10806,6 +10807,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopItemList:
     items: []
+  ownedItemList:
+    ownedItemList: []
   ShopList: {fileID: 1823544924}
   buyButton: {fileID: 1197592823}
   equipButton: {fileID: 1347879451}
@@ -11085,6 +11088,11 @@ PrefabInstance:
       propertyPath: ShopList
       value: 
       objectReference: {fileID: 1823544924}
+    - target: {fileID: 94207544863942362, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: ShopPanel
+      value: 
+      objectReference: {fileID: 1986829658}
     - target: {fileID: 152183099356772313, guid: 3e60dbb935be73d4e86fb803efd5e985,
         type: 3}
       propertyPath: ShopList
