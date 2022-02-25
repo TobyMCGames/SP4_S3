@@ -57,7 +57,7 @@ namespace Photon.Pun.Demo.Asteroids
             cachedRoomList = new Dictionary<string, RoomInfo>();
             roomListEntries = new Dictionary<string, GameObject>();
 
-            //random player name
+            //auto input field can remove later
             PlayerNameInput.text = "testplayer";
             //PasswordInput.text = "pass1234";
         }
