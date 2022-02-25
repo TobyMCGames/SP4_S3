@@ -70,7 +70,7 @@ public class ReadShopItems : MonoBehaviour
             Transform LockPanel = item.transform.GetChild(2);
             LockPanel.GetChild(0).GetComponent<Text>().text = "Unlocked at lvl: " + itemList.items[a].iLevelReq;
             //set item to false if its not on first page
-            //if(itemList.items[a].sType != GlobalSettings.ShopFirstPage)
+            //if (itemList.items[a].sType != GlobalSettings.ShopFirstPage)
             //{
             //    item.SetActive(false);
             //}

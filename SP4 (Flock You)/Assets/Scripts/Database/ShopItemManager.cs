@@ -23,6 +23,7 @@ public class ShopItemManager : MonoBehaviour
     {
         Transform currentItem = ShopList.transform.GetChild(0);
         SetCurrentItem(currentItem);
+        //ChangePage("skin");
     }
 
     //changes display based on which item selected
@@ -42,6 +43,42 @@ public class ShopItemManager : MonoBehaviour
         {
             LockedStatus.text = "";
             buyButton.enabled = true;
+        }
+    }
+
+    public void ChangeSkinPage()
+    {
+        ChangePage("skin");
+    }
+
+    public void ChangePerksPage()
+    {
+        ChangePage("perk");
+    }
+
+    public void ChangePage(string itemtype)
+    {
+        bool firstitem = false;
+        for (int j = 0; j < ShopList.transform.childCount; j++)
+        {
+            for (int a = 0; a < shopItemList.items.Count; a++)
+            {
+                if (shopItemList.items[a].sType != itemtype)
+                {
+                    //set all those not the same type to not show
+                    ShopList.transform.GetChild(a).gameObject.SetActive(false);
+                }
+                else
+                {
+                    //set all those of same type to show
+                    ShopList.transform.GetChild(a).gameObject.SetActive(true);
+                    if(!firstitem)
+                    {
+                        SetCurrentItem(ShopList.transform.GetChild(a));
+                        firstitem = true;
+                    }
+                }
+            }
         }
     }
 

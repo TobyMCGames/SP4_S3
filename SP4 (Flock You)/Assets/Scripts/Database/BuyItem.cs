@@ -66,6 +66,7 @@ public class BuyItem : MonoBehaviour
                 //update player cash locally
                 GlobalSettings.Cash -= ShopPanel.GetComponent<ShopItemManager>().GetItemCost();
                 ShopPanel.GetComponent<ShopItemManager>().SetItembought();
+                ShopPanel.GetComponent<ShopItemManager>().ChangeDisplay();
                 UpdateCashDisplay();
                 purchaseStatus.text = webreq.downloadHandler.text;
                 startDisplayCountdown = true;

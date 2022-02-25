@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LocalShopManager : MonoBehaviour
 {
 
-    // !!-----Script not in use anymore can delete later-----!!
+    // !!-----Script not in use anymore can delete later, use ShopItemManager instead-----!!
 
     public GameObject ShopList;
     public Button buyButton;
