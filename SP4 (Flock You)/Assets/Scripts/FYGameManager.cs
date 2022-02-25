@@ -246,24 +246,25 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 }
             }
         }
-        // Timed Conditions
-        if (curTimer < GameTime / 2)
-        {
-            if (rainSettings.RainIntensity < 0.34f)
-            {
-                rainSettings.RainIntensity += 0.2f * Time.deltaTime;
-                if (rainSettings.RainIntensity >= 0.34f)
-                    rainSettings.RainIntensity = 0.34f;
-            }
-        }
 
-
-        // Game Ending
         if (!isOver())
         {
             if (AllPlayerInfo)
                 curTimer -= Time.deltaTime;
 
+            // Timed Conditions
+            if (curTimer < GameTime / 2)
+            {
+                if (rainSettings.RainIntensity < 0.34f)
+                {
+                    rainSettings.EnableWind = true;
+                    rainSettings.RainIntensity += 0.2f * Time.deltaTime;
+                    if (rainSettings.RainIntensity >= 0.34f)
+                        rainSettings.RainIntensity = 0.34f;
+                }
+            }
+
+            // Game Ending
             if (isOver())
             {
                 UI_Manager.Instance.SetEndScreen();
