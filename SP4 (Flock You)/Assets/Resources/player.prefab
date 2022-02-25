@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 7713378912158581476}
   - component: {fileID: 2140205575491955895}
   - component: {fileID: -4431983117077521505}
-  - component: {fileID: 4068423997155946976}
+  - component: {fileID: 4797853370881345161}
   m_Layer: 9
   m_Name: player
   m_TagString: Player
@@ -891,7 +891,7 @@ MonoBehaviour:
     MinDelaySoft: 200
     MaxDelaySoft: 400
     MaxDelayHard: 1000
---- !u!114 &4068423997155946976
+--- !u!114 &4797853370881345161
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
