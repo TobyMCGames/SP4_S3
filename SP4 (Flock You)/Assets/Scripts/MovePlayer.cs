@@ -156,6 +156,7 @@ public class MovePlayer : MonoBehaviour
             camera.m_Follow = transform;
         }
         landingcheck();
+
     }
 
     void checkJump()
@@ -210,8 +211,7 @@ public class MovePlayer : MonoBehaviour
             if (!photonView.IsMine)
                 return;
         // check player grounded
-        isgrounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, playerheight * 0.5f - (fallspeed * Time.deltaTime));
-        Debug.Log(fallspeed);
+        isgrounded = Physics.Raycast(m_Rigidbody.position, Vector3.down, out RaycastHit Hit,0.1f+playerheight * 0.5f - (fallspeed * Time.deltaTime));
         if (isgrounded)
         {
             pitch = 0;
@@ -220,7 +220,7 @@ public class MovePlayer : MonoBehaviour
             toggleTrail(false);
            
             if (playerState == PlayerState.FLYING_DIVEBOMB)
-                m_Rigidbody.position = hit.point + (Vector3.up * playerheight * 0.5f);
+                m_Rigidbody.position = Hit.point + (Vector3.up * playerheight * 0.5f);
             playerState = PlayerState.IDLE;
             fallspeed = 0;
             m_Rigidbody.useGravity = true;
@@ -494,11 +494,11 @@ public class MovePlayer : MonoBehaviour
     {
         if (playerState == PlayerState.FLYING_DIVEBOMB)
         {
-            islanding = Physics.Raycast(m_Rigidbody.position, Vector3.down, (playerheight + landingheight) * (-2 *fallspeed));
+            islanding = Physics.Raycast(m_Rigidbody.position, Vector3.down, 0.1f+(playerheight + landingheight) * (-2 *fallspeed));
         }
         else if (!isgrounded)
         {
-            islanding = Physics.Raycast(m_Rigidbody.position, Vector3.down, playerheight + landingheight);
+            islanding = Physics.Raycast(m_Rigidbody.position, Vector3.down, 0.1f+playerheight + landingheight);
         }
         
         //Debug.Log(islanding);

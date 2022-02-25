@@ -7,6 +7,7 @@ public class VoiceDeafen : MonoBehaviour
     // Photon voice deafen
     protected bool isDeafened;
     AudioSource audioSource;
+    public AudioSource[] soundFX;
 
     // Start is called before the first frame update
     void Start()
@@ -19,24 +20,22 @@ public class VoiceDeafen : MonoBehaviour
     void Update()
     {
         // Mute a player when he selects mute button
-        //if (Input.GetKeyUp("m"))
         if (Input.GetKeyUp(","))
         {
             Debug.Log(", key was released");
             if (isDeafened == true)
             {
                 isDeafened = false;
-                //recorder.TransmitEnabled = true;
                 audioSource.mute = false;
+                soundFX[1].Play();
             }
             else
             {
                 isDeafened = true;
-                //recorder.TransmitEnabled = false;
                 audioSource.mute = true;
+                soundFX[0].Play();
+                // Add code to mute the player too if time permits
             }
         }
     }
-
-
 }

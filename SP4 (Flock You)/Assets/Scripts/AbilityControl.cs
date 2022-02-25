@@ -14,7 +14,7 @@ public class AbilityControl : MonoBehaviour
     private float ScrollLimit = 2f;
     private float ScrollValue = 0f;
     private int AbilityCount = 0;
-    private int currAbility = 0;
+    public int currAbility = 0;
     DistractAbility distactAbility = new DistractAbility();
     LayEggAbility layEggAbility = new LayEggAbility();
 
@@ -31,8 +31,8 @@ public class AbilityControl : MonoBehaviour
             Debug.Log("photonView not set in AbilityControl.cs");
 
         //add abilities to list
-        AbilitiesList.Add(layEggAbility);
         AbilitiesList.Add(distactAbility);
+        AbilitiesList.Add(layEggAbility);
         AbilityCount = AbilitiesList.Count;
 
         for (int i = 0; i < AbilityCount; i++)
@@ -44,6 +44,7 @@ public class AbilityControl : MonoBehaviour
 
     private void Start()
     {
+        UI_Manager.Instance.UpdateAbility();
     }
 
     public LayEggAbility GetLayEggAbility()
@@ -73,7 +74,7 @@ public class AbilityControl : MonoBehaviour
             {
                 currAbility = 0;
             }
-
+            UI_Manager.Instance.UpdateAbility();
             Debug.Log(currAbility);
         }
         else if (ScrollValue <= -ScrollLimit)
@@ -86,7 +87,7 @@ public class AbilityControl : MonoBehaviour
             {
                 currAbility = AbilityCount - 1;
             }
-
+            UI_Manager.Instance.UpdateAbility();
             Debug.Log(currAbility);
         }
 
