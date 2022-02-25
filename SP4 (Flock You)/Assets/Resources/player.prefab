@@ -534,7 +534,6 @@ Transform:
   - {fileID: 4234142319548848944}
   - {fileID: 3058864953704353293}
   - {fileID: 6013174992898924169}
-  - {fileID: 5405832006444365230}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -629,7 +628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 5
-  movemul: 40
+  movemul: 100
   jumpforce: 10
   flymaxIncrease: 2
   flymaxDecrease: 2
@@ -642,6 +641,7 @@ MonoBehaviour:
   playerState: 0
   camera: {fileID: 0}
   Lookat: {fileID: 8714987993477327268}
+  isgrounded: 0
   BarrelRollSpeed: 5
   DiveBombDirection: {x: 0, y: 0, z: 0}
   LeftWing: {fileID: 1746161339624272492}
@@ -720,6 +720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d903fbee24840540906b823af8cff86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currAbility: 0
 --- !u!114 &5531866283144861043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,9 +1033,6 @@ GameObject:
   - component: {fileID: 3428104852706284703}
   m_Layer: 0
   m_Name: UndeafenSound
-  - component: {fileID: 5405832006444365230}
-  m_Layer: 9
-  m_Name: Hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
