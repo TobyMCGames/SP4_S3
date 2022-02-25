@@ -885,6 +885,7 @@ GameObject:
   - component: {fileID: 1133752372}
   - component: {fileID: 1133752373}
   - component: {fileID: 1133752374}
+  - component: {fileID: 1133752375}
   m_Layer: 0
   m_Name: VoiceManager
   m_TagString: Untagged
@@ -979,7 +980,7 @@ MonoBehaviour:
   voiceDetectionThreshold: 0.01
   voiceDetectionDelayMs: 500
   unityMicrophoneDevice: 
-  photonMicrophoneDeviceId: -1
+  photonMicrophoneDeviceId: 0
   interestGroup: 0
   debugEchoMode: 0
   reliableMode: 0
@@ -1011,6 +1012,18 @@ MonoBehaviour:
   trySamplingRateMatch: 0
   useMicrophoneTypeFallback: 1
   recordOnlyWhenJoined: 1
+--- !u!114 &1133752375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133752371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 464dbac94b3f3ec478d85e818550b77d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1293928278 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6877641835838080389, guid: 1796f246ec9d3d542bca7d71a751be1a,
@@ -1435,6 +1448,7 @@ MonoBehaviour:
   player: {fileID: 3727522623858185587, guid: 008496d9bc1b228409b68881800d8ec3, type: 3}
   UI_Timer: {fileID: 193360771}
   scoreboard: {fileID: 0}
+  EndScreen: {fileID: 0}
   UI_Health: {fileID: 673186660}
   UI_Ammo: {fileID: 1902265180}
   UI_Lives: {fileID: 1729423605}
