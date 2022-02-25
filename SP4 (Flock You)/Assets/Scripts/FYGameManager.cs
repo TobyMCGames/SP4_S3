@@ -285,7 +285,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
     public bool isOver()
     {
-        return curTimer <= 0;
+        return curTimer <= 0 || (AllPlayerInfo && PlayerList.childCount == 0);
     }
 
     void AssignSpawnPoints()
