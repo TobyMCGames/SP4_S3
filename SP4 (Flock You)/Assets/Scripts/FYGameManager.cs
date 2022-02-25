@@ -239,7 +239,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
         if (!isOver())
         {
-            curTimer -= Time.deltaTime;
+            if (AllPlayerInfo)
+                curTimer -= Time.deltaTime;
 
             if (isOver())
             {

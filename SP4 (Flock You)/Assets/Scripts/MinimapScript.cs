@@ -29,6 +29,9 @@ public class MinimapScript : MonoBehaviour
         if (FYGameManager.Instance.isOver())
             return;
 
+        if (Player == null)
+            return;
+
         minimapPos = Player.transform.position;
         minimapPos.y = Player.transform.position.y + BasecameraOffset;
         transform.position = minimapPos;
