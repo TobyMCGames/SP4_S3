@@ -19,13 +19,6 @@ public class ShopItemManager : MonoBehaviour
     public Text ItemCostText;
     public Text LockedStatus;
 
-    public void DisplayFirstItem()
-    {
-        Transform currentItem = ShopList.transform.GetChild(0);
-        SetCurrentItem(currentItem);
-        //ChangePage("skin");
-    }
-
     //changes display based on which item selected
     public void ChangeDisplay()
     {
