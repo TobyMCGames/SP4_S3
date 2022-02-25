@@ -5,7 +5,7 @@ using Cinemachine;
 
 public class MinimapScript : MonoBehaviour
 {
-    [SerializeField] GameObject Player;
+    [SerializeField] GameObject Player = null;
     [SerializeField] Cinemachine.CinemachineFreeLook tpc;
     [SerializeField] float BasecameraOffset = 20f;
     [SerializeField] float ScrollSpeed = 10f;
@@ -26,7 +26,7 @@ public class MinimapScript : MonoBehaviour
     // Update is called once per frame  
     void LateUpdate()
     {
-        if (FYGameManager.Instance.isOver())
+        if (FYGameManager.Instance.isOver() && Player != null)
             return;
 
         minimapPos = Player.transform.position;
