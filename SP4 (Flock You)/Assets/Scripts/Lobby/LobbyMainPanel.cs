@@ -306,11 +306,11 @@ namespace Photon.Pun.Demo.Asteroids
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            PhotonNetwork.LoadLevel("FlockYou_GameScene");
+            //PhotonNetwork.LoadLevel("FlockYou_GameScene");
             //PhotonNetwork.LoadLevel("Toby_Scene");
             //PhotonNetwork.LoadLevel("ZG_SCENE2");
             //PhotonNetwork.LoadLevel("DemoAsteroids-GameScene");
-            //PhotonNetwork.LoadLevel("YuYang_TestScene");
+            PhotonNetwork.LoadLevel("YuYang_TestScene");
         }
 
         #endregion
