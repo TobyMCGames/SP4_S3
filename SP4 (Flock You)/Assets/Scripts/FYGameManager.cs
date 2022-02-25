@@ -362,7 +362,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         }
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
-            ClientPlayer = PhotonNetwork.Instantiate("player", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+            ClientPlayer = PhotonNetwork.Instantiate(GlobalSettings.CurrentSkin, position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
             MinimapCam.GetComponent<MinimapScript>().setPlayertoFollow(ClientPlayer);
             MinimapCam.GetComponent<MinimapScript>().settpc(MainCamera);
         }

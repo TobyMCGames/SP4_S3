@@ -14,24 +14,20 @@ public class GlobalSettings : MonoBehaviour
     public static string Username = "Default Username";
     public static int Level;
     public static int XP;
-    public static int BaseXPToLevelUp;
+    public static int BaseXPToLevelUp = 100;
     public static int XPToLevelUp;
     public static int Cash;
-    public static string CurrentSkin;
-    public static string CurrentPerk;
-    public static string DefaultSkin;
-    public static string Defaultperk;
+    public static string CurrentSkin = "player";
+    public static string CurrentPerk = "none";
+    public static string DefaultSkin = "player";
+    public static string Defaultperk = "none";
     public static string itemname;
     public static bool NotConnected = true;
 
-    private void Awake()
-    {
-        BaseXPToLevelUp = 100;
-        DefaultSkin = "player";
-        Defaultperk = "none";
-        CurrentSkin = DefaultSkin;
-        CurrentPerk = Defaultperk;
-    }
+    //private void Update()
+    //{
+    //    Debug.Log(CurrentSkin);
+    //}
 
     // Game Modes
     public enum GAMEMODES
