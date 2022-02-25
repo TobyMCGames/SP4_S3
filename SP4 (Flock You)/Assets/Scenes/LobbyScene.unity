@@ -9535,6 +9535,8 @@ MonoBehaviour:
   purchaseStatus: {fileID: 1881616527}
   ShopPanel: {fileID: 1986829658}
   playerCashText: {fileID: 137079308}
+  BuyButton: {fileID: 1197592821}
+  EquipButton: {fileID: 1347879449}
 --- !u!114 &1826739979
 MonoBehaviour:
   m_ObjectHideFlags: 0
