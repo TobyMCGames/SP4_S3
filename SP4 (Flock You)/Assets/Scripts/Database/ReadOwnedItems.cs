@@ -85,6 +85,10 @@ public class ReadOwnedItems : MonoBehaviour
                         {
                             GlobalSettings.CurrentSkin = ownedItem.sItemName;
                         }
+                        else if(ownedItem.sItemType == "perk")
+                        {
+                            GlobalSettings.CurrentPerk = ownedItem.sItemName;
+                        }
                     }
                     else
                         CostPanel.transform.GetChild(0).GetComponent<Text>().text = "Owned";
