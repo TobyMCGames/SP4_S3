@@ -9,6 +9,8 @@ using Photon.Pun.UtilityScripts;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
+using DigitalRuby.RainMaker;
+
 using Cinemachine;
 
 public class FYGameManager : MonoBehaviourPunCallbacks
@@ -17,8 +19,10 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public static FYGameManager Instance = null;
     private PhotonView photonView;
 
-    // Game Timer
+    [Header("Game Settings")]
+    public float GameTime;
     public float curTimer;
+    public RainScript rainSettings;
 
     [Header("Loading Screen")]
     public GameObject UI_Screen;
@@ -106,6 +110,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        curTimer = GameTime;
+
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
             Initialize();
@@ -113,6 +119,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             AssignSpawnPoints();
             player.ResetSpawnPoint();
             UI_Manager.Instance.SetupScoreboard();
+            AllPlayerInfo = true;
         }
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
@@ -239,7 +246,19 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 }
             }
         }
+        // Timed Conditions
+        if (curTimer < GameTime / 2)
+        {
+            if (rainSettings.RainIntensity < 0.34f)
+            {
+                rainSettings.RainIntensity += 0.2f * Time.deltaTime;
+                if (rainSettings.RainIntensity >= 0.34f)
+                    rainSettings.RainIntensity = 0.34f;
+            }
+        }
 
+
+        // Game Ending
         if (!isOver())
         {
             if (AllPlayerInfo)
@@ -352,6 +371,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
         MainCamera.Follow = player.transform;
         MainCamera.LookAt = player.transform;
+      
 
         player.GetComponent<MovePlayer>().camera = MainCamera;
         //player.GetComponent<FYPlayer>().Init();

@@ -27,10 +27,11 @@ public class GlobalSettings : MonoBehaviour
         NUM_GAME_MODES
     }
 
-    public static GAMEMODES curMode = GAMEMODES.SINGLE_PLAYER;
+    public static GAMEMODES curMode;
 
     private void OnApplicationQuit()
     {
+        curMode = GAMEMODES.SINGLE_PLAYER;
         NotConnected = true;
     }
 }

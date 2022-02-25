@@ -1,9 +1,9 @@
-using Photon.Voice.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Voice.Unity;
 
-public class VoiceManager : MonoBehaviour
+public class VoiceMute : MonoBehaviour
 {
     // Photon voice mute
     protected bool isMuted;
@@ -13,6 +13,7 @@ public class VoiceManager : MonoBehaviour
     void Start()
     {
         recorder = GetComponent<Recorder>();
+        recorder.TransmitEnabled = false; // mute when start game
     }
 
     // Update is called once per frame
@@ -21,7 +22,7 @@ public class VoiceManager : MonoBehaviour
         // Mute a player when he selects mute button
         if (Input.GetKeyUp("m"))
         {
-            Debug.Log("M key was released");
+            Debug.Log("m key was released");
             if (isMuted == true)
             {
                 isMuted = false;

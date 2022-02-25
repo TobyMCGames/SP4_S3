@@ -1021,7 +1021,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1133752371}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 464dbac94b3f3ec478d85e818550b77d, type: 3}
+  m_Script: {fileID: 11500000, guid: b1052d2283d79ae4e836810602d02c79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1293928278 stripped
@@ -1400,7 +1400,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a792c6ee6b6a84fb03bdc0d88306ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameTime: 0
   curTimer: 65
+  rainSettings: {fileID: 0}
   UI_Screen: {fileID: 2043670230}
   Loading_Screen: {fileID: 274018344}
   Direction_Test: {fileID: 390943595}
