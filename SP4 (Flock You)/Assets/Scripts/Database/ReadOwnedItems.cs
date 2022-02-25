@@ -9,7 +9,8 @@ using Photon.Pun;
 public class ReadOwnedItems : MonoBehaviour
 {
     private string URL;
-    public GameObject ShopList; //must add using UnityEngine.UI and using UnityEngine.Networking on top
+    public GameObject ShopList;
+    public GameObject ShopPanel;
 
     private void Awake()
     {
@@ -60,7 +61,8 @@ public class ReadOwnedItems : MonoBehaviour
 
     void Deserialize(String RawJSON)
     {
-        OwnedItemList oi = JsonUtility.FromJson<OwnedItemList>(RawJSON); //convert raw json to objects
+        ShopPanel.GetComponent<ShopItemManager>().ownedItemList = JsonUtility.FromJson<OwnedItemList>(RawJSON);
+        OwnedItemList oi = ShopPanel.GetComponent<ShopItemManager>().ownedItemList;
 
         for (int i = 0; i < oi.ownedItemList.Count; i++)
         {

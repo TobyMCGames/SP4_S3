@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 2140205575491955895}
   - component: {fileID: -4431983117077521505}
   m_Layer: 9
-  m_Name: player_TopHat
+  m_Name: The Gentleman
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

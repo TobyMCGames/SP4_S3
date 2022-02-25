@@ -16,9 +16,16 @@ public class GlobalSettings : MonoBehaviour
     public static int XP;
     public static int Cash;
     public static string CurrentSkin;
+    public static string DefaultSkin;
     public static string itemname;
     public static bool NotConnected = true;
-    
+
+    private void Awake()
+    {
+        DefaultSkin = "player";
+        CurrentSkin = DefaultSkin;
+    }
+
     // Game Modes
     public enum GAMEMODES
     {
