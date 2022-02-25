@@ -50,9 +50,12 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
     // floor cube
     public GameObject floor;
+
+    
     
     public void Awake()
     {
+        
         Instance = this;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
