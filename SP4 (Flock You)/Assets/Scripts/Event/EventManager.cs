@@ -26,19 +26,23 @@ public class EventManager : MonoBehaviourPun
 
     private void Update()
     {
-        GameObject eventobj;
-        for (int i = ActiveEventList.Count-1; i >= 0;i--)
+        
+        if (PhotonNetwork.IsMasterClient)
         {
-            eventobj = ActiveEventList[i];
-            if (ActiveEventList[i].GetComponent<BaseEvent>().IsTobeDestroyed())
+            GameObject eventobj;
+            for (int i = ActiveEventList.Count-1; i > -1; i--)
             {
-                ActiveEventList[i].GetComponent<BaseEvent>().returnEventobj();
-                photonView.RPC("RemoveFromList", RpcTarget.Others, i);
-                ActiveEventList.RemoveAt(i);
-                if (PhotonNetwork.IsMasterClient)
+                eventobj = ActiveEventList[i];
+                if (ActiveEventList[i].GetComponent<BaseEvent>().IsTobeDestroyed())
+                {
+                    ActiveEventList[i].GetComponent<BaseEvent>().returnEventobj();
+                    photonView.RPC("RemoveFromList", RpcTarget.Others, i);
+                    ActiveEventList.RemoveAt(i);
                     PhotonNetwork.Destroy(eventobj);
+                }
             }
         }
+        
     }
 
     [PunRPC]
