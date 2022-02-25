@@ -81,6 +81,8 @@ public class MovePlayer : MonoBehaviour
     float flaptimermax = 0.1f;
     float currenflaptimer = 0.0f;
     public Vector3 DiveBombDirection = Vector3.zero;
+    [SerializeField] GameObject LeftWing = null;
+    [SerializeField] GameObject RightWing = null;
 
     [Header("Orientation")]
     float pitch = 0.0f, yaw = 0.0f, roll = 0.0f;
@@ -216,6 +218,7 @@ public class MovePlayer : MonoBehaviour
             pitch = 0;
             roll = 0;
             vec3up = Vector3.up;
+            toggleTrail(false);
            
             if (playerState == PlayerState.FLYING_DIVEBOMB)
                 m_Rigidbody.position = hit.point + (Vector3.up * playerheight * 0.5f);
@@ -321,8 +324,10 @@ public class MovePlayer : MonoBehaviour
             if (playerState != PlayerState.FLYING_DIVEBOMB)
                 playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // striaght up
+            {
                 m_Rigidbody.AddForce((Vector3.up * flyverticalforce) * Time.deltaTime, ForceMode.VelocityChange);
-
+                toggleTrail(false);
+            }
             else // go up a relative to your orientation
             {
                 Vector3 movement = Orientation;
@@ -352,6 +357,7 @@ public class MovePlayer : MonoBehaviour
             if (!inputed) // fly striaght down;
             {
                 m_Rigidbody.AddForce((flyverticalforce * Vector3.down) * Time.deltaTime, ForceMode.VelocityChange);
+                toggleTrail(false);
             }
             else // go down a relative to your orientation
             {
@@ -408,12 +414,14 @@ public class MovePlayer : MonoBehaviour
             rbRotation = Quaternion.Lerp(m_Rigidbody.rotation, m_Rotation, Time.deltaTime * turnSpeed);
             m_Rigidbody.AddForce((m_Movement * Time.deltaTime) * movemul, ForceMode.VelocityChange);
             m_Rigidbody.MoveRotation(rbRotation);
+            toggleTrail(true);
         }
         else
         {
             if (playerState != PlayerState.FLYING_HEIGHTCHANGE)
             {
                 simulateflap();
+                toggleTrail(false);
             }
             Orientation.Set(pitch, yaw, roll);
             m_Rotation = Quaternion.Euler(Orientation);
@@ -438,6 +446,7 @@ public class MovePlayer : MonoBehaviour
                                 doubletapcheck = false;
                                 elapsedtaptime = 0;
                                 Orientation.Set(0, 0, 0);
+                                toggleTrail(true);
                                 if (playerState > PlayerState.FLYING && playerState != PlayerState.FLYING_DIVEBOMB)
                                 {
                                     playerState = PlayerState.FLYING_DIVEBOMB;
@@ -551,6 +560,7 @@ public class MovePlayer : MonoBehaviour
             playerState = PlayerState.FLYING_HEIGHTCHANGE;
             movemul += -fallspeed * Time.deltaTime;
         }*/
+        toggleTrail(true);
     }
 
     void BarrelRoll()
@@ -644,5 +654,11 @@ public class MovePlayer : MonoBehaviour
     public float getYaw()
     {
         return yaw;
+    }
+
+    public void toggleTrail(bool toggle)
+    {
+        LeftWing.SetActive(toggle);
+        RightWing.SetActive(toggle);
     }
 }
