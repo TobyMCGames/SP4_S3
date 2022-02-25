@@ -116,7 +116,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             Loading_Screen.SetActive(true);
             Hashtable props = new Hashtable
             {
-                {JLGame.PLAYER_LOADED_LEVEL, true}
+                {FYGame.PLAYER_LOADED_LEVEL, true}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
