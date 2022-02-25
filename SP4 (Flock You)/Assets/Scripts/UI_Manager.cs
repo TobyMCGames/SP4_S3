@@ -65,6 +65,8 @@ public class UI_Manager : MonoBehaviour
         {
             scoreboard.gameObject.SetActive(false);
         }
+
+        UpdateAbilityCooldown();
     }
 
     public void UpdateHealth()
@@ -124,20 +126,45 @@ public class UI_Manager : MonoBehaviour
         {
             Ability_Distract.SetParent(UI_Ability.GetChild(0));
             Ability_Distract.GetComponent<RectTransform>().sizeDelta = new Vector2(60,60);
+            Ability_Distract.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(148, 74);
             Ability_Distract.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
             Ability_LayNest.SetParent(UI_Ability.GetChild(1));
             Ability_LayNest.GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+            Ability_LayNest.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(111, 55.5f);
             Ability_LayNest.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
         }
         else if (player.GetComponent<AbilityControl>().currAbility == (int)AbilityControl.ABILITIES.LAYEGG)
         {
             Ability_LayNest.SetParent(UI_Ability.GetChild(0));
             Ability_LayNest.GetComponent<RectTransform>().sizeDelta = new Vector2(60, 60);
+            Ability_LayNest.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(148, 74);
             Ability_LayNest.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
             Ability_Distract.SetParent(UI_Ability.GetChild(1));
             Ability_Distract.GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+            Ability_Distract.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(111, 55.5f);
             Ability_Distract.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
         }
+    }
+
+    public void UpdateAbilityCooldown()
+    {
+        if (Ability_Distract == null)
+        {
+            Debug.Log("UI_Distract not set");
+            return;
+        }
+
+        if (Ability_LayNest == null)
+        {
+            Debug.Log("UI_LayNest not set");
+            return;
+        }
+
+        DistractAbility distractAbility = player.GetComponent<AbilityControl>().GetDistractAbility();
+        Ability_Distract.GetChild(0).GetComponent<Slider>().value = (float)distractAbility.CurCooldown / distractAbility.cooldown;
+
+        LayEggAbility layEggAbility = player.GetComponent<AbilityControl>().GetLayEggAbility();
+        Ability_LayNest.GetChild(0).GetComponent<Slider>().value = (float)layEggAbility.CurCooldown / layEggAbility.cooldown;
     }
 
     public void SetupScoreboard()
