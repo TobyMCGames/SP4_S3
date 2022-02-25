@@ -14,10 +14,13 @@ public class UI_Manager : MonoBehaviour
     public Text UI_Timer;
     public Transform scoreboard;
     public Transform EndScreen;
-    //Temporary use text instead of image
     public Slider UI_Health;
     public Slider UI_Ammo;
     public Text UI_Lives;
+
+    public Transform UI_Ability;
+    public Transform Ability_LayNest;
+    public Transform Ability_Distract;
 
 
     private void Awake()
@@ -95,6 +98,46 @@ public class UI_Manager : MonoBehaviour
         }
 
         UI_Lives.text = "x " + player.curLives;
+    }
+
+    public void UpdateAbility()
+    {
+        if (UI_Ability == null)
+        {
+            Debug.Log("UI_Ability not set");
+            return;
+        }
+
+        if (Ability_Distract == null)
+        {
+            Debug.Log("UI_Distract not set");
+            return;
+        }
+
+        if (Ability_LayNest == null)
+        {
+            Debug.Log("UI_LayNest not set");
+            return;
+        }
+
+        if (player.GetComponent<AbilityControl>().currAbility == (int)AbilityControl.ABILITIES.DISTRACT)
+        {
+            Ability_Distract.SetParent(UI_Ability.GetChild(0));
+            Ability_Distract.GetComponent<RectTransform>().sizeDelta = new Vector2(60,60);
+            Ability_Distract.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+            Ability_LayNest.SetParent(UI_Ability.GetChild(1));
+            Ability_LayNest.GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+            Ability_LayNest.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+        }
+        else if (player.GetComponent<AbilityControl>().currAbility == (int)AbilityControl.ABILITIES.LAYEGG)
+        {
+            Ability_LayNest.SetParent(UI_Ability.GetChild(0));
+            Ability_LayNest.GetComponent<RectTransform>().sizeDelta = new Vector2(60, 60);
+            Ability_LayNest.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+            Ability_Distract.SetParent(UI_Ability.GetChild(1));
+            Ability_Distract.GetComponent<RectTransform>().sizeDelta = new Vector2(50, 50);
+            Ability_Distract.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
+        }
     }
 
     public void SetupScoreboard()
