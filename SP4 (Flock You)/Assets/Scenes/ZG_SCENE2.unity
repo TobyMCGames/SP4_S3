@@ -650,7 +650,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 5033030191947368739}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 5033030191947368745}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 319d2fe34a804e245819465c9505ea59, type: 3}
@@ -1068,6 +1068,7 @@ MonoBehaviour:
   player: {fileID: 3727522623858185587, guid: 008496d9bc1b228409b68881800d8ec3, type: 3}
   UI_Timer: {fileID: 193360771}
   scoreboard: {fileID: 0}
+  EndScreen: {fileID: 0}
   UI_Health: {fileID: 673186660}
   UI_Ammo: {fileID: 1902265180}
   UI_Lives: {fileID: 1729423605}
@@ -2056,6 +2057,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5033030191947368739}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5033030191947368745 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6877641835838080390, guid: 1796f246ec9d3d542bca7d71a751be1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 5033030191947368739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5033030191947368746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033030191947368745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c44231b15c5b3f409a6bb03d2a57304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5284415277384130640
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -28,7 +28,7 @@ public class MovePlayer : MonoBehaviour
 
     [Header("Player Settings")]
     [Tooltip("how fast can the player rotate")]
-    public float turnSpeed = 20f;[Tooltip("Movement speed multiplier that affects the player's movementspeed")]
+    public float turnSpeed = 2f;[Tooltip("Movement speed multiplier that affects the player's movementspeed")]
     public float movemul = 10f;[Tooltip("how high the player can jump")]
     public float jumpforce = 10f;
     public float flymaxIncrease = 2f;
@@ -61,7 +61,7 @@ public class MovePlayer : MonoBehaviour
     float playerheight;
 
     bool inputed = false;
-    bool isgrounded = false;
+    [SerializeField] bool isgrounded = false;
     bool islanding = false;
 
     // barrel roll
@@ -167,7 +167,7 @@ public class MovePlayer : MonoBehaviour
                 playerState = PlayerState.JUMPING;
                 m_Rigidbody.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
             }
-            else if (!isgrounded && playerState < PlayerState.FLYING)
+            else if (!isgrounded && playerState != PlayerState.JUMPING && playerState < PlayerState.FLYING)
             {
                 playerState = PlayerState.FLYING;
                 //flydrop =
@@ -186,11 +186,11 @@ public class MovePlayer : MonoBehaviour
         inputed= hasHorizontalInput || hasVerticalInput;
         
 
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.D) && playerState >= PlayerState.FLYING)
         {
             playerState = PlayerState.FLYING_BARREL_RIGHT;
         }
-        else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.A) && playerState >= PlayerState.FLYING)
         {
             playerState = PlayerState.FLYING_BARREL_LEFT;
         }
@@ -210,9 +210,8 @@ public class MovePlayer : MonoBehaviour
             if (!photonView.IsMine)
                 return;
         // check player grounded
-
-        isgrounded = Physics.Raycast(m_Rigidbody.position, Vector3.down, out RaycastHit hit, playerheight * 0.5f - fallspeed * Time.deltaTime);
-
+        isgrounded = Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, playerheight * 0.5f - (fallspeed * Time.deltaTime));
+        Debug.Log(fallspeed);
         if (isgrounded)
         {
             pitch = 0;
@@ -321,7 +320,7 @@ public class MovePlayer : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             //m_Movement.y += Time.deltaTime * flyverticalforce;
-            if (playerState != PlayerState.FLYING_DIVEBOMB)
+            if (playerState != PlayerState.FLYING_DIVEBOMB && !isgrounded)
                 playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // striaght up
             {
@@ -346,13 +345,13 @@ public class MovePlayer : MonoBehaviour
         else if (!islanding && playerState != PlayerState.FLYING_DIVEBOMB)
         {
             recenterPitch();
-            playerState = PlayerState.FLYING;
+            playerState = PlayerState.FLYING_HOVERING;
         }
 
 
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            if (playerState != PlayerState.FLYING_DIVEBOMB)
+            if (playerState != PlayerState.FLYING_DIVEBOMB && !isgrounded)
                 playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // fly striaght down;
             {
@@ -411,7 +410,7 @@ public class MovePlayer : MonoBehaviour
             if (orientationtext != null)
                 orientationtext.text = Orientation.ToString();
             m_Rotation = Quaternion.Euler(Orientation);
-            rbRotation = Quaternion.Lerp(m_Rigidbody.rotation, m_Rotation, Time.deltaTime * turnSpeed);
+            rbRotation = Quaternion.Lerp(m_Rigidbody.rotation, m_Rotation,Time.deltaTime * turnSpeed);
             m_Rigidbody.AddForce((m_Movement * Time.deltaTime) * movemul, ForceMode.VelocityChange);
             m_Rigidbody.MoveRotation(rbRotation);
             toggleTrail(true);
@@ -497,7 +496,7 @@ public class MovePlayer : MonoBehaviour
         {
             islanding = Physics.Raycast(m_Rigidbody.position, Vector3.down, (playerheight + landingheight) * (-2 *fallspeed));
         }
-        else
+        else if (!isgrounded)
         {
             islanding = Physics.Raycast(m_Rigidbody.position, Vector3.down, playerheight + landingheight);
         }

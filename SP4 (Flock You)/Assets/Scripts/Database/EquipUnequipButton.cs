@@ -9,20 +9,22 @@ public class EquipUnequipButton : MonoBehaviour
     public GameObject buyButton;
     private bool isEquipped;
     public GameObject ShopPanel;
+    public GameObject ShopList;
 
     private Transform selectedItem;
+    private Transform previousEquipItem;
     private string selectedItemName;
-    private bool runOnce; //this is so scuffed wtf
+    ItemList shopItemList;
     private string URL;
 
     private void Awake()
     {
         URL = GlobalSettings.BaseServer + "equipunequipitem.php";
+        shopItemList = ShopPanel.GetComponent<ShopItemManager>().shopItemList;
     }
 
     public void SetEquipStatus(Transform itemSelected)
     {
-        runOnce = true;
         selectedItem = itemSelected;
         selectedItemName = ShopPanel.GetComponent<ShopItemManager>().GetItemName();
 
@@ -50,9 +52,35 @@ public class EquipUnequipButton : MonoBehaviour
 
     public void EquipUnequipItem()
     {
-        if (runOnce)
-            UpdateEquipStatus(selectedItemName, !isEquipped);
-        runOnce = false;
+        //fi its a skin, unequip all skins
+        bool thisitemEquipped = false;
+        for (int j = 0; j < ShopList.transform.childCount; j++)
+        {
+            for (int a = 0; a < shopItemList.items.Count; a++)
+            {
+                //check if item is a skin
+                if (shopItemList.items[a].sType == "skin")
+                {
+                    //check if the item is equipped
+                    Transform shopItem = ShopList.transform.GetChild(a);
+                    if (shopItem.GetChild(3).GetComponentInChildren<Text>().text == "Equipped")
+                    {
+                        if(!thisitemEquipped)
+                        {
+                            Debug.Log("This item is equipped: " + shopItem.GetChild(0).GetComponentInChildren<Text>().text);
+                            UpdateEquipStatus(shopItem.GetChild(0).GetComponentInChildren<Text>().text, false);
+                            shopItem.GetChild(3).GetComponentInChildren<Text>().text = "Owned";
+                            previousEquipItem = shopItem;
+                            thisitemEquipped = true;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        //equip or enequip the item
+        UpdateEquipStatus(selectedItemName, !isEquipped);
     }
 
     public void UpdateEquipStatus(string itemname, bool bEquipped)
@@ -78,7 +106,8 @@ public class EquipUnequipButton : MonoBehaviour
         {
             case UnityWebRequest.Result.Success:
                 Debug.Log(webreq.downloadHandler.text);
-                if(bEquipped)
+
+                if (bEquipped)
                 {
                     selectedItem.GetChild(3).GetComponentInChildren<Text>().text = "Equipped";
                     GetComponentInChildren<Text>().text = "Unequip";
@@ -86,10 +115,12 @@ public class EquipUnequipButton : MonoBehaviour
                 }
                 else
                 {
-
                     selectedItem.GetChild(3).GetComponentInChildren<Text>().text = "Owned";
                     GetComponentInChildren<Text>().text = "Equip";
                     ShopPanel.GetComponent<ShopItemManager>().SetCurrentItem(selectedItem);
+
+                    if(previousEquipItem != null)
+                        previousEquipItem.GetChild(3).GetComponentInChildren<Text>().text = "Owned";
                 }
 
                 break;
