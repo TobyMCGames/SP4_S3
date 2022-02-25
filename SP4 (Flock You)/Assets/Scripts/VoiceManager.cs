@@ -8,11 +8,13 @@ public class VoiceManager : MonoBehaviour
     // Photon voice mute
     protected bool isMuted;
     Recorder recorder;
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         recorder = GetComponent<Recorder>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -25,13 +27,17 @@ public class VoiceManager : MonoBehaviour
             if (isMuted == true)
             {
                 isMuted = false;
-                recorder.TransmitEnabled = true;
+                //recorder.TransmitEnabled = true;
+                audioSource.mute = false;
             }
             else
             {
                 isMuted = true;
-                recorder.TransmitEnabled = false;
+                //recorder.TransmitEnabled = false;
+                audioSource.mute = true;
             }
         }
     }
+
+
 }
