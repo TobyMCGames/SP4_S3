@@ -2589,7 +2589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a792c6ee6b6a84fb03bdc0d88306ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curTimer: 65
+  curTimer: 5
   UI_Screen: {fileID: 2043670230}
   Loading_Screen: {fileID: 274018344}
   Direction_Test: {fileID: 390943595}
@@ -3795,6 +3795,7 @@ GameObject:
   - component: {fileID: 2048355978}
   - component: {fileID: 2048355977}
   - component: {fileID: 2048355976}
+  - component: {fileID: 2048355979}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -3850,6 +3851,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2048355979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048355975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd92ce71742350e44a8e021fe63dc6bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2098518095
 GameObject:
   m_ObjectHideFlags: 0

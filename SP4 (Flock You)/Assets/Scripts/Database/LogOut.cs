@@ -46,6 +46,7 @@ public class LogOut : MonoBehaviour
                 }
                 //switch back to login panel
                 PhotonNetwork.Disconnect();
+                GlobalSettings.NotConnected = true;
                 SwitchToLogin();
                 break;
             default:

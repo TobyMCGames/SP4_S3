@@ -84,8 +84,15 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public void ReturnToMenu()
     {
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
-            PhotonNetwork.Disconnect();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
+        {
+            PhotonNetwork.LeaveRoom();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StopAllCoroutines();
+            }
+        }
+        else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            UnityEngine.SceneManagement.SceneManager.LoadScene("toby_Lobby");
     }
 
     private void OnDestroy()
