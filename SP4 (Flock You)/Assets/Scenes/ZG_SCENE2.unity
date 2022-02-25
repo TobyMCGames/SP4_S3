@@ -467,7 +467,7 @@ PrefabInstance:
     - target: {fileID: 5284415276743349063, guid: a009ba7e659edd44aa63e44a31d72bd3,
         type: 3}
       propertyPath: m_Name
-      value: MinimapCam (1)
+      value: MinimapCam
       objectReference: {fileID: 0}
     - target: {fileID: 5284415276743349065, guid: a009ba7e659edd44aa63e44a31d72bd3,
         type: 3}
@@ -1948,7 +1948,7 @@ PrefabInstance:
     - target: {fileID: 6479499962615632938, guid: 36a9a8571df7866488a1f0690d59cf9d,
         type: 3}
       propertyPath: m_Name
-      value: EventManager (1)
+      value: EventManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36a9a8571df7866488a1f0690d59cf9d, type: 3}
@@ -2654,7 +2654,7 @@ GameObject:
   - component: {fileID: 817040395}
   - component: {fileID: 817040394}
   m_Layer: 0
-  m_Name: FYGameManager (1)
+  m_Name: FYGameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2843,7 +2843,7 @@ GameObject:
   - component: {fileID: 869871554}
   - component: {fileID: 869871553}
   m_Layer: 0
-  m_Name: EventSystem (1)
+  m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3501,7 +3501,7 @@ PrefabInstance:
     - target: {fileID: 7001283004037623516, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Name
-      value: LevelLayer (1)
+      value: LevelLayer
       objectReference: {fileID: 0}
     - target: {fileID: 7153893312754280396, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -5099,7 +5099,7 @@ GameObject:
   - component: {fileID: 1451190271}
   - component: {fileID: 1451190270}
   m_Layer: 0
-  m_Name: VoiceManager (1)
+  m_Name: VoiceManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5725,7 +5725,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 160098, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 3}
       propertyPath: m_Name
-      value: RainPrefab (1)
+      value: 'RainPrefab '
       objectReference: {fileID: 0}
     - target: {fileID: 470886, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 3}
       propertyPath: m_RootOrder
@@ -5762,6 +5762,14 @@ PrefabInstance:
     - target: {fileID: 11437536, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 3}
       propertyPath: RainIntensity
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19945500, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19948124, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 3}
@@ -5942,7 +5950,7 @@ GameObject:
   - component: {fileID: 1704094348}
   - component: {fileID: 1704094347}
   m_Layer: 0
-  m_Name: Directional Light (1)
+  m_Name: Directional Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6824,7 +6832,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1963727683}
   m_Layer: 0
-  m_Name: PlayerList (1)
+  m_Name: PlayerList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7325,7 +7333,7 @@ GameObject:
   - component: {fileID: 2107122841}
   - component: {fileID: 2107122840}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
