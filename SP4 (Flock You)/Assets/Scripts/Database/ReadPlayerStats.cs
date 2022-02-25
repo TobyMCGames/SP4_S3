@@ -61,12 +61,15 @@ public class ReadPlayerStats : MonoBehaviour
             //set cash
             GlobalSettings.Cash = playerStats.stats[a].cash;
             PlayerCashtxt.text = "Cash: $" + playerStats.stats[a].cash;
-            //set stats
-            GlobalSettings.XP = playerStats.stats[a].xp;
-            PlayerXPTxt.text = "Exp:  " + playerStats.stats[a].xp;
+
             //get level
             GlobalSettings.Level = playerStats.stats[a].level;
             PlayerLevelTxt.text = "Lvl " + playerStats.stats[a].level;
+
+            //set stats
+            GlobalSettings.XP = playerStats.stats[a].xp;
+            GlobalSettings.XPToLevelUp = GlobalSettings.BaseXPToLevelUp * GlobalSettings.Level;
+            PlayerXPTxt.text = "Exp:  " + playerStats.stats[a].xp + "/" + GlobalSettings.XPToLevelUp;
         }
 
         //load shop

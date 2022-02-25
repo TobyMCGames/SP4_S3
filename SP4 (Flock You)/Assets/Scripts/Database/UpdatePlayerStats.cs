@@ -17,6 +17,11 @@ public class UpdatePlayerStats : MonoBehaviour
     public void UpdateStats(int xp, int cash)
     { 
         StartCoroutine(SendStatsInfo(xp, cash));
+        //check if enough to level up
+        if ((GlobalSettings.XP + xp) > GlobalSettings.XPToLevelUp)
+        {
+            LevelUp();
+        }
     }
 
     public void LevelUp()

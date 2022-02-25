@@ -14,6 +14,8 @@ public class GlobalSettings : MonoBehaviour
     public static string Username = "Default Username";
     public static int Level;
     public static int XP;
+    public static int BaseXPToLevelUp;
+    public static int XPToLevelUp;
     public static int Cash;
     public static string CurrentSkin;
     public static string CurrentPerk;
@@ -24,6 +26,7 @@ public class GlobalSettings : MonoBehaviour
 
     private void Awake()
     {
+        BaseXPToLevelUp = 100;
         DefaultSkin = "player";
         Defaultperk = "none";
         CurrentSkin = DefaultSkin;
