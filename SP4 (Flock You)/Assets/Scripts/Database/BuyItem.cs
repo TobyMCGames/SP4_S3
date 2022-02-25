@@ -11,10 +11,27 @@ public class BuyItem : MonoBehaviour
     public Text purchaseStatus;
     public GameObject ShopPanel;
     public Text playerCashText;
+    public GameObject BuyButton;
+    public GameObject EquipButton;
+
+    private float purchaseDisplayTimer = 0;
+    private bool startDisplayCountdown;
 
     private void Awake()
     {
         URL = GlobalSettings.BaseServer + "buyitem.php";
+    }
+
+    private void Update()
+    {
+        if(startDisplayCountdown)
+        {
+            purchaseDisplayTimer += Time.deltaTime;
+            if(purchaseDisplayTimer >= 1.5f)
+            {
+                purchaseStatus.text = "";
+            }
+        }
     }
 
     public void DoBuyItem()
@@ -51,6 +68,9 @@ public class BuyItem : MonoBehaviour
                 ShopPanel.GetComponent<ShopItemManager>().SetItembought();
                 UpdateCashDisplay();
                 purchaseStatus.text = webreq.downloadHandler.text;
+                startDisplayCountdown = true;
+                BuyButton.SetActive(false);
+                EquipButton.SetActive(true);
                 break;
             default:
                 purchaseStatus.text = "Server Error";
