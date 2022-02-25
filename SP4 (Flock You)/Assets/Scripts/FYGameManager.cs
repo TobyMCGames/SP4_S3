@@ -246,24 +246,25 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 }
             }
         }
-        // Timed Conditions
-        if (curTimer < GameTime / 2)
-        {
-            if (rainSettings.RainIntensity < 0.34f)
-            {
-                rainSettings.RainIntensity += 0.2f * Time.deltaTime;
-                if (rainSettings.RainIntensity >= 0.34f)
-                    rainSettings.RainIntensity = 0.34f;
-            }
-        }
 
-
-        // Game Ending
         if (!isOver())
         {
             if (AllPlayerInfo)
                 curTimer -= Time.deltaTime;
 
+            // Timed Conditions
+            if (curTimer < GameTime / 2)
+            {
+                if (rainSettings.RainIntensity < 0.34f)
+                {
+                    rainSettings.EnableWind = true;
+                    rainSettings.RainIntensity += 0.2f * Time.deltaTime;
+                    if (rainSettings.RainIntensity >= 0.34f)
+                        rainSettings.RainIntensity = 0.34f;
+                }
+            }
+
+            // Game Ending
             if (isOver())
             {
                 UI_Manager.Instance.SetEndScreen();
@@ -284,7 +285,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
     public bool isOver()
     {
-        return curTimer <= 0;
+        return curTimer <= 0 || (AllPlayerInfo && PlayerList.childCount == 0);
     }
 
     void AssignSpawnPoints()
