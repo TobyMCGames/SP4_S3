@@ -57,6 +57,7 @@ public class BuyItem : MonoBehaviour
         form.AddField("sUsername", GlobalSettings.Username);
         form.AddField("itemname", ShopPanel.GetComponent<ShopItemManager>().GetItemName());
         form.AddField("itemcost", ShopPanel.GetComponent<ShopItemManager>().GetItemCost());
+        form.AddField("itemtype", ShopPanel.GetComponent<ShopItemManager>().GetItemType());
 
         UnityWebRequest webreq = UnityWebRequest.Post(URL, form);
         yield return webreq.SendWebRequest();

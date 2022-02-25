@@ -9,6 +9,7 @@ public class ShopItemManager : MonoBehaviour
     private string ItemName;
     private int ItemCost;
     private int ItemLevelReq;
+    private string ItemType;
     private Transform currentItem;
 
     [Header("Shop Panel Objects")]
@@ -82,6 +83,7 @@ public class ShopItemManager : MonoBehaviour
         ItemName = shopItemList.items[buttonID].sName;
         ItemCost = shopItemList.items[buttonID].iCost;
         ItemLevelReq = shopItemList.items[buttonID].iLevelReq;
+        ItemType = shopItemList.items[buttonID].sType;
 
         GlobalSettings.itemname = ItemName;
     }
@@ -117,6 +119,11 @@ public class ShopItemManager : MonoBehaviour
     public string GetItemName()
     {
         return ItemName;
+    }
+
+    public string GetItemType()
+    {
+        return ItemType;
     }
 
     public int GetItemCost()

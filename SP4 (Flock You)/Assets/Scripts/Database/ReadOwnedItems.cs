@@ -79,6 +79,10 @@ public class ReadOwnedItems : MonoBehaviour
                     if (ownedItem.bEquipped)
                     {
                         CostPanel.transform.GetChild(0).GetComponent<Text>().text = "Equipped";
+                        if(ownedItem.sItemType == "skin")
+                        {
+                            GlobalSettings.CurrentSkin = ownedItem.sItemName;
+                        }
                     }
                     else
                         CostPanel.transform.GetChild(0).GetComponent<Text>().text = "Owned";
@@ -94,6 +98,7 @@ public class OneOwnedItem
 {
     public string sItemName;
     public bool bEquipped;
+    public string sItemType;
 }
 [Serializable]
 public class OwnedItemList
