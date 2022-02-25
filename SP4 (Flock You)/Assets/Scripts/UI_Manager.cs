@@ -13,6 +13,7 @@ public class UI_Manager : MonoBehaviour
 
     public Text UI_Timer;
     public Transform scoreboard;
+    public Transform EndScreen;
     //Temporary use text instead of image
     public Text UI_Health;
     public Text UI_Ammo;
@@ -41,6 +42,8 @@ public class UI_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (FYGameManager.Instance.isOver())
+            return;
         if (UI_Timer != null)
         {
             int min = (int)FYGameManager.Instance.curTimer / 60;
@@ -111,6 +114,12 @@ public class UI_Manager : MonoBehaviour
             scoreboard.GetChild(i + 1).GetChild(1).GetComponent<Text>().text = playerValues[i].ilevel.ToString();
             scoreboard.GetChild(i + 1).GetChild(2).GetComponent<Text>().text = playerValues[i].iPoints.ToString();
         }
+    }
+
+    public void SetEndScreen()
+    {
+        scoreboard.gameObject.SetActive(true);
+        EndScreen.gameObject.SetActive(true);
     }
 
     [PunRPC]

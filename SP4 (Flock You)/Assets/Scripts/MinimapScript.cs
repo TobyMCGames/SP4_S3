@@ -26,6 +26,9 @@ public class MinimapScript : MonoBehaviour
     // Update is called once per frame  
     void LateUpdate()
     {
+        if (FYGameManager.Instance.isOver())
+            return;
+
         minimapPos = Player.transform.position;
         minimapPos.y = Player.transform.position.y + BasecameraOffset;
         transform.position = minimapPos;

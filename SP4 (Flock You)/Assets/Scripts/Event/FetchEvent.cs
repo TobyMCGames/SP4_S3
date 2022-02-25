@@ -143,8 +143,8 @@ public class FetchEvent : BaseEvent
     {
         if (canvas != null)
         {
-            TextDistanceCheck.transform.parent = canvas.transform;
-            TextCarriedby.transform.parent = canvas.transform;
+            TextDistanceCheck.transform.SetParent(canvas.transform);
+            TextCarriedby.transform.SetParent(canvas.transform);
         }
         else
             Debug.Log("Canvas is null in eventbase");
