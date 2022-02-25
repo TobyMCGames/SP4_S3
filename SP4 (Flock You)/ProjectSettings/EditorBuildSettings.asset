@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Toby_Scene.unity
     guid: 080af2770530a9b448c6cb12709c9ea9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FlockYou_GameScene.unity
     guid: c718e23f99e771c489292057b15d2752
   - enabled: 0

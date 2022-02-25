@@ -15,8 +15,8 @@ public class UI_Manager : MonoBehaviour
     public Transform scoreboard;
     public Transform EndScreen;
     //Temporary use text instead of image
-    public Text UI_Health;
-    public Text UI_Ammo;
+    public Slider UI_Health;
+    public Slider UI_Ammo;
     public Text UI_Lives;
 
 
@@ -72,7 +72,7 @@ public class UI_Manager : MonoBehaviour
             return;
         }
 
-        UI_Health.text = "x " + player.curHealth;
+        UI_Health.value = (float)player.curHealth / player.MaxHealth;
     }
 
     public void UpdateAmmo()
@@ -83,7 +83,7 @@ public class UI_Manager : MonoBehaviour
             return;
         }
 
-        UI_Ammo.text = "x " + player.DropLoadControl_script.curAmmo;
+        UI_Ammo.value = (float)player.DropLoadControl_script.curAmmo / player.DropLoadControl_script.MaxAmmo;
     }
 
     public void UpdateLives()
