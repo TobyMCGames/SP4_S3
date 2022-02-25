@@ -1043,7 +1043,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1986829663}
         m_TargetAssemblyTypeName: ShopItemManager, Assembly-CSharp
-        m_MethodName: SkinPage
+        m_MethodName: ChangeSkinPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4422,7 +4422,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1986829663}
         m_TargetAssemblyTypeName: ShopItemManager, Assembly-CSharp
-        m_MethodName: DisplayFirstItem
+        m_MethodName: ChangeSkinPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6597,6 +6597,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buyButton: {fileID: 1197592821}
   ShopPanel: {fileID: 1986829658}
+  ShopList: {fileID: 1823544924}
 --- !u!1 &1370510199
 GameObject:
   m_ObjectHideFlags: 0
@@ -8133,7 +8134,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1986829663}
         m_TargetAssemblyTypeName: ShopItemManager, Assembly-CSharp
-        m_MethodName: PerksPage
+        m_MethodName: ChangePerksPage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -15,7 +15,7 @@ public class GlobalSettings : MonoBehaviour
     public static int Level;
     public static int XP;
     public static int Cash;
-    public static string ShopFirstPage = "skin";
+    public static string CurrentSkin = "";
     public static string itemname;
     public static bool NotConnected = true;
     
