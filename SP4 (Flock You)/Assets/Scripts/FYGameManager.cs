@@ -50,9 +50,12 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
     // floor cube
     public GameObject floor;
+
+    
     
     public void Awake()
     {
+        
         Instance = this;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -84,8 +87,15 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public void ReturnToMenu()
     {
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
-            PhotonNetwork.Disconnect();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
+        {
+            PhotonNetwork.LeaveRoom();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StopAllCoroutines();
+            }
+        }
+        else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            UnityEngine.SceneManagement.SceneManager.LoadScene("toby_Lobby");
     }
 
     private void OnDestroy()
@@ -109,7 +119,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             Loading_Screen.SetActive(true);
             Hashtable props = new Hashtable
             {
-                {JLGame.PLAYER_LOADED_LEVEL, true}
+                {FYGame.PLAYER_LOADED_LEVEL, true}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
@@ -232,7 +242,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
         if (!isOver())
         {
-            curTimer -= Time.deltaTime;
+            if (AllPlayerInfo)
+                curTimer -= Time.deltaTime;
 
             if (isOver())
             {
