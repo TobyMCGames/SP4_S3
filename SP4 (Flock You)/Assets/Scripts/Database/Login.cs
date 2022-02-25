@@ -19,6 +19,19 @@ public class Login : MonoBehaviour
     private void Start()
     {
         LoadingStatus.SetActive(false);
+
+        Debug.Log("NotConnected is now " + GlobalSettings.NotConnected);
+        if (!GlobalSettings.NotConnected)
+        {
+            //Set player name
+            string playerName = GlobalSettings.Username;
+            LoadingStatus.SetActive(true);
+            PhotonNetwork.LocalPlayer.NickName = playerName;
+            PlayerNameDisplayTxt.text = playerName;
+
+            //load player stats
+            transform.GetComponent<ReadPlayerStats>().LoadStats();
+        }
     }
 
     [Header("From Selection Panel")]
@@ -59,6 +72,8 @@ public class Login : MonoBehaviour
 
                     //load player stats
                     transform.GetComponent<ReadPlayerStats>().LoadStats();
+
+                    GlobalSettings.NotConnected = false;
                 }
                 break;
             default:

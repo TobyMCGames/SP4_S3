@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3203390089089227891}
   - component: {fileID: 152183099356772313}
   - component: {fileID: 94207544863942362}
+  - component: {fileID: 7909490881961579153}
   m_Layer: 0
   m_Name: DatabaseManager
   m_TagString: Untagged
@@ -50,6 +51,7 @@ MonoBehaviour:
   displayTxt: {fileID: 0}
   if_username: {fileID: 0}
   if_password: {fileID: 0}
+  LoadingStatus: {fileID: 0}
   PlayerNameDisplayTxt: {fileID: 0}
 --- !u!114 &1896682447112623664
 MonoBehaviour:
@@ -110,3 +112,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShopList: {fileID: 0}
+--- !u!114 &7909490881961579153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6085842425276159477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e186c52ae7ce74248b321b236f81b3e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

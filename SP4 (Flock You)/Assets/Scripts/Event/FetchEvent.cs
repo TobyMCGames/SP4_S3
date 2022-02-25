@@ -114,7 +114,7 @@ public class FetchEvent : BaseEvent
     
     public override void Init()
     {
-        if (IsfetchGlobal && GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+        /*if (IsfetchGlobal && GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             foreach (Transform player in FYGameManager.Instance.PlayerList)
             {
@@ -125,7 +125,7 @@ public class FetchEvent : BaseEvent
         {  
             // set the target to the main player in single player mode.
             //TargetTransform.Add(FYGameManager.Instance.player.gameObject.transform);
-        }
+        }*/
     }
 
     public void setCarriedby(PhotonView _view)
@@ -213,5 +213,30 @@ public class FetchEvent : BaseEvent
     public PhotonView getView()
     {
         return photonView;
+    }
+
+    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (GlobalSettings.curMode != GlobalSettings.GAMEMODES.MULTIPLAYER)
+            return;
+        if (stream.IsWriting)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                stream.SendNext(Completed);
+                stream.SendNext(Destructiontimer);
+                if (carriedby != null)
+                    stream.SendNext(carriedby.ViewID);
+            }
+        }
+        else if (stream.IsReading)
+        {
+            Completed = (bool)stream.ReceiveNext();
+            Destructiontimer = (double)stream.ReceiveNext();
+            int carriedview = -1;
+            carriedview = (int)stream.ReceiveNext();
+            if (carriedview != -1)
+                carriedby = PhotonNetwork.GetPhotonView(carriedview);
+        }
     }
 }

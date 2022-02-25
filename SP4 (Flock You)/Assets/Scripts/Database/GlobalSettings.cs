@@ -17,6 +17,7 @@ public class GlobalSettings : MonoBehaviour
     public static int Cash;
     public static string ShopFirstPage = "skin";
     public static string itemname;
+    public static bool NotConnected = true;
     
     // Game Modes
     public enum GAMEMODES
@@ -27,6 +28,11 @@ public class GlobalSettings : MonoBehaviour
     }
 
     public static GAMEMODES curMode = GAMEMODES.SINGLE_PLAYER;
+
+    private void OnApplicationQuit()
+    {
+        NotConnected = true;
+    }
 }
 
 [Serializable]
