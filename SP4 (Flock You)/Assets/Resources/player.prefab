@@ -624,7 +624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5449a6edcc444d489ce6a4ba11dabcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSpeed: 20
+  turnSpeed: 5
   movemul: 40
   jumpforce: 10
   flymaxIncrease: 2

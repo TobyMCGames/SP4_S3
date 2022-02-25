@@ -352,6 +352,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
         MainCamera.Follow = player.transform;
         MainCamera.LookAt = player.transform;
+      
 
         player.GetComponent<MovePlayer>().camera = MainCamera;
         //player.GetComponent<FYPlayer>().Init();
