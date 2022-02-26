@@ -88,7 +88,7 @@ public class AbilityControl : MonoBehaviour
                 currAbility = AbilityCount - 1;
             }
             UI_Manager.Instance.UpdateAbility();
-            Debug.Log(currAbility);
+            //Debug.Log(currAbility);
         }
 
         //get key to activate ability

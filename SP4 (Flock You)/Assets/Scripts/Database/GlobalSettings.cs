@@ -18,9 +18,9 @@ public class GlobalSettings : MonoBehaviour
     public static int XPToLevelUp;
     public static int Cash;
     public static string CurrentSkin = "player";
-    public static string CurrentPerk = "none";
+    public static string CurrentPerk = "None";
     public static string DefaultSkin = "player";
-    public static string Defaultperk = "none";
+    public static string Defaultperk = "None";
     public static string itemname;
     public static bool NotConnected = true;
 

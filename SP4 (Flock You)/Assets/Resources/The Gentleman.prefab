@@ -640,6 +640,7 @@ MonoBehaviour:
   playerState: 0
   camera: {fileID: 0}
   Lookat: {fileID: 8714987993477327268}
+  isgrounded: 0
   BarrelRollSpeed: 5
   DiveBombDirection: {x: 0, y: 0, z: 0}
   LeftWing: {fileID: 1746161339624272492}
@@ -718,6 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d903fbee24840540906b823af8cff86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currAbility: 0
 --- !u!114 &5531866283144861043
 MonoBehaviour:
   m_ObjectHideFlags: 0
