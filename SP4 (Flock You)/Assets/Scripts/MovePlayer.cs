@@ -165,6 +165,11 @@ public class MovePlayer : MonoBehaviour
 
     }
 
+    public bool GetIsGrounded()
+    {
+        return isgrounded;
+    }
+
     void checkJump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
