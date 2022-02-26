@@ -633,7 +633,7 @@ MonoBehaviour:
   jumpforce: 10
   flymaxIncrease: 2
   flymaxDecrease: 2
-  flyverticalforce: 60
+  flyverticalforce: 80
   flyhorizontalforce: 60
   landingheight: 4
   landingtimer: 0.1
@@ -1552,7 +1552,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8013924091098126131}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.265, z: 0.644}
+  m_LocalPosition: {x: 0, y: -0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1987478240769630005}

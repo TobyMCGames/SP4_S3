@@ -9,8 +9,6 @@ using Photon.Pun.UtilityScripts;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-using DigitalRuby.RainMaker;
-
 using Cinemachine;
 
 public class FYGameManager : MonoBehaviourPunCallbacks
@@ -22,7 +20,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     [Header("Game Settings")]
     public float GameTime;
     public float curTimer;
-    public RainScript rainSettings;
+    public RainManager rainSettings;
     public bool isPaused = false;
 
     [Header("Loading Screen")]
@@ -273,14 +271,15 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 curTimer -= Time.deltaTime;
 
             // Timed Conditions
-            if (curTimer < GameTime / 2)
+            if (curTimer < GameTime)
             {
-                if (rainSettings.RainIntensity < 0.34f)
+                if (rainSettings.RainIntensity < 1.0f)
                 {
-                    rainSettings.EnableWind = true;
                     rainSettings.RainIntensity += 0.2f * Time.deltaTime;
-                    if (rainSettings.RainIntensity >= 0.34f)
-                        rainSettings.RainIntensity = 0.34f;
+                    if (rainSettings.RainIntensity > 1.0f)
+                    {
+                        rainSettings.RainIntensity = 1.0f;
+                    }
                 }
             }         
 
@@ -309,10 +308,16 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         return curTimer <= 0 || (AllPlayerInfo && PlayerList.childCount == 0);
     }
 
+    public bool isRaining()
+    {
+        return rainSettings.RainIntensity > 0.3;
+    }
+
     public void Pause()
     {
         isPaused = !isPaused;
         UI_Manager.Instance.SetPauseScreen(isPaused);
+        rainSettings.TogglePause();
 
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {

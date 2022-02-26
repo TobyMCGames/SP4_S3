@@ -334,12 +334,16 @@ public class MovePlayer : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
+            float OverallForce = flyverticalforce;
+            if (FYGameManager.Instance.isRaining())
+                OverallForce *= 0.7f;
+
             //m_Movement.y += Time.deltaTime * flyverticalforce;
             if (playerState != PlayerState.FLYING_DIVEBOMB && !isgrounded)
                 playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // striaght up
             {
-                m_Rigidbody.AddForce((Vector3.up * flyverticalforce) * Time.deltaTime, ForceMode.VelocityChange);
+                m_Rigidbody.AddForce((Vector3.up * OverallForce) * Time.deltaTime, ForceMode.VelocityChange);
                 toggleTrail(false);
             }
             else // go up a relative to your orientation
@@ -347,14 +351,14 @@ public class MovePlayer : MonoBehaviour
                 Vector3 movement = Orientation;
                 movement.y = 0;
                 m_Rigidbody.AddForce(Quaternion.Euler(Orientation) *
-                    (Vector3.up * flyverticalforce * Time.deltaTime), ForceMode.VelocityChange);
+                    (Vector3.up * OverallForce * Time.deltaTime), ForceMode.VelocityChange);
 
-                if (pitch - Time.deltaTime * flyverticalforce < -45)
+                if (pitch - Time.deltaTime * OverallForce < -45)
                 {
                     pitch = -45;
                 }
                 else
-                    pitch -= Time.deltaTime * flyverticalforce;
+                    pitch -= Time.deltaTime * OverallForce;
             }
         }
         else if (!islanding && playerState != PlayerState.FLYING_DIVEBOMB)
@@ -366,11 +370,15 @@ public class MovePlayer : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftControl))
         {
+            float OverallForce = flyverticalforce;
+            if (FYGameManager.Instance.isRaining())
+                OverallForce *= 1.5f;
+
             if (playerState != PlayerState.FLYING_DIVEBOMB && !isgrounded)
                 playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // fly striaght down;
             {
-                m_Rigidbody.AddForce((flyverticalforce * Vector3.down) * Time.deltaTime, ForceMode.VelocityChange);
+                m_Rigidbody.AddForce((OverallForce * Vector3.down) * Time.deltaTime, ForceMode.VelocityChange);
                 toggleTrail(false);
             }
             else // go down a relative to your orientation
@@ -381,12 +389,12 @@ public class MovePlayer : MonoBehaviour
                 Vector3 movement = Orientation;
                 movement.y = 0;
                 m_Rigidbody.AddForce(Quaternion.Euler(Orientation) * Vector3.down *
-                    flyverticalforce * Time.deltaTime, ForceMode.VelocityChange);
+                    OverallForce * Time.deltaTime, ForceMode.VelocityChange);
 
-                if (pitch + Time.deltaTime * flyverticalforce > 45)
+                if (pitch + Time.deltaTime * OverallForce > 45)
                     pitch = 45;
                 else
-                    pitch += Time.deltaTime * flyverticalforce;
+                    pitch += Time.deltaTime * OverallForce;
             }
         }
         else if (!islanding)
