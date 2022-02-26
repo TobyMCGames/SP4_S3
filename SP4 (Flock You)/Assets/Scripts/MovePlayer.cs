@@ -613,7 +613,7 @@ public class MovePlayer : MonoBehaviour
         m_Rotation = Quaternion.Euler(Orientation);
         m_Rotation = Quaternion.RotateTowards(m_Rigidbody.rotation, m_Rotation, turnSpeed * 12 * Time.deltaTime);
         m_Movement = m_Rotation * m_Movement;
-        m_Rigidbody.AddForce(m_Movement * movemul * Time.deltaTime, ForceMode.VelocityChange);
+        m_Rigidbody.AddForce(m_Movement * 20 * Time.deltaTime, ForceMode.VelocityChange);
         m_Rigidbody.MoveRotation(m_Rotation);
 
         if (BarrelRollAngle >= 360 && playerState == PlayerState.FLYING_BARREL_LEFT)
