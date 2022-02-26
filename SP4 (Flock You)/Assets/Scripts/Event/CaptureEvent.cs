@@ -152,7 +152,8 @@ public class CaptureEvent : BaseEvent
                 }
                 else if (!Completed)
                 {
-                    Leadingplayer.text = "Playername" + "is: " +
+                    Debug.Log(mostprogressViewID);
+                        Leadingplayer.text = "Playername" + "is: " +
                         Mathf.Round((playerProgresslist[mostprogressViewID].getProgress() * 100f)).ToString() + "% to capturing the point";
                 }
                 else if (Completed)
