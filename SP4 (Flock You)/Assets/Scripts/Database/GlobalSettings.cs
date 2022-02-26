@@ -22,9 +22,9 @@ public class GlobalSettings : MonoBehaviour
     public static int BaseXPToLevelUp = 100;
     public static int XPToLevelUp;
     public static int Cash;
-    public static string CurrentSkin = "player";
+    public static string CurrentSkin = "Main_Player";
     public static string CurrentPerk = "None";
-    public static string DefaultSkin = "player";
+    public static string DefaultSkin = "Main_Player";
     public static string Defaultperk = "None";
     public static string itemname;
 

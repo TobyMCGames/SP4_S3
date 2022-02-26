@@ -5811,6 +5811,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5284415276743349066, guid: a009ba7e659edd44aa63e44a31d72bd3,
+        type: 3}
+      propertyPath: maxZoom
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 5284415276743349066, guid: a009ba7e659edd44aa63e44a31d72bd3,
+        type: 3}
+      propertyPath: minZoom
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5284415276743349066, guid: a009ba7e659edd44aa63e44a31d72bd3,
+        type: 3}
+      propertyPath: currZoom
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5284415276743349066, guid: a009ba7e659edd44aa63e44a31d72bd3,
+        type: 3}
+      propertyPath: zoomspeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5284415276743349066, guid: a009ba7e659edd44aa63e44a31d72bd3,
+        type: 3}
+      propertyPath: ScrollSpeed
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a009ba7e659edd44aa63e44a31d72bd3, type: 3}
 --- !u!1 &242827122 stripped
@@ -17359,12 +17384,27 @@ PrefabInstance:
     - target: {fileID: 6877641835838080389, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Orbits.Array.data[0].m_Height
-      value: 7
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877641835838080389, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_Orbits.Array.data[0].m_Radius
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877641835838080389, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_Orbits.Array.data[1].m_Radius
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835838080389, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Orbits.Array.data[2].m_Height
-      value: -7
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877641835838080389, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: m_Orbits.Array.data[2].m_Radius
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6943984938603984320, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}

@@ -424,8 +424,9 @@ GameObject:
   - component: {fileID: 2140205575491955895}
   - component: {fileID: -4431983117077521505}
   - component: {fileID: 4797853370881345161}
+  - component: {fileID: 4956138402575873926}
   m_Layer: 9
-  m_Name: player_test
+  m_Name: Main_Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -549,7 +550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnSpeed: 5
   movemul: 100
-  jumpforce: 10
+  jumpforce: 30
   flymaxIncrease: 2
   flymaxDecrease: 2
   flyverticalforce: 60
@@ -844,6 +845,18 @@ MonoBehaviour:
   soundFX:
   - {fileID: 330105818827859952}
   - {fileID: 3428104852706284703}
+--- !u!114 &4956138402575873926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987478240769630004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b55d5266ae4ccf41b380973942bd772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4189169062673136737
 GameObject:
   m_ObjectHideFlags: 0
@@ -1573,10 +1586,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 125127745295877708, guid: 2a9acd20082d14c4eb17efd8abc1137b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2a9acd20082d14c4eb17efd8abc1137b,
         type: 3}
       propertyPath: m_Name
       value: grounded
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2a9acd20082d14c4eb17efd8abc1137b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2a9acd20082d14c4eb17efd8abc1137b,
         type: 3}
@@ -1686,6 +1709,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4e9d8dc2e3bea1c4d8912b07b97d0a15,
         type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4e9d8dc2e3bea1c4d8912b07b97d0a15,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1718,6 +1746,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 4e9d8dc2e3bea1c4d8912b07b97d0a15,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e9d8dc2e3bea1c4d8912b07b97d0a15, type: 3}
