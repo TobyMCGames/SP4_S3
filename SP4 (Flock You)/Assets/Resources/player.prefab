@@ -650,6 +650,8 @@ MonoBehaviour:
   baserotation: {x: 0, y: 90, z: 0}
   directiontext: {fileID: 0}
   orientationtext: {fileID: 0}
+  GroundedModel: {fileID: 0}
+  FlyingModel: {fileID: 0}
 --- !u!114 &6220354295224625069
 MonoBehaviour:
   m_ObjectHideFlags: 0

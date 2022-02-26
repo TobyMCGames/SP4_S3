@@ -95,6 +95,10 @@ public class MovePlayer : MonoBehaviour
     public Text directiontext;
     public Text orientationtext;
 
+    [Header("Player Models")]
+    public GameObject GroundedModel;
+    public GameObject FlyingModel;
+
     //private doubletapchecktype doublechecktype = doubletapchecktype.DOUBLE_NONE;
     Dictionary<doubletapchecktype, double> keyfirsttaptimelist = new Dictionary<doubletapchecktype, double>();
     Dictionary<doubletapchecktype, bool> keyfirsttapstatus = new Dictionary<doubletapchecktype, bool>();
@@ -149,11 +153,16 @@ public class MovePlayer : MonoBehaviour
         Moveplayer();
         if (playerState >= PlayerState.FLYING)
         {
+            //toggle flying model
+            StartCoroutine(ChangeFlyingModel());
+
             m_Rigidbody.useGravity = false;
             Fly();
         }
         else
+        {
             m_Rigidbody.useGravity = true;
+        }
         //checkDoubletap();
         checkJump(); // checks if player jumps
         if (Input.GetKeyUp(KeyCode.C))
@@ -168,6 +177,26 @@ public class MovePlayer : MonoBehaviour
     public bool GetIsGrounded()
     {
         return isgrounded;
+    }
+
+    IEnumerator ChangeFlyingModel()
+    {
+        if (FlyingModel != null && GroundedModel != null)
+        {
+            FlyingModel.SetActive(true);
+            GroundedModel.SetActive(false);
+        }
+        yield break;
+    }
+
+    IEnumerator ChangeGroundedModel()
+    {
+        if (FlyingModel != null && GroundedModel != null)
+        {
+            FlyingModel.SetActive(false);
+            GroundedModel.SetActive(true);
+        }
+        yield break;
     }
 
     void checkJump()
@@ -233,7 +262,10 @@ public class MovePlayer : MonoBehaviour
             roll = 0;
             vec3up = Vector3.up;
             toggleTrail(false);
-           
+
+            //toggle model to show grounded model
+            StartCoroutine(ChangeGroundedModel());
+
             if (playerState == PlayerState.FLYING_DIVEBOMB)
                 m_Rigidbody.position = Hit.point + (Vector3.up * playerheight * 0.5f);
             playerState = PlayerState.IDLE;
