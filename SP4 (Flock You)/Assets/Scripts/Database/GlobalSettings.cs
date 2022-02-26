@@ -5,12 +5,17 @@ using System;
 
 public class GlobalSettings : MonoBehaviour
 {
+
+    [Header("Server Settings")]
     //EC2 (online aws)
     public static string BaseServer = "http://ec2-3-210-222-73.compute-1.amazonaws.com/FlockYou_server/";
 
     //LocalHost (for testing)
     //public static string BaseServer = "http://localhost/FlockYou_server/";
 
+    public static bool NotConnected = true;
+
+    [Header("Player Values")]
     public static string Username = "Default Username";
     public static int Level;
     public static int XP;
@@ -22,12 +27,9 @@ public class GlobalSettings : MonoBehaviour
     public static string DefaultSkin = "player";
     public static string Defaultperk = "None";
     public static string itemname;
-    public static bool NotConnected = true;
 
-    //private void Update()
-    //{
-    //    Debug.Log(CurrentSkin);
-    //}
+    [Header("Game Settings")]
+    public static float gravity = -29.4f;
 
     // Game Modes
     public enum GAMEMODES
