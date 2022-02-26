@@ -7,9 +7,7 @@ public class EventManager : MonoBehaviourPun
 {
     public static EventManager Instance = null;
     public List<GameObject> ActiveEventList = new List<GameObject>();
-
-    public GameObject EventfetchPrefab;
-    public GameObject EventcapturePrefab;
+    public List<GameObject> GameEventPrefabs = new List<GameObject>();
     public GameObject EventText;
 
     public PhotonView EventmanagerView;
@@ -33,7 +31,7 @@ public class EventManager : MonoBehaviourPun
             for (int i = ActiveEventList.Count-1; i > -1; i--)
             {
                 eventobj = ActiveEventList[i];
-                if (ActiveEventList[i].GetComponent<BaseEvent>().IsTobeDestroyed())
+                if (ActiveEventList[i].GetComponent<BaseEvent>().IsTobeDestroyed() || FYGameManager.Instance.isOver())
                 {
                     ActiveEventList[i].GetComponent<BaseEvent>().returnEventobj();
                     photonView.RPC("RemoveFromList", RpcTarget.Others, i);
@@ -80,7 +78,7 @@ public class EventManager : MonoBehaviourPun
                 }
                 else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
                 {
-                    FetchEvent = Instantiate(EventfetchPrefab, gameObject.transform);
+                    FetchEvent = Instantiate(getEventePrefab(BaseEvent.GameEventType.EVENT_FETCH),gameObject.transform);
                     FetchEvent.transform.localPosition = position;
                     ActiveEventList.Add(FetchEvent);
                     //AddEvent(FetchEvent);
@@ -132,6 +130,18 @@ public class EventManager : MonoBehaviourPun
         {
             if (ActiveEventList[i].GetComponent<BaseEvent>().GetEventType() == _type)
                 return ActiveEventList[i];
+        }
+        return null;
+    }
+
+    public GameObject getEventePrefab(BaseEvent.GameEventType _type)
+    {
+        for (int i =0;i< GameEventPrefabs.Count;i++)
+        {
+            if (GameEventPrefabs[i].GetComponent<BaseEvent>().GetEventType() == _type)
+            {
+                return GameEventPrefabs[i];
+            }
         }
         return null;
     }

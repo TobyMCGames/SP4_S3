@@ -6,7 +6,6 @@ using Photon.Pun;
 
 public class MovePlayer : MonoBehaviour
 {
-
     public enum PlayerState
     {
         IDLE,
@@ -120,6 +119,9 @@ public class MovePlayer : MonoBehaviour
                 }
             }
         }
+
+        //apply player perk
+        transform.GetComponent<PerkManager>().ApplyPlayerPerk();
     }
     private void Start()
     {

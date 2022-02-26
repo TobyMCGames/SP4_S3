@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 6328503022382824016}
   - component: {fileID: 2903316305176949313}
   - component: {fileID: 6647417997961611444}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: helment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1114,7 +1114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5073017375832091390}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: halov4-sketchfab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1914,6 +1914,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8302323917274447848, guid: 9dfb1a7c0cc499d4a8c0cf4bf36db33a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -7941539276821963928, guid: 9dfb1a7c0cc499d4a8c0cf4bf36db33a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -6270862688305095639, guid: 9dfb1a7c0cc499d4a8c0cf4bf36db33a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: -5762557997501954219, guid: 9dfb1a7c0cc499d4a8c0cf4bf36db33a,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1928,6 +1943,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SketchfabM6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9dfb1a7c0cc499d4a8c0cf4bf36db33a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3063327261013225844, guid: 9dfb1a7c0cc499d4a8c0cf4bf36db33a,
         type: 3}
