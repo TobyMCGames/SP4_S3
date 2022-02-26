@@ -553,8 +553,8 @@ MonoBehaviour:
   jumpforce: 30
   flymaxIncrease: 2
   flymaxDecrease: 2
-  flyverticalforce: 60
-  flyhorizontalforce: 60
+  flyverticalforce: 100
+  flyhorizontalforce: 100
   landingheight: 4
   landingtimer: 0.1
   birdterminalvelocity: -30
@@ -564,6 +564,7 @@ MonoBehaviour:
   Lookat: {fileID: 8714987993477327268}
   isgrounded: 0
   BarrelRollSpeed: 5
+  DashSpeed: 100
   DiveBombDirection: {x: 0, y: 0, z: 0}
   LeftWing: {fileID: 1746161339624272492}
   RightWing: {fileID: 6760781802868806864}
@@ -1544,7 +1545,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2a9acd20082d14c4eb17efd8abc1137b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.556
+      value: -0.506
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2a9acd20082d14c4eb17efd8abc1137b,
         type: 3}

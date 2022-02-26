@@ -69,7 +69,7 @@ public class MovePlayer : MonoBehaviour
     public float BarrelRollSpeed = 5f;
     float BarrelRollAngle = 0;
     float rolloffsetX =0;
-    float DashSpeed = 20f;
+    [SerializeField] float DashSpeed = 20f;
 
     // double jump
     double firsttaptime = 0.0;
@@ -236,12 +236,12 @@ public class MovePlayer : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.D) && playerState >= PlayerState.FLYING)
         {
             //playerState = PlayerState.FLYING_BARREL_RIGHT;
-            m_Rigidbody.MovePosition(m_Rigidbody.position + (vec3right * 20f));
+            m_Rigidbody.MovePosition(m_Rigidbody.position + (vec3right * DashSpeed));
         }
         else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.A) && playerState >= PlayerState.FLYING)
         {
             //playerState = PlayerState.FLYING_BARREL_LEFT;
-            m_Rigidbody.MovePosition(m_Rigidbody.position + (-vec3right*20f));
+            m_Rigidbody.MovePosition(m_Rigidbody.position + (-vec3right* DashSpeed));
         }
     }
 
