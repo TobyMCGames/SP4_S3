@@ -2,6 +2,7 @@
 using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Photon.Pun.Demo.Asteroids
@@ -218,6 +219,12 @@ namespace Photon.Pun.Demo.Asteroids
         #endregion
 
         #region UI CALLBACKS
+
+        public void ClickPlaySingleplayer()
+        {
+            GlobalSettings.curMode = GlobalSettings.GAMEMODES.SINGLE_PLAYER;
+            SceneManager.LoadScene("FlockYou_GameScene");
+        }
 
         public void OnBackButtonClicked()
         {
