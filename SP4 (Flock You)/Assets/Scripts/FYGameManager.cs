@@ -273,7 +273,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                     if (rainSettings.RainIntensity >= 0.34f)
                         rainSettings.RainIntensity = 0.34f;
                 }
-            }
+            }         
 
             // Game Ending
             if (isOver())
@@ -281,6 +281,11 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 UI_Manager.Instance.SetEndScreen();
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+
+                int XpToAdd = player.playerGameInfo.iPoints;
+                int CashToAdd = player.playerGameInfo.iPoints / 2;
+
+                transform.GetComponent<UpdatePlayerStats>().UpdateStats(XpToAdd, CashToAdd);
 
                 // Disable Freelook camera
                 player.GetComponent<MovePlayer>().camera.gameObject.SetActive(false);
@@ -368,7 +373,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         }
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
-            ClientPlayer = PhotonNetwork.Instantiate("player", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+            ClientPlayer = PhotonNetwork.Instantiate(GlobalSettings.CurrentSkin, position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
             MinimapCam.GetComponent<MinimapScript>().setPlayertoFollow(ClientPlayer);
             MinimapCam.GetComponent<MinimapScript>().settpc(MainCamera);
         }

@@ -30,6 +30,9 @@ public class FYPlayer : MonoBehaviour
     private void Awake()
     {
         Init();
+
+        //apply player perk
+        transform.GetComponent<PerkManager>().ApplyPlayerPerk();
     }
 
     // Start is called before the first frame update

@@ -13,7 +13,7 @@ public class EquipUnequipButton : MonoBehaviour
     public GameObject ShopList;
 
     private Transform selectedItem;
-    private Transform previousSkinItem;
+    private Transform previousSelectedItem;
     private string selectedItemName;
     ItemList shopItemList;
     private string URL;
@@ -51,7 +51,12 @@ public class EquipUnequipButton : MonoBehaviour
         }
     }
 
-    public void EquipUnequipItem()
+    public void DoEquipUnequipItem()
+    {
+        EquipUnequipItem(ShopPanel.GetComponent<ShopItemManager>().GetItemType());
+    }
+
+    public void EquipUnequipItem(string itemtype)
     {
         //if its a skin, unequip all skins
         bool thisitemEquipped = false;
@@ -60,7 +65,7 @@ public class EquipUnequipButton : MonoBehaviour
             for (int a = 0; a < shopItemList.items.Count; a++)
             {
                 //check if item is a skin
-                if (shopItemList.items[a].sType == "skin")
+                if (shopItemList.items[a].sType == itemtype)
                 {
                     //check if the item is equipped
                     Transform shopItem = ShopList.transform.GetChild(a);
@@ -72,7 +77,7 @@ public class EquipUnequipButton : MonoBehaviour
                             //unequip the last item
                             UpdateEquipStatus(shopItem.GetChild(0).GetComponentInChildren<Text>().text, false);
                             shopItem.GetChild(3).GetComponentInChildren<Text>().text = "Owned";
-                            previousSkinItem = shopItem;
+                            previousSelectedItem = shopItem;
                             thisitemEquipped = true;
                         }
                     }
@@ -89,42 +94,59 @@ public class EquipUnequipButton : MonoBehaviour
         StartCoroutine(SendInfo(itemname, bEquipped));
     }
 
-    private void ChangeEquipItem(string itemname)
+    private void ChangeEquipItem(string itemname, string itemtype)
     {
-        OwnedItemList oi = ShopPanel.GetComponent<ShopItemManager>().ownedItemList;
-        for (int i = 0; i < oi.ownedItemList.Count; i++)
+        //OwnedItemList oi = ShopPanel.GetComponent<ShopItemManager>().ownedItemList;
+        //for (int i = 0; i < oi.ownedItemList.Count; i++)
+        //{
+        //    OneOwnedItem ownedItem = oi.ownedItemList[i];
+        //    for (int j = 0; j < ShopList.transform.childCount; j++)
+        //    {
+        //        if (ownedItem.sItemType == itemtype)
+        //        {
+        //            GlobalSettings.CurrentSkin = itemname;
+        //            Debug.Log(GlobalSettings.CurrentSkin);
+        //            break;
+        //        }
+        //    }
+        //    break;
+        //}
+
+        if(itemtype == "skin")
         {
-            OneOwnedItem ownedItem = oi.ownedItemList[i];
-            for (int j = 0; j < ShopList.transform.childCount; j++)
-            {
-                if (ownedItem.sItemType == "skin")
-                {
-                    GlobalSettings.CurrentSkin = itemname;
-                    Debug.Log(GlobalSettings.CurrentSkin);
-                    break;
-                }
-            }
-            break;
+            GlobalSettings.CurrentSkin = itemname;
+        }
+        else if(itemtype == "perk")
+        {
+            GlobalSettings.CurrentPerk = itemname;
         }
     }
 
     //check if the item selected is a skin, then change back to default skin
-    private void ChangeUnequipItem()
+    private void ChangeUnequipItem(string itemtype)
     {
-        OwnedItemList oi = ShopPanel.GetComponent<ShopItemManager>().ownedItemList;
-        for (int i = 0; i < oi.ownedItemList.Count; i++)
+        //OwnedItemList oi = ShopPanel.GetComponent<ShopItemManager>().ownedItemList;
+        //for (int i = 0; i < oi.ownedItemList.Count; i++)
+        //{
+        //    OneOwnedItem ownedItem = oi.ownedItemList[i];
+        //    for (int j = 0; j < ShopList.transform.childCount; j++)
+        //    {
+        //        if (ownedItem.sItemType == "skin")
+        //        {
+        //            GlobalSettings.CurrentSkin = GlobalSettings.DefaultSkin;
+        //            Debug.Log(GlobalSettings.CurrentSkin);
+        //            break;
+        //        }
+        //    }
+        //    break;
+        //}
+        if (itemtype == "skin")
         {
-            OneOwnedItem ownedItem = oi.ownedItemList[i];
-            for (int j = 0; j < ShopList.transform.childCount; j++)
-            {
-                if (ownedItem.sItemType == "skin")
-                {
-                    GlobalSettings.CurrentSkin = GlobalSettings.DefaultSkin;
-                    Debug.Log(GlobalSettings.CurrentSkin);
-                    break;
-                }
-            }
-            break;
+            GlobalSettings.CurrentSkin = GlobalSettings.DefaultSkin;
+        }
+        else if (itemtype == "perk")
+        {
+            GlobalSettings.CurrentPerk = GlobalSettings.Defaultperk;
         }
     }
 
@@ -152,7 +174,7 @@ public class EquipUnequipButton : MonoBehaviour
                     selectedItem.GetChild(3).GetComponentInChildren<Text>().text = "Equipped";
                     GetComponentInChildren<Text>().text = "Unequip";
                     ShopPanel.GetComponent<ShopItemManager>().SetCurrentItem(selectedItem);
-                    ChangeEquipItem(selectedItem.GetChild(0).GetComponentInChildren<Text>().text);
+                    ChangeEquipItem(selectedItem.GetChild(0).GetComponentInChildren<Text>().text, ShopPanel.GetComponent<ShopItemManager>().GetItemType());
                     //DatabaseManager.GetComponent<ReadOwnedItems>
                 }
                 else
@@ -160,9 +182,9 @@ public class EquipUnequipButton : MonoBehaviour
                     selectedItem.GetChild(3).GetComponentInChildren<Text>().text = "Owned";
                     GetComponentInChildren<Text>().text = "Equip";
                     ShopPanel.GetComponent<ShopItemManager>().SetCurrentItem(selectedItem);
-                    ChangeUnequipItem();
-                    if(previousSkinItem != null)
-                        previousSkinItem.GetChild(3).GetComponentInChildren<Text>().text = "Owned";
+                    ChangeUnequipItem(ShopPanel.GetComponent<ShopItemManager>().GetItemType());
+                    if(previousSelectedItem != null)
+                        previousSelectedItem.GetChild(3).GetComponentInChildren<Text>().text = "Owned";
                 }
 
                 break;
