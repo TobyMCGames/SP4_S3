@@ -27,7 +27,7 @@ public class PerkManager : MonoBehaviour
                 break;
             case ActivePerk.Speedy_Legs:
                 float playermovespeed = transform.GetComponent<MovePlayer>().movemul;
-                transform.GetComponent<MovePlayer>().movemul = playermovespeed * 2;
+                transform.GetComponent<MovePlayer>().movemul = playermovespeed * 1.25f;
                 Debug.Log("Speedy legs active");
                 break;
             case ActivePerk.Jumpy:
