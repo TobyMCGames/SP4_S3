@@ -9,6 +9,7 @@ public class DropSystem : MonoBehaviour
     [SerializeField] GameObject interactlist;
     private Rigidbody m_rigidbody;
     bool isbroken = false;
+    float destructiontime = 5f;
     private void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody>();
@@ -24,6 +25,7 @@ public class DropSystem : MonoBehaviour
             if (interactscript = t.gameObject.GetComponent<InteractItem>())
             {
                 interactscript.InteractableList = interactlist.transform;
+                t.gameObject.SetActive(false);
             }
         }
     }
@@ -32,11 +34,18 @@ public class DropSystem : MonoBehaviour
     void Update()
     {
         if (isbroken == true)
-            return;
-        if (m_rigidbody.velocity.sqrMagnitude >= ForcerequiredtoBreak)
         {
-            Destroy(gameObject);
+            if (destructiontime <= 0)
+                Destroy(gameObject);
+            else
+                destructiontime -= Time.deltaTime;
+            return;
+        }
+        if (m_rigidbody.velocity.sqrMagnitude >= ForcerequiredtoBreak && !GetComponent<InteractItem>().IsHeldonto())
+        {
+            ReleaseInventory();
             isbroken = true;
+            gameObject.SetActive(false);
         }
     }
 
@@ -48,9 +57,5 @@ public class DropSystem : MonoBehaviour
              t.SetParent(interactlist.transform);
             t.gameObject.SetActive(true);
         }
-    }
-    private void OnDestroy()
-    {
-        ReleaseInventory();
     }
 }

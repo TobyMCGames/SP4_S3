@@ -115,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonView: {fileID: 0}
   InteractableList: {fileID: 0}
+  affectedbygravity: 0
 --- !u!54 &3295674855171668689
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -265,7 +266,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8640479595591486793}
-  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

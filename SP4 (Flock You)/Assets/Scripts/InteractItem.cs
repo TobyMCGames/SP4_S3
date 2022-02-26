@@ -8,16 +8,18 @@ public class InteractItem : MonoBehaviour
     public PhotonView photonView;
     public Transform InteractableList;
     Rigidbody m_Rigidbody;
+    [SerializeField] bool affectedbygravity = true;  // starts off with or without gravity, it will be turned on after first interaction
 
     private void Awake()
     {
+
         photonView = gameObject.GetPhotonView();
     }
 
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
-        m_Rigidbody.useGravity = false;
+        m_Rigidbody.useGravity = affectedbygravity;
     }
 
     // Update is called once per frame
@@ -76,6 +78,18 @@ public class InteractItem : MonoBehaviour
                 fetchscript.setSingleCarriedby(_holder.transform);
             else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                 fetchscript.setCarriedby(_holder.GetComponent<PhotonView>());
+        }
+    }
+
+    public bool IsHeldonto()
+    {
+        if (transform.parent == InteractableList.transform)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 }

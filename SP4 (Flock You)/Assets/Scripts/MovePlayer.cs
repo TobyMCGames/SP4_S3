@@ -9,6 +9,7 @@ public class MovePlayer : MonoBehaviour
     public enum PlayerState
     {
         IDLE,
+        DROPPING,
         JUMPING,
         FLYING,
         FLYING_HEIGHTCHANGE,// when bird is flying up / down
@@ -188,6 +189,10 @@ public class MovePlayer : MonoBehaviour
                     flydrop *= -1;
             }
         }
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !isgrounded && playerState == PlayerState.IDLE)
+        {
+            playerState = PlayerState.FLYING_HEIGHTCHANGE;
+        }
     }
 
     void PlayerInput()
@@ -208,14 +213,6 @@ public class MovePlayer : MonoBehaviour
         {
             //playerState = PlayerState.FLYING_BARREL_LEFT;
             m_Rigidbody.MovePosition(m_Rigidbody.position + (-vec3right*20f));
-        }
-
-        if (Input.GetKeyUp(KeyCode.Alpha0) && PhotonNetwork.IsMasterClient)
-        {
-            Vector3 Eventpos = Vector3.zero;
-            Eventpos.Set(20, 1, 20);
-            //photonView.RPC("CreateEvent", RpcTarget.AllViaServer,BaseEvent.GameEventType.EVENT_CAPTURE, Eventpos);
-            EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_CAPTURE, Eventpos);
         }
     }
 
@@ -244,15 +241,6 @@ public class MovePlayer : MonoBehaviour
             m_Rigidbody.useGravity = true;
         }
 
-        if (directiontext != null)
-        {
-            if (playerState == PlayerState.FLYING)
-            {
-                directiontext.text = "Flying: " + Orientation.ToString();
-            }
-            else
-                directiontext.text = "Grounded: " + vec3front.ToString();
-        }
     }
 
     void Moveplayer()
