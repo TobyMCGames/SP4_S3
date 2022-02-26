@@ -103,7 +103,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             }
         }
         else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
-            UnityEngine.SceneManagement.SceneManager.LoadScene("toby_Lobby");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
     }
 
     private void OnDestroy()
