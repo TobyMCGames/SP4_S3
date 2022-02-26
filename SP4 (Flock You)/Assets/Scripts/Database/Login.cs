@@ -10,6 +10,7 @@ public class Login : MonoBehaviour
     public Text displayTxt; //must add using UnityEngine.UI
     public InputField if_username, if_password; //to link to the inpufields
     public GameObject LoadingStatus;
+    public GameObject ReturnPanel;
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class Login : MonoBehaviour
         if (!GlobalSettings.NotConnected)
         {
             //Set player name
+            ReturnPanel.SetActive(true);
             string playerName = GlobalSettings.Username;
             LoadingStatus.SetActive(true);
             PhotonNetwork.LocalPlayer.NickName = playerName;

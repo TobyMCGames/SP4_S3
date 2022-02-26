@@ -41,6 +41,9 @@ namespace Photon.Pun.Demo.Asteroids
         [Header("Inside Room Panel")]
         public GameObject InsideRoomPanel;
 
+        [Header("Return Panel")]
+        public GameObject ReturnPanel;
+
         public Button StartGameButton;
         public GameObject PlayerListEntryPrefab;
 
@@ -69,6 +72,7 @@ namespace Photon.Pun.Demo.Asteroids
         public override void OnConnectedToMaster()
         {
             this.SetActivePanel(SelectionPanel.name);
+            ReturnPanel.SetActive(false);
         }
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
