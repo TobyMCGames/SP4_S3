@@ -137,6 +137,10 @@ public class MovePlayer : MonoBehaviour
 
     private void Update()
     {
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            if (FYGameManager.Instance.isPaused)
+                return;
+
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
@@ -214,6 +218,10 @@ public class MovePlayer : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            if (FYGameManager.Instance.isPaused)
+                return;
+
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;

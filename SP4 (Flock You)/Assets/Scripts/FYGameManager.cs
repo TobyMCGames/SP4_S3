@@ -23,6 +23,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public float GameTime;
     public float curTimer;
     public RainScript rainSettings;
+    public bool isPaused = false;
 
     [Header("Loading Screen")]
     public GameObject UI_Screen;
@@ -55,7 +56,10 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     // floor cube
     public GameObject floor;
 
-    
+    [Header("Event Related")]
+    [Tooltip("Possible locations where the events can be spawned")] public GameObject[] EventPosition;
+    [SerializeField] int EventFrequency = 5;
+    [SerializeField] float ElapsedEventTime = 0f;
     
     public void Awake()
     {
@@ -216,6 +220,15 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            if (isPaused)
+                return;
+
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             if (!AllPlayersAssigned)
@@ -230,7 +243,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 }
 
 
-            if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null)
+            /*if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null)
             {
                 Vector3 Eventpos = Vector3.zero;
                 Vector3 floorpos = floor.transform.position;
@@ -244,8 +257,16 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                     Eventpos.Set(randx, randy, randz);
                     EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_FETCH, Eventpos);
                 }
+            }*/
+            if (EventManager.Instance.ActiveEventList.Count == 0 && !isOver()) // no events happening currently
+            {
+
+                EventManager.Instance.CreateEvent((BaseEvent.GameEventType)Random.Range(0, EventManager.Instance.GameEventPrefabs.Count),
+                    EventPosition[Random.Range(0, EventPosition.Length)].transform.position);
             }
         }
+
+        
 
         if (!isOver())
         {
@@ -268,16 +289,12 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             if (isOver())
             {
                 UI_Manager.Instance.SetEndScreen();
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
 
                 int XpToAdd = player.playerGameInfo.iPoints;
                 int CashToAdd = player.playerGameInfo.iPoints / 2;
 
                 transform.GetComponent<UpdatePlayerStats>().UpdateStats(XpToAdd, CashToAdd);
 
-                // Disable Freelook camera
-                player.GetComponent<MovePlayer>().camera.gameObject.SetActive(false);
 
                 // delete all players
                 if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
@@ -291,6 +308,20 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public bool isOver()
     {
         return curTimer <= 0 || (AllPlayerInfo && PlayerList.childCount == 0);
+    }
+
+    public void Pause()
+    {
+        isPaused = !isPaused;
+        UI_Manager.Instance.SetPauseScreen(isPaused);
+
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+        {
+            if (isPaused)
+                Time.timeScale = 0;
+            else
+                Time.timeScale = 1;
+        }
     }
 
     void AssignSpawnPoints()
