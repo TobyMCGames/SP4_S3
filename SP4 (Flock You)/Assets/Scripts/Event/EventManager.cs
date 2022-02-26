@@ -66,7 +66,6 @@ public class EventManager : MonoBehaviourPun
                     CaptureEvent.transform.localPosition = position;
                     photonView.RPC("SyncEventPosition", RpcTarget.AllViaServer,CaptureEvent.GetComponent<PhotonView>().ViewID, position);
                     photonView.RPC("InitEvent", RpcTarget.AllViaServer, CaptureEvent.GetComponent<PhotonView>().ViewID, eventType);
-                    ActiveEventList.Add(CaptureEvent);
                 }
                 break;
             case BaseEvent.GameEventType.EVENT_FETCH:
