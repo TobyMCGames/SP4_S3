@@ -643,7 +643,7 @@ MonoBehaviour:
   camera: {fileID: 0}
   Lookat: {fileID: 8714987993477327268}
   isgrounded: 0
-  BarrelRollSpeed: 5
+  BarrelRollSpeed: 200
   DiveBombDirection: {x: 0, y: 0, z: 0}
   LeftWing: {fileID: 1746161339624272492}
   RightWing: {fileID: 6760781802868806864}

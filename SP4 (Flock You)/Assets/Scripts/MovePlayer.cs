@@ -67,6 +67,7 @@ public class MovePlayer : MonoBehaviour
     public float BarrelRollSpeed = 5f;
     float BarrelRollAngle = 0;
     float rolloffsetX =0;
+    float DashSpeed = 20f;
 
     // double jump
     double firsttaptime = 0.0;
@@ -200,11 +201,13 @@ public class MovePlayer : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.D) && playerState >= PlayerState.FLYING)
         {
-            playerState = PlayerState.FLYING_BARREL_RIGHT;
+            //playerState = PlayerState.FLYING_BARREL_RIGHT;
+            m_Rigidbody.MovePosition(m_Rigidbody.position + (vec3right * 20f));
         }
         else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.A) && playerState >= PlayerState.FLYING)
         {
-            playerState = PlayerState.FLYING_BARREL_LEFT;
+            //playerState = PlayerState.FLYING_BARREL_LEFT;
+            m_Rigidbody.MovePosition(m_Rigidbody.position + (-vec3right*20f));
         }
 
         if (Input.GetKeyUp(KeyCode.Alpha0) && PhotonNetwork.IsMasterClient)
@@ -326,11 +329,11 @@ public class MovePlayer : MonoBehaviour
             divebomb();
             return;
         }
-        else if (playerState == PlayerState.FLYING_BARREL_LEFT || playerState == PlayerState.FLYING_BARREL_RIGHT)
-        {
-            BarrelRoll();
-            return;
-        }
+        //else if (playerState == PlayerState.FLYING_BARREL_LEFT || playerState == PlayerState.FLYING_BARREL_RIGHT)
+        //{
+        //    BarrelRoll();
+        //    return;
+        //}
 
         if (Input.GetKey(KeyCode.Space))
         {
@@ -576,10 +579,10 @@ public class MovePlayer : MonoBehaviour
         }*/
         toggleTrail(true);
     }
-
+    /*
     void BarrelRoll()
     {
-        if (playerState == PlayerState.FLYING_BARREL_LEFT)
+        /*if (playerState == PlayerState.FLYING_BARREL_LEFT)
         {
             roll += turnSpeed * 12 * Time.deltaTime;
             BarrelRollAngle += turnSpeed * 12 * Time.deltaTime;
@@ -634,7 +637,29 @@ public class MovePlayer : MonoBehaviour
             if (roll < -360)
                 roll += 360;
         }
-    }
+
+        if (playerState == PlayerState.FLYING_BARREL_LEFT)
+        {
+            BarrelRollAngle += BarrelRollSpeed * Time.deltaTime;
+            roll += BarrelRollSpeed * Time.deltaTime;
+            Orientation.Set(pitch, yaw, roll);
+            //m_Rotation = Quaternion.Euler(pitch,yaw,roll);
+            //transform.rotation = m_Rotation;
+            transform.rotation = Quaternion.AngleAxis(roll,Vector3.right) * Quaternion.AngleAxis(pitch,Vector3.forward) * Quaternion.AngleAxis(yaw,Vector3.up);
+            //m_Rigidbody.MoveRotation(m_Rotation);
+            m_Rigidbody.MoveRotation(m_Rotation);
+            if (BarrelRollAngle >= 360)
+            {
+                playerState = PlayerState.FLYING;
+                rolloffsetX = 0;
+                BarrelRollAngle = 0;
+                m_Rigidbody.angularVelocity = Vector3.zero;
+                if (roll >= 360)
+                    roll -= 360;
+            }    
+        }
+    }*/
+
 
     void recenterRoll()
     {
