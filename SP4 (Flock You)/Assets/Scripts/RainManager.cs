@@ -33,6 +33,9 @@ public class RainManager : MonoBehaviour
         RainEmi = RainSystem.emission.rateOverTimeMultiplier;
         CloudEmi = CloudSystem.emission.rateOverTimeMultiplier;
 
+        RainSystem.emissionRate = RainEmi * RainIntensity;
+        CloudSystem.emissionRate = CloudEmi * RainIntensity;
+
         if (RainSound != null)
             RainLoopAudio = new LoopingAudioSource(this, RainSound, null);
 

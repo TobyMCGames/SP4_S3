@@ -493,6 +493,7 @@ GameObject:
   - component: {fileID: 1987478240769630001}
   - component: {fileID: 1987478240769630000}
   - component: {fileID: 1987478240769630006}
+  - component: {fileID: -8322403687695026369}
   - component: {fileID: 600894972404136892}
   - component: {fileID: 6220354295224625069}
   - component: {fileID: 3433376927388911469}
@@ -611,11 +612,23 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &-8322403687695026369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987478240769630004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b55d5266ae4ccf41b380973942bd772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &600894972404136892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1091,7 +1104,6 @@ GameObject:
   - component: {fileID: 3058864953704353293}
   - component: {fileID: 15520560712301565}
   - component: {fileID: 1409734983417956070}
-  - component: {fileID: 3098879692040572775}
   m_Layer: 9
   m_Name: Right Wing
   m_TagString: Untagged
@@ -1163,19 +1175,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3098879692040572775
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5925328716628159681}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6760781802868806864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,7 +1442,6 @@ GameObject:
   - component: {fileID: 6013174992898924169}
   - component: {fileID: 6257385332438803822}
   - component: {fileID: 4742157969171394026}
-  - component: {fileID: 2782141830571330729}
   m_Layer: 9
   m_Name: Left Wing
   m_TagString: Untagged
@@ -1515,19 +1513,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2782141830571330729
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7577294188454753836}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8013924091098126131
 GameObject:
   m_ObjectHideFlags: 0

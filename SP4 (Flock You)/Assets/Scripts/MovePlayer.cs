@@ -50,6 +50,7 @@ public class MovePlayer : MonoBehaviour
     public GameObject Lookat;
 
     Rigidbody m_Rigidbody;
+    CustomGravity _customGravity;
     Vector3 m_Movement;
     Quaternion m_Rotation = Quaternion.identity;
     float horizontalmovement;
@@ -101,10 +102,11 @@ public class MovePlayer : MonoBehaviour
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        _customGravity = GetComponent<CustomGravity>();
         playerheight = transform.localScale.y;
         DefaultMoveMul = movemul;
         vec3up = new Vector3(0, 1, 0);
-        flydrop.Set(0, -3.0f, 0);
+        flydrop.Set(0, GlobalSettings.gravity, 0);
         DiveBombDirection = Physics.gravity;
         photonView = GetComponent<PhotonView>();
         if (photonView == null)
@@ -149,11 +151,11 @@ public class MovePlayer : MonoBehaviour
         Moveplayer();
         if (playerState >= PlayerState.FLYING)
         {
-            m_Rigidbody.useGravity = false;
+            _customGravity.enabled = false;
             Fly();
         }
         else
-            m_Rigidbody.useGravity = true;
+            _customGravity.enabled = true;
         //checkDoubletap();
         checkJump(); // checks if player jumps
         if (Input.GetKeyUp(KeyCode.C))
@@ -238,7 +240,7 @@ public class MovePlayer : MonoBehaviour
                 m_Rigidbody.position = Hit.point + (Vector3.up * playerheight * 0.5f);
             playerState = PlayerState.IDLE;
             fallspeed = 0;
-            m_Rigidbody.useGravity = true;
+            _customGravity.enabled = true;
         }
 
         if (directiontext != null)
@@ -305,7 +307,7 @@ public class MovePlayer : MonoBehaviour
         else
         {
             playerState = PlayerState.IDLE;
-            m_Rigidbody.useGravity = true;
+            _customGravity.enabled = true;
         }
     }
 
