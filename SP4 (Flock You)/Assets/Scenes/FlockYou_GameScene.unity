@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18634948, g: 0.522621, b: 0.83286655, a: 1}
+  m_IndirectSpecularColor: {r: 0.18672392, g: 0.52244323, b: 0.8353656, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4667,6 +4667,11 @@ MonoBehaviour:
   - {fileID: 5033030191947368742}
   MinimapCam: {fileID: 242827122}
   floor: {fileID: 5033030191947368745}
+  EventPosition:
+  - {fileID: 1668293662}
+  - {fileID: 1668293661}
+  EventFrequency: 5
+  ElapsedEventTime: 0
 --- !u!4 &1517933914
 Transform:
   m_ObjectHideFlags: 0
@@ -5208,6 +5213,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36a9a8571df7866488a1f0690d59cf9d, type: 3}
+--- !u!1 &1668293661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3609534893058401022, guid: 36a9a8571df7866488a1f0690d59cf9d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1668293660}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1668293662 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3555870422365826751, guid: 36a9a8571df7866488a1f0690d59cf9d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1668293660}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1670399673
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,13 +6,14 @@ using Cinemachine;
 public class MinimapScript : MonoBehaviour
 {
     [SerializeField] GameObject Player = null;
-    [SerializeField] Cinemachine.CinemachineFreeLook tpc;
+    [SerializeField] CinemachineFreeLook tpc;
     [SerializeField] float BasecameraOffset = 20f;
     [SerializeField] float ScrollSpeed = 10f;
     [SerializeField] float minZoom = 5f;
     [SerializeField] float currZoom = 10f;
     [SerializeField] float maxZoom = 20f;
     [SerializeField] float zoomspeed = 5f;
+
     Camera cam;
     Vector3 minimapPos;
     // Start is called before the first frame update
@@ -24,7 +25,7 @@ public class MinimapScript : MonoBehaviour
     }
 
     // Update is called once per frame  
-    void LateUpdate()
+    private void Update()
     {
         if (FYGameManager.Instance.isOver() && Player != null)
             return;

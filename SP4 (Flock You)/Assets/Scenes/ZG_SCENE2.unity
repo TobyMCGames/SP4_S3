@@ -1945,6 +1945,23 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1063727481913639406, guid: b6fbc7e833f7cc64e964ba9b7067f178,
         type: 3}
+    - target: {fileID: 6479499962615632937, guid: 36a9a8571df7866488a1f0690d59cf9d,
+        type: 3}
+      propertyPath: ActiveEventList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479499962615632937, guid: 36a9a8571df7866488a1f0690d59cf9d,
+        type: 3}
+      propertyPath: ActiveEventList.Array.data[0]
+      value: 
+      objectReference: {fileID: 8826730325308337277, guid: 5976527683f52b242986f8f62b33eb50,
+        type: 3}
+    - target: {fileID: 6479499962615632937, guid: 36a9a8571df7866488a1f0690d59cf9d,
+        type: 3}
+      propertyPath: ActiveEventList.Array.data[1]
+      value: 
+      objectReference: {fileID: 1063727481913639406, guid: b6fbc7e833f7cc64e964ba9b7067f178,
+        type: 3}
     - target: {fileID: 6479499962615632938, guid: 36a9a8571df7866488a1f0690d59cf9d,
         type: 3}
       propertyPath: m_Name
@@ -1952,6 +1969,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36a9a8571df7866488a1f0690d59cf9d, type: 3}
+--- !u!1 &450907511 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3609534893058401022, guid: 36a9a8571df7866488a1f0690d59cf9d,
+    type: 3}
+  m_PrefabInstance: {fileID: 450907510}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &450907512 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3555870422365826751, guid: 36a9a8571df7866488a1f0690d59cf9d,
+    type: 3}
+  m_PrefabInstance: {fileID: 450907510}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &452380583
 GameObject:
   m_ObjectHideFlags: 0
@@ -2737,6 +2766,11 @@ MonoBehaviour:
   - {fileID: 1028296342}
   MinimapCam: {fileID: 105881783}
   floor: {fileID: 1028296338}
+  EventPosition:
+  - {fileID: 450907512}
+  - {fileID: 450907511}
+  EventFrequency: 5
+  ElapsedEventTime: 0
 --- !u!4 &817040397
 Transform:
   m_ObjectHideFlags: 0
@@ -5123,7 +5157,7 @@ MonoBehaviour:
   voiceDetectionThreshold: 0.01
   voiceDetectionDelayMs: 500
   unityMicrophoneDevice: 
-  photonMicrophoneDeviceId: -1
+  photonMicrophoneDeviceId: 0
   interestGroup: 0
   debugEchoMode: 0
   reliableMode: 0
@@ -6743,6 +6777,36 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1894780607}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1896228839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1896228840}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1896228840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896228839}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 278, y: 20.1, z: -374.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1923063010
 GameObject:
   m_ObjectHideFlags: 0
