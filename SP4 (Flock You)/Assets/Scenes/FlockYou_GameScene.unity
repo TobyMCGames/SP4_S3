@@ -15435,7 +15435,7 @@ MonoBehaviour:
   CloudSystem: {fileID: 108009842}
   RainSound: {fileID: 8300000, guid: 3359e9d10af08ca46ae396298dbd1ed9, type: 3}
   WindSound: {fileID: 8300000, guid: f9826f595784348498b57bcf6b2c8b1f, type: 3}
-  RainIntensity: 1
+  RainIntensity: 0
   camera: {fileID: 1366792336}
 --- !u!1 &1825314543
 GameObject:
