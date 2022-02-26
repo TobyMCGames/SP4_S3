@@ -6527,6 +6527,7 @@ MonoBehaviour:
   RoomListContent: {fileID: 889509550}
   RoomListEntryPrefab: {fileID: 114706, guid: 03c5e15309335324fba99d68e38cb08b, type: 3}
   InsideRoomPanel: {fileID: 1370510199}
+  ReturnPanel: {fileID: 624323959}
   StartGameButton: {fileID: 800069350}
   PlayerListEntryPrefab: {fileID: 195212, guid: d68bf8413681d9b4aa7328277e632e3f,
     type: 3}
@@ -11336,6 +11337,11 @@ PrefabInstance:
       propertyPath: displayTxt
       value: 
       objectReference: {fileID: 46365618}
+    - target: {fileID: 3017652947777773765, guid: 3e60dbb935be73d4e86fb803efd5e985,
+        type: 3}
+      propertyPath: ReturnPanel
+      value: 
+      objectReference: {fileID: 624323959}
     - target: {fileID: 3017652947777773765, guid: 3e60dbb935be73d4e86fb803efd5e985,
         type: 3}
       propertyPath: if_password

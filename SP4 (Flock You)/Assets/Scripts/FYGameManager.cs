@@ -23,6 +23,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public float GameTime;
     public float curTimer;
     public RainScript rainSettings;
+    public bool isPaused = false;
 
     [Header("Loading Screen")]
     public GameObject UI_Screen;
@@ -219,6 +220,15 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            if (isPaused)
+                return;
+
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             if (!AllPlayersAssigned)
@@ -278,16 +288,12 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             if (isOver())
             {
                 UI_Manager.Instance.SetEndScreen();
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
 
                 int XpToAdd = player.playerGameInfo.iPoints;
                 int CashToAdd = player.playerGameInfo.iPoints / 2;
 
                 transform.GetComponent<UpdatePlayerStats>().UpdateStats(XpToAdd, CashToAdd);
 
-                // Disable Freelook camera
-                player.GetComponent<MovePlayer>().camera.gameObject.SetActive(false);
 
                 // delete all players
                 if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
@@ -301,6 +307,20 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     public bool isOver()
     {
         return curTimer <= 0 || (AllPlayerInfo && PlayerList.childCount == 0);
+    }
+
+    public void Pause()
+    {
+        isPaused = !isPaused;
+        UI_Manager.Instance.SetPauseScreen(isPaused);
+
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+        {
+            if (isPaused)
+                Time.timeScale = 0;
+            else
+                Time.timeScale = 1;
+        }
     }
 
     void AssignSpawnPoints()

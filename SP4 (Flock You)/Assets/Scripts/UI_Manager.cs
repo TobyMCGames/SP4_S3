@@ -11,9 +11,13 @@ public class UI_Manager : MonoBehaviour
     public PhotonView photonView;
     public FYPlayer player;
 
-    public Text UI_Timer;
+    [Header("Screens")]
     public Transform scoreboard;
     public Transform EndScreen;
+    public Transform PauseScreen;
+
+    [Header("Game UI")]
+    public Text UI_Timer;
     public Slider UI_Health;
     public Slider UI_Ammo;
     public Text UI_Lives;
@@ -190,6 +194,29 @@ public class UI_Manager : MonoBehaviour
     {
         scoreboard.gameObject.SetActive(true);
         EndScreen.gameObject.SetActive(true);
+
+        if (PauseScreen.gameObject.activeInHierarchy == true)
+            SetPauseScreen(false);
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        // Disable Freelook camera
+        player.GetComponent<MovePlayer>().camera.gameObject.SetActive(false);
+    }
+
+    public void SetPauseScreen(bool state)
+    {
+        PauseScreen.gameObject.SetActive(state);
+
+        Cursor.visible = state;
+        if (state == true)
+            Cursor.lockState = CursorLockMode.None;
+        else
+            Cursor.lockState = CursorLockMode.Locked;
+
+        // Disable Freelook camera
+        player.GetComponent<MovePlayer>().camera.gameObject.SetActive(!state);
     }
 
     [PunRPC]
