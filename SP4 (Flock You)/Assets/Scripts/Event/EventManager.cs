@@ -46,6 +46,7 @@ public class EventManager : MonoBehaviourPun
     [PunRPC]
     public void RemoveFromList(int index)
     {
+        if (index < ActiveEventList.Count && index >= 0)
         ActiveEventList[index].GetComponent<BaseEvent>().returnEventobj();
         ActiveEventList.RemoveAt(index);
     }

@@ -56,7 +56,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
     [Header("Event Related")]
     [Tooltip("Possible locations where the events can be spawned")] public GameObject[] EventPosition;
-    [SerializeField] int EventFrequency = 5;
+    [SerializeField] int EventFrequency =  60; // seconds
     [SerializeField] float ElapsedEventTime = 0f;
     
     public void Awake()
@@ -240,30 +240,25 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                     AllPlayerInfo = true;
                 }
 
-
-            if (AllPlayerInfo && EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_CAPTURE) == null &&
-                EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null && !isOver())
+            if (!isOver())
             {
-                if (PhotonNetwork.IsMasterClient)
+                if (AllPlayerInfo && EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_CAPTURE) == null &&
+                EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null)
                 {
-                    /*float randx, randy, randz;
-                    randx = Random.Range(floor.transform.position.x - floorscale.x * 0.25f, floor.transform.position.x + floorscale.x * 0.25f);
-                    randy = Random.Range(floor.transform.position.y + floorscale.y * 0.5f, floor.transform.position.y + floorscale.y);
-                    randz = Random.Range(floor.transform.position.z - floorscale.z * 0.25f, floor.transform.position.z + floorscale.z * 0.25f);
-                    Eventpos.Set(randx, randy, randz);
-                    EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_CAPTURE, Eventpos);*/
-
-                    EventManager.Instance.CreateEvent((BaseEvent.GameEventType)Random.Range(0,EventManager.Instance.GameEventPrefabs.Count), 
-                        EventPosition[Random.Range(0, EventPosition.Length)].transform.position);
+                    if (PhotonNetwork.IsMasterClient && ElapsedEventTime <= 0)
+                    {
+                        ElapsedEventTime = EventFrequency;
+                        EventManager.Instance.CreateEvent((BaseEvent.GameEventType)Random.Range(0, EventManager.Instance.GameEventPrefabs.Count),
+                            EventPosition[Random.Range(0, EventPosition.Length)].transform.position);
+                    }
+                    else
+                    {
+                        ElapsedEventTime -= Time.deltaTime;
+                    }
                 }
-            }         
+                
+            }
         }
-
-        /*if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null &&
-            EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_CAPTURE) == null && !isOver()) // no events happening currently
-        {
-            //
-        }*/
 
         if (!isOver())
         {
