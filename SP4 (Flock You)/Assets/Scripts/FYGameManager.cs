@@ -271,7 +271,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 curTimer -= Time.deltaTime;
 
             // Timed Conditions
-            if (curTimer < GameTime)
+            if (curTimer < GameTime / 2)
             {
                 if (rainSettings.RainIntensity < 1.0f)
                 {
