@@ -30,6 +30,7 @@ public class GlobalSettings : MonoBehaviour
 
     [Header("Game Settings")]
     public static float gravity = -29.4f;
+    public static float Volume = 1.0f;
 
     // Game Modes
     public enum GAMEMODES

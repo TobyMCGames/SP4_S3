@@ -536,6 +536,7 @@ Transform:
   - {fileID: 3058864953704353293}
   - {fileID: 6013174992898924169}
   - {fileID: 6285630724586810288}
+  - {fileID: 9131960854707024980}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -657,6 +658,7 @@ MonoBehaviour:
   Lookat: {fileID: 8714987993477327268}
   isgrounded: 0
   BarrelRollSpeed: 200
+  DashSpeed: 20
   DiveBombDirection: {x: 0, y: 0, z: 0}
   LeftWing: {fileID: 1746161339624272492}
   RightWing: {fileID: 6760781802868806864}
@@ -737,6 +739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currAbility: 0
+  PlayerAudio: {fileID: 7016929745360412952}
 --- !u!114 &7014241976448607402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1641,6 +1644,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b6e3ced5e49824a976ceaf28c07fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8845238179618020114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9131960854707024980}
+  - component: {fileID: 7016929745360412952}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9131960854707024980
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8845238179618020114}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.09024012, y: -0.40546107, z: 0.07317741}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1987478240769630005}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7016929745360412952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8845238179618020114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d2741de6994634b93418e7c9493b92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BG_Music: {fileID: 0}
+  AudioKey:
+  - Screech
+  AudioData:
+  - {fileID: 8300000, guid: 9b426f609eb1df949bf09f0fa4452814, type: 3}
+  Volume: 0
+  SetAsGlobalVolume: 0
 --- !u!1 &9042462070060249663
 GameObject:
   m_ObjectHideFlags: 0

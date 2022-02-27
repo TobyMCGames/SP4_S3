@@ -286,7 +286,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 int XpToAdd = player.playerGameInfo.iPoints;
                 int CashToAdd = player.playerGameInfo.iPoints / 2;
 
-                transform.GetComponent<UpdatePlayerStats>().UpdateStats(XpToAdd, CashToAdd);
+                if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                    transform.GetComponent<UpdatePlayerStats>().UpdateStats(XpToAdd, CashToAdd);
 
 
                 // delete all players

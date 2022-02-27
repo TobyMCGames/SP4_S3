@@ -11,7 +11,6 @@ public class EventManager : MonoBehaviourPun
     public GameObject EventText;
 
     public PhotonView EventmanagerView;
-
     private void Awake()
     {
         Instance = this;
@@ -46,7 +45,7 @@ public class EventManager : MonoBehaviourPun
     [PunRPC]
     public void RemoveFromList(int index)
     {
-        if (index < ActiveEventList.Count && index >= 0)
+        if (index < ActiveEventList.Count && index >= 0 && ActiveEventList.Count >0)
         ActiveEventList[index].GetComponent<BaseEvent>().returnEventobj();
         ActiveEventList.RemoveAt(index);
     }

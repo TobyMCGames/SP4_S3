@@ -1662,6 +1662,7 @@ MonoBehaviour:
   GameTime: 0
   curTimer: 65
   rainSettings: {fileID: 0}
+  isPaused: 0
   UI_Screen: {fileID: 2043670230}
   Loading_Screen: {fileID: 274018344}
   Direction_Test: {fileID: 390943595}
@@ -1679,6 +1680,9 @@ MonoBehaviour:
   - {fileID: 5033030191947368742}
   MinimapCam: {fileID: 1645656167}
   floor: {fileID: 5033030191947368745}
+  EventPosition: []
+  EventFrequency: 5
+  ElapsedEventTime: 0
 --- !u!4 &1517933914
 Transform:
   m_ObjectHideFlags: 0
@@ -1707,12 +1711,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonView: {fileID: 0}
   player: {fileID: 3727522623858185587, guid: 008496d9bc1b228409b68881800d8ec3, type: 3}
-  UI_Timer: {fileID: 193360771}
   scoreboard: {fileID: 0}
   EndScreen: {fileID: 0}
+  PauseScreen: {fileID: 0}
+  UI_Timer: {fileID: 193360771}
   UI_Health: {fileID: 0}
   UI_Ammo: {fileID: 0}
   UI_Lives: {fileID: 1729423605}
+  UI_Ability: {fileID: 0}
+  Ability_LayNest: {fileID: 0}
+  Ability_Distract: {fileID: 0}
 --- !u!114 &1517933916
 MonoBehaviour:
   m_ObjectHideFlags: 0
