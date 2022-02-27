@@ -2598,7 +2598,7 @@ PrefabInstance:
     - target: {fileID: 4967154475190431383, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.777512
+      value: 1.9797468
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476080642628, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
@@ -2618,12 +2618,12 @@ PrefabInstance:
     - target: {fileID: 4967154476088973863, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.777512
+      value: 1.9797468
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476267677751, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.777512
+      value: 1.9797468
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476586342109, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
@@ -2673,7 +2673,7 @@ PrefabInstance:
     - target: {fileID: 4967154476839047209, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.777512
+      value: 1.9797468
       objectReference: {fileID: 0}
     - target: {fileID: 8917505357998334060, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
@@ -3131,7 +3131,7 @@ PrefabInstance:
     - target: {fileID: 5236775274137823855, guid: 3b695bd75332dac479ea3cceadf59368,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.67
       objectReference: {fileID: 0}
     - target: {fileID: 5236775274137823855, guid: 3b695bd75332dac479ea3cceadf59368,
         type: 3}
