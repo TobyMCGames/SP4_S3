@@ -5,65 +5,67 @@ using Photon.Pun;
 
 public class TimeTrial : BaseEvent
 {
-    [SerializeField] GameObject Path; // put in the path with the gameobjects which will set the path based on the object's transform
-    [SerializeField] List<GameObject> PointList;
-    [SerializeField] float pointsAccumulated = 0f;
+    public GameObject Path; // put in the path with the gameobjects which will set the path based on the object's transform
+    [SerializeField] int pointsAccumulated = 0;
     [SerializeField] float completionBonus = 0f;
     [SerializeField] float TrialTime = 30f;
     [SerializeField] float CurrentTrialTime;
-
+    GameObject TargetPlayer  = null;
+    List<GameObject> pathways = new List<GameObject>();
     bool TimeTrialStarted = false;
     int currentPoint = 0;
-    TimeCheckpoint CurrentCheckpoint;
-
-    public override void Awake()
-    {   
-
-    }
+    GameObject CurrentCheckpoint;
 
     public override void Start()
-    {   
-        foreach (Transform T in Path.transform)
-        {
-            PointList.Add(T.gameObject);
-        }
-        CurrentCheckpoint = PointList[0].GetComponent<TimeCheckpoint>();
+    {
         if (!CurrentCheckpoint)
             Debug.Log("There are no checkpoints in the time trial");
+        CurrentTrialTime = TrialTime;
+        foreach (Transform t in Path.transform)
+        {
+            pathways.Add(t.gameObject);
+        }   
+        for (int i =1; i < pathways.Count;i++)
+        {
+            pathways[i].SetActive(false);
+        }
     }
 
     public override void Update()
     {
-        if (CurrentCheckpoint.IsCollided())
+        if (FYGameManager.Instance.isOver())
+            return;
+        if (pathways[currentPoint].GetComponent<TimeCheckpoint>().isCollided())
         {
-            if (currentPoint > 0 && currentPoint < PointList.Count-1)
+            if (currentPoint > 0 && currentPoint < Path.transform.childCount-1)
             {
-                CurrentTrialTime += CurrentCheckpoint.GetTimeExtension();
-                pointsAccumulated += CurrentCheckpoint.GetPoints();
+                CurrentTrialTime += pathways[currentPoint].GetComponent<TimeCheckpoint>().GetTimeExtension();
+                pointsAccumulated += pathways[currentPoint].GetComponent<TimeCheckpoint>().GetPoints();
+                pathways[currentPoint].SetActive(false);
                 currentPoint++;
-                CurrentCheckpoint = PointList[currentPoint].GetComponent<TimeCheckpoint>();
+                pathways[currentPoint].SetActive(true);
             }
             else if (currentPoint == 0) // startpoint 
             {
                 TimeTrialStarted = true;
+                pathways[currentPoint].SetActive(false);
+                currentPoint++;
+                pathways[currentPoint].SetActive(true);
             }
-            else if (currentPoint == PointList.Count-1) // handle point giving
+            else if (currentPoint == Path.transform.childCount-1) // handle point giving
             {
-                
+                pathways[currentPoint].SetActive(false);
+                TargetPlayer.GetComponent<FYPlayer>().playerGameInfo.iPoints += pointsAccumulated;
+                gameObject.SetActive(false);
             }
-
-            currentPoint++;
         }
         if (TimeTrialStarted)
         {
             CurrentTrialTime -= Time.deltaTime;
         }
-    }
-    
-    // check if the player collided with the point 
-    public void CheckPoinHit()
+    } 
+    public void initTargetPlayer(GameObject _targetObject)
     {
-
+        TargetPlayer = _targetObject;
     }
-    
 }
