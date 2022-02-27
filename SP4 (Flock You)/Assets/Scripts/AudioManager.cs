@@ -8,6 +8,9 @@ public class AudioManager : MonoBehaviour
     [Header("Audio")]
     public AudioClip BG_Music;
     private LoopingAudioSource LoopBGAudio;
+    public string[] AudioKey;
+    public AudioClip[] AudioData;
+    public Dictionary<string, AudioSource> AudioLib;
 
     [Header("Audio Settings")]
     [Range(0.0f, 1.0f)]
@@ -23,10 +26,34 @@ public class AudioManager : MonoBehaviour
         else
             Volume = GlobalSettings.Volume;
 
+        prevVolume = Volume;
+
         if (BG_Music != null)
         {
             LoopBGAudio = new LoopingAudioSource(this, BG_Music, null);
             LoopBGAudio.Play(Volume);
+            LoopBGAudio.AudioSource.volume = Volume;
+        }
+
+        if (AudioData == null || AudioKey == null)
+            return;
+
+        if (AudioData.Length != AudioKey.Length)
+        {
+            Debug.Log("Audio Key do not match number of Audio Data");
+            return;
+        }
+
+        AudioLib = new Dictionary<string, AudioSource>();
+        for (int i = 0; i < AudioKey.Length; i++)
+        {
+            AudioSource source = gameObject.AddComponent<AudioSource>();
+            source.loop = false;
+            source.clip = AudioData[i];
+            source.playOnAwake = false;
+            source.volume = GlobalSettings.Volume;
+            source.Stop();
+            AudioLib.Add(AudioKey[i], source);
         }
     }
 
@@ -47,8 +74,25 @@ public class AudioManager : MonoBehaviour
             LoopBGAudio.AudioSource.volume = Volume;
         }
 
+        if (AudioLib != null)
+        {
+            for (int i = 0; i < AudioLib.Count; i++)
+            {
+                AudioLib[AudioKey[i]].volume = Volume;
+            }
+        }
 
         prevVolume = Volume;
+    }
+
+    public void PlayAudio(string Key)
+    {
+        if (AudioLib.ContainsKey(Key))
+        {
+            AudioLib[Key].Play();
+        }
+        else
+            Debug.Log("This Audio Manager does not contain " + Key);
     }
 }
 

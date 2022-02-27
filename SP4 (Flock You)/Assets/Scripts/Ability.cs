@@ -7,6 +7,7 @@ public class Ability
 {
     protected PhotonView photonView;
     protected Transform player;
+    protected AudioManager PlayerAudio;
 
     public float cooldown = 0;
     public float CurCooldown = 0;
@@ -31,6 +32,11 @@ public class Ability
     public void SetPhotonView(PhotonView _photonView)
     {
         photonView = _photonView;
+    }
+
+    public void SetPlayerAudio(AudioManager _manager)
+    {
+        PlayerAudio = _manager;
     }
 
     public virtual void UseAbility()

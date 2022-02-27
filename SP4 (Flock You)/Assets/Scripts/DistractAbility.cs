@@ -20,6 +20,8 @@ public class DistractAbility : Ability
         //get list from DistractDetection and assign as own
         Enemies = player.GetComponentInChildren<DistractDetection>().GetEnemyList();
 
+        PlayerAudio.PlayAudio("Screech");
+
         //Distract enemies in the list
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
