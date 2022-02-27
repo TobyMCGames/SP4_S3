@@ -91,7 +91,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     }
 
     public void ReturnToMenu()
-    {
+    {    
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             PhotonNetwork.LeaveRoom();
@@ -101,7 +101,10 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             }
         }
         else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+        {
+            Time.timeScale = 1f;
             UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
+        }
     }
 
     private void OnDestroy()
