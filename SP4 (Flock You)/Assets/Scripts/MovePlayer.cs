@@ -325,20 +325,12 @@ public class MovePlayer : MonoBehaviour
             camera.m_LookAt = collision.transform;
             camera.Follow = collision.transform;
         }
-        else
+        else if (!collision.gameObject.CompareTag("Interactable") && !collision.gameObject.CompareTag("Projectile"))
         {
             playerState = PlayerState.IDLE;
             _customGravity.enabled = true;
         }
     }
-
-    /*public void singletapJump()
-    {
-        if (isgrounded)
-        {
-            Jump();
-        }
-    }*/
 
     public void Fly()
     {

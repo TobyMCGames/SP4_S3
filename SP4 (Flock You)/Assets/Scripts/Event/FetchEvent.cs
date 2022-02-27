@@ -42,6 +42,7 @@ public class FetchEvent : BaseEvent
 
         EventManager.Instance.TextToDisplay(TextDistanceCheck);
         EventManager.Instance.TextToDisplay(TextCarriedby);
+        pointsAwarded = 50;
     }
 
     public override void Awake()
@@ -67,15 +68,18 @@ public class FetchEvent : BaseEvent
                 else
                 {
                     calculateDistance(false);
-                    TextCarriedby.text = "Playername is carrying the item";
+                    TextCarriedby.text = "";
                     TextDistanceCheck.text = "Nearest Nest: " + Distance.ToString() + "m";
                     FetchItem.GetComponent<FetchItemScript>().stoprender(true);
                 }
             }
             else if (Completed)
             {
-                TextCarriedby.text = "Playername delivered the item";
+                TextCarriedby.text = "you have successfully delivered the item";
                 TextDistanceCheck.text = "";
+                SingleCarriedby.gameObject.GetComponent<FYPlayer>().playerGameInfo.iPoints += pointsAwarded;
+                UI_Manager.Instance.UpdatePlayerScore(SingleCarriedby.transform.GetComponent<FYPlayer>().playerGameInfo.sUsername,
+                    SingleCarriedby.transform.GetComponent<FYPlayer>().playerGameInfo.iPoints, 0);
             }
         }
         else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
@@ -92,18 +96,21 @@ public class FetchEvent : BaseEvent
                 else
                 {
                     calculateDistance(false);
-                    TextCarriedby.text = carriedby + " is carrying the item";
+                    TextCarriedby.text = carriedby.gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername.ToString() + " is carrying the item";
+                    
                     if (carriedby.IsMine)
                         TextDistanceCheck.text = "Nearest Nest: " + Distance.ToString() + "m";
                     else
-                        TextDistanceCheck.text = "Player with item:" + Distance.ToString();
+                        TextDistanceCheck.text = carriedby.gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername.ToString() + "Is:" +Distance.ToString() + " awway catch him!";
                     FetchItem.GetComponent<FetchItemScript>().stoprender(true);
                 }
             }
             else if (Completed)
             {
-                TextCarriedby.text = carriedby + " delivered the item";
+                TextCarriedby.text = carriedby.gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername.ToString() + " has delivered the item";
                 TextDistanceCheck.text = "";
+                UI_Manager.Instance.UpdatePlayerScore(carriedby.gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername,
+                    carriedby.gameObject.GetComponent<FYPlayer>().playerGameInfo.iPoints, 0);
             }
         }
     }
@@ -216,7 +223,7 @@ public class FetchEvent : BaseEvent
                     nearestNest = currdistance;
         }
         if (nearestNest == -1)
-            Debug.Log("No nests foudn in the game manager");
+            Debug.Log("No nests found in the game manager");
         return Mathf.Round(nearestNest);
     }
     public PhotonView getView()

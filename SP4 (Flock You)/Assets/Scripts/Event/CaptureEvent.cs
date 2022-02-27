@@ -72,6 +72,7 @@ public class CaptureEvent : BaseEvent
 
     public override void Init()
     {
+        pointsAwarded = 70;
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
             PhotonView playerview;
@@ -153,12 +154,12 @@ public class CaptureEvent : BaseEvent
                 else if (!Completed)
                 {
                     Debug.Log(mostprogressViewID);
-                        Leadingplayer.text = "Playername" + "is: " +
+                        Leadingplayer.text = PhotonNetwork.GetPhotonView(mostprogressViewID).gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername + " is: " +
                         Mathf.Round((playerProgresslist[mostprogressViewID].getProgress() * 100f)).ToString() + "% to capturing the point";
                 }
                 else if (Completed)
                 {
-                    Leadingplayer.text = "Playername: " + "has captured the point";
+                    Leadingplayer.text = PhotonNetwork.GetPhotonView(mostprogressViewID).gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername + " has captured the point";
                 }
                 //photonView.RPC("SyncLeadingPlayer", RpcTarget.OthersBuffered, Leadingplayer);
             }
@@ -201,11 +202,8 @@ public class CaptureEvent : BaseEvent
                     Debug.Log("multiplayer CaptureEvent: Colliding Player does not have a photonview");
                 else if (!viewwithinBoundary.Contains(playerview.ViewID))
                 {
-                    Debug.Log("view: " + playerview.ViewID + " Added ");
                     viewwithinBoundary.Add(playerview.ViewID);
                     timewithinBoundary.Add(0f);
-                    //photonView.RPC("AddviewBoundary", RpcTarget.AllViaServer, playerview.ViewID);
-                    //photonView.RPC("addTimeBoundary", RpcTarget.AllViaServer, 0f);
                 }   
             }
         }

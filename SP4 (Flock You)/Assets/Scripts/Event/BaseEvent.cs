@@ -9,19 +9,18 @@ public class BaseEvent :MonoBehaviourPun,IPunObservable
     {
         EVENT_FETCH,
         EVENT_CAPTURE,
+        EVENT_TIMETRIAL,
         NUM_EVENTS,
     }
     [SerializeField] protected GameEventType Eventtype;
     [SerializeField] protected Collider EventArea;
-    //[SerializeField] protected List<PhotonView> EventTarget;
-    //[SerializeField] protected List<Transform> TargetTransform;
     [SerializeField] protected GameObject canvas;
 
     protected PhotonView EventView;
     protected bool Completed;
     protected double Destructiontimer;
 
-    protected float pointsAwarded=0;
+    protected int pointsAwarded=0;
     public virtual bool IsReqMet()
     {
         return false;
