@@ -15,6 +15,7 @@ public class VoiceMute : MonoBehaviour
     {
         recorder = GetComponent<Recorder>();
         recorder.TransmitEnabled = true; // mute when start game
+        //recorder.MicrophoneDevice = 
         isMuted = true;
     }
 
@@ -29,12 +30,14 @@ public class VoiceMute : MonoBehaviour
             {
                 isMuted = false;
                 recorder.TransmitEnabled = true;
+                recorder.IsRecording = true;
                 soundFX[1].Play();
             }
             else
             {
                 isMuted = true;
                 recorder.TransmitEnabled = false;
+                recorder.IsRecording = false;
                 soundFX[0].Play();
             }
         }
