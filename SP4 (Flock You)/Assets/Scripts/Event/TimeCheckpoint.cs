@@ -2,25 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+
 public class TimeCheckpoint : MonoBehaviour
 {
-
-    bool Collided = false;
+    
     [SerializeField] float TimeExtension = 0f;
-    [SerializeField] float points = 0f;
-    // Start is called before the first frame update
-    private void OnCollisionEnter(Collision collision)
+    [SerializeField] int points = 0;
+    bool Collided = false;
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
+            transform.parent.parent.GetComponent<TimeTrial>().initTargetPlayer(other.gameObject);
             Collided = true;
         }
-        
-    }
-
-    public bool IsCollided()
-    {
-        return Collided;
     }
 
     public float GetTimeExtension()
@@ -28,9 +23,14 @@ public class TimeCheckpoint : MonoBehaviour
         return TimeExtension;
     }
 
-    public float GetPoints()
+    public int GetPoints()
     {
         return points;
     }
 
+    public bool isCollided()
+    {
+        return Collided;
+    }
 }
+
