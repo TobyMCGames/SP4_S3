@@ -40,6 +40,7 @@ public class MovePlayer : MonoBehaviour
     public float birdterminalvelocity = -30f;
     public float AirResistance = 10f;
     public PlayerState playerState = PlayerState.IDLE;
+    public PlayerState PrevPlayerState;
     private float landingelapsed = 0.0f;
     private float divebombminpitch = 90.0f;
     private float fallspeed = 0f;
@@ -115,6 +116,7 @@ public class MovePlayer : MonoBehaviour
         flydrop.Set(0, GlobalSettings.gravity, 0);
         DiveBombDirection = Physics.gravity;
         photonView = GetComponent<PhotonView>();
+        PrevPlayerState = playerState;
         if (photonView == null)
             Debug.Log("Player does not have PhotonView");
         else
@@ -149,16 +151,41 @@ public class MovePlayer : MonoBehaviour
             if (FYGameManager.Instance.isPaused)
                 return;
 
+        if (PrevPlayerState != playerState)
+        {
+            if (playerState >= PlayerState.FLYING)
+            {
+                //toggle flying model
+                StartCoroutine(ChangeFlyingModel());
+            }
+            else if (playerState == PlayerState.IDLE)
+            {
+                //toggle model to show grounded model
+                StartCoroutine(ChangeGroundedModel());
+            }
+
+            if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                if (!photonView.IsMine)
+                    PrevPlayerState = playerState;
+        }
+
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             if (!photonView.IsMine)
                 return;
-        PlayerInput();
+
+        if (PrevPlayerState != playerState)
+        {
+            PrevPlayerState = playerState;
+
+            if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                photonView.RPC("UpdatePlayerState", RpcTarget.AllViaServer, (int)playerState);
+        }
+
+            PlayerInput();
         controlDrag();
         Moveplayer();
         if (playerState >= PlayerState.FLYING)
         {
-            //toggle flying model
-            StartCoroutine(ChangeFlyingModel());
             _customGravity.enabled = false;
             Fly();
         }
@@ -262,9 +289,6 @@ public class MovePlayer : MonoBehaviour
             roll = 0;
             vec3up = Vector3.up;
             toggleTrail(false);
-
-            //toggle model to show grounded model
-            StartCoroutine(ChangeGroundedModel());
 
             if (playerState == PlayerState.FLYING_DIVEBOMB)
                 m_Rigidbody.position = Hit.point + (Vector3.up * playerheight * 0.5f);
@@ -720,5 +744,11 @@ public class MovePlayer : MonoBehaviour
     {
         LeftWing.SetActive(toggle);
         RightWing.SetActive(toggle);
+    }
+
+    [PunRPC]
+    public void UpdatePlayerState(int _state)
+    {
+        playerState = (PlayerState)_state;
     }
 }
