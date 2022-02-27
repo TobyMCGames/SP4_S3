@@ -15,7 +15,7 @@ MonoBehaviour:
   AppSettings:
     AppIdRealtime: 4e1ab826-d54e-488a-ac89-d6488c01d958
     AppIdFusion: 
-    AppIdChat: 
+    AppIdChat: 7f8b0e94-6966-4e30-bf55-2d2a48df06bf
     AppIdVoice: 039cac45-0af9-44d0-87f3-6c87ce9adb5f
     AppVersion: 
     UseNameServer: 1
@@ -100,6 +100,7 @@ MonoBehaviour:
   - completeEvent
   - CompleteEvent
   - ReleaseInventory
+  - PlayAudio
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

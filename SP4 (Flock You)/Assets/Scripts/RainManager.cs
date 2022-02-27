@@ -70,10 +70,10 @@ public class RainManager : MonoBehaviour
         CloudSystem.emissionRate = CloudEmi * RainIntensity;
 
         if (RainLoopAudio != null)
-            RainLoopAudio.Play(RainIntensity * 0.5f);
+            RainLoopAudio.Play(RainIntensity * 0.3f * GlobalSettings.Volume);
 
         if (WindLoopAudio != null)
-            WindLoopAudio.Play(RainIntensity * 0.5f);
+            WindLoopAudio.Play(RainIntensity * 0.3f * GlobalSettings.Volume);
 
 
         PrevRainIntensity = RainIntensity;
@@ -90,52 +90,6 @@ public class RainManager : MonoBehaviour
         {
             RainLoopAudio.AudioSource.Play();
             WindLoopAudio.AudioSource.Play();
-        }
-    }
-}
-
-public class LoopingAudioSource
-{
-    public AudioSource AudioSource { get; private set; }
-    public float TargetVolume { get; private set; }
-
-    public LoopingAudioSource(MonoBehaviour script, AudioClip clip, AudioMixerGroup mixer)
-    {
-        AudioSource = script.gameObject.AddComponent<AudioSource>();
-
-        if (mixer != null)
-        {
-            AudioSource.outputAudioMixerGroup = mixer;
-        }
-
-        AudioSource.loop = true;
-        AudioSource.clip = clip;
-        AudioSource.playOnAwake = false;
-        AudioSource.volume = 0.0f;
-        AudioSource.Stop();
-        TargetVolume = 1.0f;
-    }
-
-    public void Play(float targetVolume)
-    {
-        if (!AudioSource.isPlaying)
-        {
-            AudioSource.volume = 0.0f;
-            AudioSource.Play();
-        }
-        TargetVolume = targetVolume;
-    }
-
-    public void Stop()
-    {
-        TargetVolume = 0.0f;
-    }
-
-    public void Update()
-    {
-        if (AudioSource.isPlaying && (AudioSource.volume = Mathf.Lerp(AudioSource.volume, TargetVolume, Time.deltaTime)) == 0.0f)
-        {
-            AudioSource.Stop();
         }
     }
 }

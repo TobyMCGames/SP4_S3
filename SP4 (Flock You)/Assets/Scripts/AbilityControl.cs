@@ -18,6 +18,8 @@ public class AbilityControl : MonoBehaviour
     DistractAbility distactAbility = new DistractAbility();
     LayEggAbility layEggAbility = new LayEggAbility();
 
+    public AudioManager PlayerAudio;
+
     public enum ABILITIES { 
         DISTRACT,
         LAYEGG,
@@ -39,6 +41,7 @@ public class AbilityControl : MonoBehaviour
         {
             AbilitiesList[i].SetPlayer(transform);
             AbilitiesList[i].SetPhotonView(photonView);
+            AbilitiesList[i].SetPlayerAudio(PlayerAudio);
         }
     }
 
@@ -117,5 +120,12 @@ public class AbilityControl : MonoBehaviour
             Enemy enemy = enemyView.GetComponent<Enemy>();
             enemy.Distracted(_pos);
         }
+    }
+
+    [PunRPC]
+    public void PlayAudio(string key)
+    {
+        if (PlayerAudio != null)
+            PlayerAudio.PlayAudio(key);
     }
 }

@@ -16,6 +16,20 @@ public class DistractAbility : Ability
 
     override public void UseAbility()
     {
+        if (!AudioIsSet)
+        {
+            AudioSource screechSource = PlayerAudio.AudioLib["Screech"];
+
+            if (screechSource != null)
+            {
+                screechSource.spatialBlend = 1.0f;
+                screechSource.minDistance = 50.0f;
+            }
+
+            AudioIsSet = true;
+        }
+
+
         CurCooldown = cooldown;
         //get list from DistractDetection and assign as own
         Enemies = player.GetComponentInChildren<DistractDetection>().GetEnemyList();
@@ -23,6 +37,8 @@ public class DistractAbility : Ability
         //Distract enemies in the list
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
+            PlayerAudio.PlayAudio("Screech");
+
             foreach (GameObject enemy in Enemies)
             {
                 if (enemy != null)
@@ -34,6 +50,7 @@ public class DistractAbility : Ability
         }
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
+            photonView.RPC("PlayAudio", RpcTarget.AllViaServer, "Screech");
             List<int> IDList = new List<int>();
             for (int i = 0; i < Enemies.Count; i++)
                 IDList.Add(Enemies[i].GetPhotonView().ViewID);
