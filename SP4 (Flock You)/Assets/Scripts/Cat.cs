@@ -79,20 +79,4 @@ public class Cat : Enemy
             Debug.Log("Enemy switching to DISTRACTED state");
         }
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        playerInvolved = other;
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        isMeleeAttacking = false;
-    //    }
-    //}
 }
