@@ -20,6 +20,8 @@ public class AudioManager : MonoBehaviour
     {
         if (SetAsGlobalVolume)
             GlobalSettings.Volume = Volume;
+        else
+            Volume = GlobalSettings.Volume;
 
         if (BG_Music != null)
         {
@@ -37,6 +39,8 @@ public class AudioManager : MonoBehaviour
 
         if (SetAsGlobalVolume)
             GlobalSettings.Volume = Volume;
+        else
+            Volume = GlobalSettings.Volume;
 
         if (LoopBGAudio != null)
         {

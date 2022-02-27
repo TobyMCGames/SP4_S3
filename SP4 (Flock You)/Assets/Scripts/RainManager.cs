@@ -70,10 +70,10 @@ public class RainManager : MonoBehaviour
         CloudSystem.emissionRate = CloudEmi * RainIntensity;
 
         if (RainLoopAudio != null)
-            RainLoopAudio.Play(RainIntensity * 0.5f * GlobalSettings.Volume);
+            RainLoopAudio.Play(RainIntensity * 0.3f * GlobalSettings.Volume);
 
         if (WindLoopAudio != null)
-            WindLoopAudio.Play(RainIntensity * 0.5f * GlobalSettings.Volume);
+            WindLoopAudio.Play(RainIntensity * 0.3f * GlobalSettings.Volume);
 
 
         PrevRainIntensity = RainIntensity;
