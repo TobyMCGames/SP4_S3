@@ -14091,7 +14091,7 @@ MonoBehaviour:
   UI_Screen: {fileID: 2043670230}
   Loading_Screen: {fileID: 274018344}
   Direction_Test: {fileID: 390943595}
-  PlayerPrefab: {fileID: 1987478240769630004, guid: 008496d9bc1b228409b68881800d8ec3,
+  PlayerPrefab: {fileID: 1987478240769630004, guid: 0f1ed1b945e973142bec85f94ec2bada,
     type: 3}
   player: {fileID: 0}
   MainCamera: {fileID: 166118465}
