@@ -91,7 +91,7 @@ public class Weapon : MonoBehaviour
     {
         if (ProjectilePrefab == null)
         {
-            Debug.Log("PoopPrefab was not assigned");
+            Debug.Log("Bullet prefab was not assigned");
             return;
         }
         if (ProjectileList == null)

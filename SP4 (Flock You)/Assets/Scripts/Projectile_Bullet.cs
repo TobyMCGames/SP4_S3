@@ -7,7 +7,7 @@ public class Projectile_Bullet : MonoBehaviour
 {
     PhotonView photonView;
     private Vector3 ShootDir;
-    float moveSpeed = 50f;
+    float moveSpeed = 100f;
     float tillDelete = 3f;
     Enemy enemy;
 
