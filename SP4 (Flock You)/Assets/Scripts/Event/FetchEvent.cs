@@ -101,7 +101,7 @@ public class FetchEvent : BaseEvent
                     if (carriedby.IsMine)
                         TextDistanceCheck.text = "Nearest Nest: " + Distance.ToString() + "m";
                     else
-                        TextDistanceCheck.text = carriedby.gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername.ToString() + "Is:" +Distance.ToString() + " awway catch him!";
+                        TextDistanceCheck.text = carriedby.gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername.ToString() + "Is:" +Distance.ToString() + "m away catch him!";
                     FetchItem.GetComponent<FetchItemScript>().stoprender(true);
                 }
             }

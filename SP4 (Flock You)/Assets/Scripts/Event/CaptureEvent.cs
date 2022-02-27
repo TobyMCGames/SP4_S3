@@ -154,7 +154,7 @@ public class CaptureEvent : BaseEvent
                 else if (!Completed)
                 {
                         Leadingplayer.text = PhotonNetwork.GetPhotonView(mostprogressViewID).gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername + " is: " +
-                        Mathf.Round((playerProgresslist[mostprogressViewID].getProgress() * 100f)).ToString() + "% to capturing the point";
+                        Mathf.Round((playerProgresslist[mostprogressViewID].getProgress() * 100f)).ToString() + " % to capturing the point";
                 }
                 else if (Completed)
                 {
