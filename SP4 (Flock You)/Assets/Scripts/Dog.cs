@@ -8,7 +8,7 @@ public class Dog : Enemy
 {
     
     Rigidbody rigidbody;
-    float jumpPower = 20f;
+    float jumpPower = 150f;
     Enemy enemy;
     public bool isPouncing;
     bool pounceSuccess;
@@ -34,7 +34,6 @@ public class Dog : Enemy
             SetDetectionRange(defaultDetectionRadius * 4f);
             navMeshAgent.SetDestination(player.position);
             // If dog is within range, pounce on player
-            //distanceBetweenPlayer = Vector3.Distance(transform.position, player.position); //finds distance
             if (distanceBetweenPlayer <= 2.6f)
             {
                 Pounce();
@@ -59,7 +58,6 @@ public class Dog : Enemy
         {
             isPouncing = true;
             GetComponent<NavMeshAgent>().enabled = false; // turn off NavMeshAgent
-            //Debug.Log("Distance between dog and player: " + distanceBetweenPlayer);
             // Look towards player direction
             transform.LookAt(player.position);
             // Pounce!
@@ -78,7 +76,6 @@ public class Dog : Enemy
                 isPouncing = false;
                 GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true; // resume NavMeshAgent
             }
-            //GetComponent<NavMeshAgent>().enabled = true; // resume NavMeshAgent
         }
         if (other.CompareTag("Player"))
         {

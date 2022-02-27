@@ -101,7 +101,7 @@ public class FetchEvent : BaseEvent
                     if (carriedby.IsMine)
                         TextDistanceCheck.text = "Nearest Nest: " + Distance.ToString() + "m";
                     else
-                        TextDistanceCheck.text = carriedby.gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername.ToString() + "Is:" +Distance.ToString() + " awway catch him!";
+                        TextDistanceCheck.text = carriedby.gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername.ToString() + "Is:" +Distance.ToString() + "m away catch him!";
                     FetchItem.GetComponent<FetchItemScript>().stoprender(true);
                 }
             }
@@ -241,8 +241,7 @@ public class FetchEvent : BaseEvent
             {
                 stream.SendNext(Completed);
                 stream.SendNext(Destructiontimer);
-                if (carriedby != null)
-                    stream.SendNext(carriedby.ViewID);
+                stream.SendNext(carriedby.ViewID);
             }
         }
         else if (stream.IsReading)
@@ -251,7 +250,7 @@ public class FetchEvent : BaseEvent
             Destructiontimer = (double)stream.ReceiveNext();
             int carriedview = -1;
             carriedview = (int)stream.ReceiveNext();
-            if (carriedview != -1)
+            if (carriedview != -1 && carriedview != null)
                 carriedby = PhotonNetwork.GetPhotonView(carriedview);
         }
     }
