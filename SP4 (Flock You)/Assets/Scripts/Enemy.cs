@@ -141,7 +141,7 @@ public class Enemy : MonoBehaviour
             navMeshAgent.SetDestination(player.position);
 
             //Deal damage to player
-            if (isMeleeAttacking == true && distanceBetweenPlayer <= 1.0f)
+            if (isMeleeAttacking == true && distanceBetweenPlayer <= 1.1f)
             {
                 if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                 {
@@ -191,12 +191,8 @@ public class Enemy : MonoBehaviour
 
     public void Distracted(Vector3 PlayerLastPos)
     {
-        //if (FYGameManager.Instance.curMode == FYGameManager.GAMEMODES.MULTIPLAYER)
-        //    if (!PhotonNetwork.IsMasterClient)
-        //        return;
         curState = FSM.DISTRACTED;
         Distract_Timer = DistractTime;
-        //waypointController.MoveToLocation(PlayerLastPos);
         navMeshAgent.SetDestination(PlayerLastPos);
     }
 

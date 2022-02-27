@@ -428,11 +428,11 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         SetUpUI();
 
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
-            RegisterPlayerList(GlobalSettings.Username, GlobalSettings.Level);
+            RegisterPlayerList(GlobalSettings.Username, GlobalSettings.Level,0);
 
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
-            photonView.RPC("RegisterPlayerList", RpcTarget.AllViaServer, GlobalSettings.Username, GlobalSettings.Level);
+            photonView.RPC("RegisterPlayerList", RpcTarget.AllViaServer, GlobalSettings.Username, GlobalSettings.Level,player.gameObject.GetPhotonView().ViewID);
             photonView.RPC("SetToPlayerList", RpcTarget.AllViaServer, player.gameObject.GetPhotonView().ViewID);
         }
     }
@@ -463,7 +463,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void RegisterPlayerList(string _username, int level)
+    private void RegisterPlayerList(string _username, int level, int viewid)
     {
         PlayerGameValues _playerInfo = new PlayerGameValues();
         _playerInfo.sUsername = _username;
@@ -472,9 +472,9 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
         playerGameList.Add(_playerInfo);
 
-        if (GlobalSettings.Username != _username)
-            return;
-
-        player.playerGameInfo = _playerInfo;
+        if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+            PhotonNetwork.GetPhotonView(viewid).gameObject.GetComponent<FYPlayer>().playerGameInfo = _playerInfo;
+        else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
+            player.playerGameInfo = _playerInfo;
     }
 }
