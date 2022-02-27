@@ -607,6 +607,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NestSpawn
       objectReference: {fileID: 0}
+    - target: {fileID: 4396186106477467285, guid: a4fb5426f57674c40ad3d7f782558719,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8023203474164793877, guid: a4fb5426f57674c40ad3d7f782558719,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -809,7 +814,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366792333}
-  m_LocalRotation: {x: 0.012861941, y: -0.70698977, z: -0.01286194, w: -0.7069898}
+  m_LocalRotation: {x: 0.025374819, y: -0.7066513, z: -0.025374813, w: -0.7066514}
   m_LocalPosition: {x: -6.9999995, y: 0, z: -0.0000004172325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1090,8 +1095,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a792c6ee6b6a84fb03bdc0d88306ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curMode: 0
+  GameTime: 0
   curTimer: 65
+  rainSettings: {fileID: 0}
+  isPaused: 0
   UI_Screen: {fileID: 2043670230}
   Loading_Screen: {fileID: 274018344}
   Direction_Test: {fileID: 390943595}
@@ -1101,11 +1108,17 @@ MonoBehaviour:
   MainCamera: {fileID: 1293928278}
   PlayerList: {fileID: 1907519864}
   ProjectileList: {fileID: 5033030191947368741}
+  playerGameList: []
   SpawnPoints:
   - {fileID: 5033030191947368740}
   - {fileID: 5033030191947368744}
   - {fileID: 5033030191947368743}
   - {fileID: 5033030191947368742}
+  MinimapCam: {fileID: 0}
+  floor: {fileID: 0}
+  EventPosition: []
+  EventFrequency: 5
+  ElapsedEventTime: 0
 --- !u!4 &1517933914
 Transform:
   m_ObjectHideFlags: 0
@@ -1132,11 +1145,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebf711f4a200864a979e528085e8717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 0}
   player: {fileID: 3727522623858185587, guid: 008496d9bc1b228409b68881800d8ec3, type: 3}
+  scoreboard: {fileID: 0}
+  EndScreen: {fileID: 0}
+  PauseScreen: {fileID: 0}
   UI_Timer: {fileID: 193360771}
-  UI_Health: {fileID: 673186660}
-  UI_Ammo: {fileID: 1902265180}
+  UI_Health: {fileID: 0}
+  UI_Ammo: {fileID: 0}
   UI_Lives: {fileID: 1729423605}
+  UI_Ability: {fileID: 0}
+  Ability_LayNest: {fileID: 0}
+  Ability_Distract: {fileID: 0}
 --- !u!114 &1517933916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1662,6 +1682,16 @@ PrefabInstance:
       propertyPath: curState
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2867534577220930112, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231930916497376527, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 4006190002733468391, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1831,6 +1861,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
       value: 1.9693878
+      objectReference: {fileID: 0}
+    - target: {fileID: 5826392992141899755, guid: 1796f246ec9d3d542bca7d71a751be1a,
+        type: 3}
+      propertyPath: sceneViewId
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6061232703347076683, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}

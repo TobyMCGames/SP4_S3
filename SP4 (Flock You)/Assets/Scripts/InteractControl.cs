@@ -73,6 +73,7 @@ public class InteractControl : MonoBehaviour
                 //heavy object
                 else if (heldObjectWeight > 7)
                 {
+                    transform.position = heldObject.transform.position + touchPointHeavy.transform.localPosition;
                     if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                         heldObject.GetPhotonView().RPC("SetHolder", RpcTarget.AllViaServer, photonView.ViewID, 3);
                     else

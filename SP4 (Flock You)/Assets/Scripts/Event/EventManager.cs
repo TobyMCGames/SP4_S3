@@ -11,7 +11,6 @@ public class EventManager : MonoBehaviourPun
     public GameObject EventText;
 
     public PhotonView EventmanagerView;
-
     private void Awake()
     {
         Instance = this;
@@ -46,6 +45,7 @@ public class EventManager : MonoBehaviourPun
     [PunRPC]
     public void RemoveFromList(int index)
     {
+        if (index < ActiveEventList.Count && index >= 0 && ActiveEventList.Count >0)
         ActiveEventList[index].GetComponent<BaseEvent>().returnEventobj();
         ActiveEventList.RemoveAt(index);
     }
@@ -64,8 +64,11 @@ public class EventManager : MonoBehaviourPun
                 {
                     GameObject CaptureEvent = PhotonNetwork.Instantiate("CaptureEventPrefab", gameObject.transform.position, Quaternion.identity);
                     CaptureEvent.transform.localPosition = position;
-                    photonView.RPC("SyncEventPosition", RpcTarget.AllViaServer,CaptureEvent.GetComponent<PhotonView>().ViewID, position);
-                    photonView.RPC("InitEvent", RpcTarget.AllViaServer, CaptureEvent.GetComponent<PhotonView>().ViewID, eventType);
+                    CaptureEvent.transform.SetParent(gameObject.transform);
+                    CaptureEvent.GetComponent<CaptureEvent>().Init();
+                    ActiveEventList.Add(CaptureEvent);
+                    photonView.RPC("SyncEventPosition", RpcTarget.Others,CaptureEvent.GetComponent<PhotonView>().ViewID, position);
+                    photonView.RPC("InitEvent", RpcTarget.Others, CaptureEvent.GetComponent<PhotonView>().ViewID, eventType);
                 }
                 break;
             case BaseEvent.GameEventType.EVENT_FETCH:

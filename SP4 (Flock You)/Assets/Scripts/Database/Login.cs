@@ -11,6 +11,7 @@ public class Login : MonoBehaviour
     public InputField if_username, if_password; //to link to the inpufields
     public GameObject LoadingStatus;
     public GameObject ReturnPanel;
+    public GameObject MainMenuPanel;
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class Login : MonoBehaviour
         {
             //Set player name
             ReturnPanel.SetActive(true);
+            MainMenuPanel.SetActive(false);
             string playerName = GlobalSettings.Username;
             LoadingStatus.SetActive(true);
             PhotonNetwork.LocalPlayer.NickName = playerName;

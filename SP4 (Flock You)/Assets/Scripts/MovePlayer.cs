@@ -9,6 +9,7 @@ public class MovePlayer : MonoBehaviour
     public enum PlayerState
     {
         IDLE,
+        DROPPING,
         JUMPING,
         FLYING,
         FLYING_HEIGHTCHANGE,// when bird is flying up / down
@@ -50,6 +51,7 @@ public class MovePlayer : MonoBehaviour
     public GameObject Lookat;
 
     Rigidbody m_Rigidbody;
+    CustomGravity _customGravity;
     Vector3 m_Movement;
     Quaternion m_Rotation = Quaternion.identity;
     float horizontalmovement;
@@ -67,6 +69,7 @@ public class MovePlayer : MonoBehaviour
     public float BarrelRollSpeed = 5f;
     float BarrelRollAngle = 0;
     float rolloffsetX =0;
+    [SerializeField] float DashSpeed = 20f;
 
     // double jump
     double firsttaptime = 0.0;
@@ -95,16 +98,21 @@ public class MovePlayer : MonoBehaviour
     public Text directiontext;
     public Text orientationtext;
 
+    [Header("Player Models")]
+    public GameObject GroundedModel;
+    public GameObject FlyingModel;
+
     //private doubletapchecktype doublechecktype = doubletapchecktype.DOUBLE_NONE;
     Dictionary<doubletapchecktype, double> keyfirsttaptimelist = new Dictionary<doubletapchecktype, double>();
     Dictionary<doubletapchecktype, bool> keyfirsttapstatus = new Dictionary<doubletapchecktype, bool>();
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        _customGravity = GetComponent<CustomGravity>();
         playerheight = transform.localScale.y;
         DefaultMoveMul = movemul;
         vec3up = new Vector3(0, 1, 0);
-        flydrop.Set(0, -3.0f, 0);
+        flydrop.Set(0, GlobalSettings.gravity, 0);
         DiveBombDirection = Physics.gravity;
         photonView = GetComponent<PhotonView>();
         if (photonView == null)
@@ -149,11 +157,14 @@ public class MovePlayer : MonoBehaviour
         Moveplayer();
         if (playerState >= PlayerState.FLYING)
         {
-            m_Rigidbody.useGravity = false;
+            //toggle flying model
+            StartCoroutine(ChangeFlyingModel());
+            _customGravity.enabled = false;
             Fly();
         }
         else
-            m_Rigidbody.useGravity = true;
+            _customGravity.enabled = true;
+
         //checkDoubletap();
         checkJump(); // checks if player jumps
         if (Input.GetKeyUp(KeyCode.C))
@@ -168,6 +179,26 @@ public class MovePlayer : MonoBehaviour
     public bool GetIsGrounded()
     {
         return isgrounded;
+    }
+
+    IEnumerator ChangeFlyingModel()
+    {
+        if (FlyingModel != null && GroundedModel != null)
+        {
+            FlyingModel.SetActive(true);
+            GroundedModel.SetActive(false);
+        }
+        yield break;
+    }
+
+    IEnumerator ChangeGroundedModel()
+    {
+        if (FlyingModel != null && GroundedModel != null)
+        {
+            FlyingModel.SetActive(false);
+            GroundedModel.SetActive(true);
+        }
+        yield break;
     }
 
     void checkJump()
@@ -187,6 +218,10 @@ public class MovePlayer : MonoBehaviour
                     flydrop *= -1;
             }
         }
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !isgrounded && playerState == PlayerState.IDLE)
+        {
+            playerState = PlayerState.FLYING_HEIGHTCHANGE;
+        }
     }
 
     void PlayerInput()
@@ -200,19 +235,13 @@ public class MovePlayer : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.D) && playerState >= PlayerState.FLYING)
         {
-            playerState = PlayerState.FLYING_BARREL_RIGHT;
+            //playerState = PlayerState.FLYING_BARREL_RIGHT;
+            m_Rigidbody.MovePosition(m_Rigidbody.position + (vec3right * DashSpeed));
         }
         else if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.A) && playerState >= PlayerState.FLYING)
         {
-            playerState = PlayerState.FLYING_BARREL_LEFT;
-        }
-
-        if (Input.GetKeyUp(KeyCode.Alpha0) && PhotonNetwork.IsMasterClient)
-        {
-            Vector3 Eventpos = Vector3.zero;
-            Eventpos.Set(20, 1, 20);
-            //photonView.RPC("CreateEvent", RpcTarget.AllViaServer,BaseEvent.GameEventType.EVENT_CAPTURE, Eventpos);
-            EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_CAPTURE, Eventpos);
+            //playerState = PlayerState.FLYING_BARREL_LEFT;
+            m_Rigidbody.MovePosition(m_Rigidbody.position + (-vec3right* DashSpeed));
         }
     }
 
@@ -233,23 +262,17 @@ public class MovePlayer : MonoBehaviour
             roll = 0;
             vec3up = Vector3.up;
             toggleTrail(false);
-           
+
+            //toggle model to show grounded model
+            StartCoroutine(ChangeGroundedModel());
+
             if (playerState == PlayerState.FLYING_DIVEBOMB)
                 m_Rigidbody.position = Hit.point + (Vector3.up * playerheight * 0.5f);
             playerState = PlayerState.IDLE;
             fallspeed = 0;
-            m_Rigidbody.useGravity = true;
+            _customGravity.enabled = true;
         }
 
-        if (directiontext != null)
-        {
-            if (playerState == PlayerState.FLYING)
-            {
-                directiontext.text = "Flying: " + Orientation.ToString();
-            }
-            else
-                directiontext.text = "Grounded: " + vec3front.ToString();
-        }
     }
 
     void Moveplayer()
@@ -305,7 +328,7 @@ public class MovePlayer : MonoBehaviour
         else
         {
             playerState = PlayerState.IDLE;
-            m_Rigidbody.useGravity = true;
+            _customGravity.enabled = true;
         }
     }
 
@@ -326,20 +349,24 @@ public class MovePlayer : MonoBehaviour
             divebomb();
             return;
         }
-        else if (playerState == PlayerState.FLYING_BARREL_LEFT || playerState == PlayerState.FLYING_BARREL_RIGHT)
-        {
-            BarrelRoll();
-            return;
-        }
+        //else if (playerState == PlayerState.FLYING_BARREL_LEFT || playerState == PlayerState.FLYING_BARREL_RIGHT)
+        //{
+        //    BarrelRoll();
+        //    return;
+        //}
 
         if (Input.GetKey(KeyCode.Space))
         {
+            float OverallForce = flyverticalforce;
+            if (FYGameManager.Instance.isRaining())
+                OverallForce *= 0.7f;
+
             //m_Movement.y += Time.deltaTime * flyverticalforce;
             if (playerState != PlayerState.FLYING_DIVEBOMB && !isgrounded)
                 playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // striaght up
             {
-                m_Rigidbody.AddForce((Vector3.up * flyverticalforce) * Time.deltaTime, ForceMode.VelocityChange);
+                m_Rigidbody.AddForce((Vector3.up * OverallForce) * Time.deltaTime, ForceMode.VelocityChange);
                 toggleTrail(false);
             }
             else // go up a relative to your orientation
@@ -347,14 +374,14 @@ public class MovePlayer : MonoBehaviour
                 Vector3 movement = Orientation;
                 movement.y = 0;
                 m_Rigidbody.AddForce(Quaternion.Euler(Orientation) *
-                    (Vector3.up * flyverticalforce * Time.deltaTime), ForceMode.VelocityChange);
+                    (Vector3.up * OverallForce * Time.deltaTime), ForceMode.VelocityChange);
 
-                if (pitch - Time.deltaTime * flyverticalforce < -45)
+                if (pitch - Time.deltaTime * OverallForce < -45)
                 {
                     pitch = -45;
                 }
                 else
-                    pitch -= Time.deltaTime * flyverticalforce;
+                    pitch -= Time.deltaTime * OverallForce;
             }
         }
         else if (!islanding && playerState != PlayerState.FLYING_DIVEBOMB)
@@ -366,11 +393,15 @@ public class MovePlayer : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftControl))
         {
+            float OverallForce = flyverticalforce;
+            if (FYGameManager.Instance.isRaining())
+                OverallForce *= 1.5f;
+
             if (playerState != PlayerState.FLYING_DIVEBOMB && !isgrounded)
                 playerState = PlayerState.FLYING_HEIGHTCHANGE;
             if (!inputed) // fly striaght down;
             {
-                m_Rigidbody.AddForce((flyverticalforce * Vector3.down) * Time.deltaTime, ForceMode.VelocityChange);
+                m_Rigidbody.AddForce((OverallForce * Vector3.down) * Time.deltaTime, ForceMode.VelocityChange);
                 toggleTrail(false);
             }
             else // go down a relative to your orientation
@@ -381,12 +412,12 @@ public class MovePlayer : MonoBehaviour
                 Vector3 movement = Orientation;
                 movement.y = 0;
                 m_Rigidbody.AddForce(Quaternion.Euler(Orientation) * Vector3.down *
-                    flyverticalforce * Time.deltaTime, ForceMode.VelocityChange);
+                    OverallForce * Time.deltaTime, ForceMode.VelocityChange);
 
-                if (pitch + Time.deltaTime * flyverticalforce > 45)
+                if (pitch + Time.deltaTime * OverallForce > 45)
                     pitch = 45;
                 else
-                    pitch += Time.deltaTime * flyverticalforce;
+                    pitch += Time.deltaTime * OverallForce;
             }
         }
         else if (!islanding)
@@ -576,10 +607,10 @@ public class MovePlayer : MonoBehaviour
         }*/
         toggleTrail(true);
     }
-
+    /*
     void BarrelRoll()
     {
-        if (playerState == PlayerState.FLYING_BARREL_LEFT)
+        /*if (playerState == PlayerState.FLYING_BARREL_LEFT)
         {
             roll += turnSpeed * 12 * Time.deltaTime;
             BarrelRollAngle += turnSpeed * 12 * Time.deltaTime;
@@ -613,7 +644,7 @@ public class MovePlayer : MonoBehaviour
         m_Rotation = Quaternion.Euler(Orientation);
         m_Rotation = Quaternion.RotateTowards(m_Rigidbody.rotation, m_Rotation, turnSpeed * 12 * Time.deltaTime);
         m_Movement = m_Rotation * m_Movement;
-        m_Rigidbody.AddForce(m_Movement * movemul * Time.deltaTime, ForceMode.VelocityChange);
+        m_Rigidbody.AddForce(m_Movement * 20 * Time.deltaTime, ForceMode.VelocityChange);
         m_Rigidbody.MoveRotation(m_Rotation);
 
         if (BarrelRollAngle >= 360 && playerState == PlayerState.FLYING_BARREL_LEFT)
@@ -634,7 +665,29 @@ public class MovePlayer : MonoBehaviour
             if (roll < -360)
                 roll += 360;
         }
-    }
+
+        if (playerState == PlayerState.FLYING_BARREL_LEFT)
+        {
+            BarrelRollAngle += BarrelRollSpeed * Time.deltaTime;
+            roll += BarrelRollSpeed * Time.deltaTime;
+            Orientation.Set(pitch, yaw, roll);
+            //m_Rotation = Quaternion.Euler(pitch,yaw,roll);
+            //transform.rotation = m_Rotation;
+            transform.rotation = Quaternion.AngleAxis(roll,Vector3.right) * Quaternion.AngleAxis(pitch,Vector3.forward) * Quaternion.AngleAxis(yaw,Vector3.up);
+            //m_Rigidbody.MoveRotation(m_Rotation);
+            m_Rigidbody.MoveRotation(m_Rotation);
+            if (BarrelRollAngle >= 360)
+            {
+                playerState = PlayerState.FLYING;
+                rolloffsetX = 0;
+                BarrelRollAngle = 0;
+                m_Rigidbody.angularVelocity = Vector3.zero;
+                if (roll >= 360)
+                    roll -= 360;
+            }    
+        }
+    }*/
+
 
     void recenterRoll()
     {

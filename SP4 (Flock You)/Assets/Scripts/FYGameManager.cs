@@ -9,8 +9,6 @@ using Photon.Pun.UtilityScripts;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-using DigitalRuby.RainMaker;
-
 using Cinemachine;
 
 public class FYGameManager : MonoBehaviourPunCallbacks
@@ -22,7 +20,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
     [Header("Game Settings")]
     public float GameTime;
     public float curTimer;
-    public RainScript rainSettings;
+    public RainManager rainSettings;
     public bool isPaused = false;
 
     [Header("Loading Screen")]
@@ -58,7 +56,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
 
     [Header("Event Related")]
     [Tooltip("Possible locations where the events can be spawned")] public GameObject[] EventPosition;
-    [SerializeField] int EventFrequency = 5;
+    [SerializeField] int EventFrequency =  60; // seconds
     [SerializeField] float ElapsedEventTime = 0f;
     
     public void Awake()
@@ -103,7 +101,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             }
         }
         else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
-            UnityEngine.SceneManagement.SceneManager.LoadScene("toby_Lobby");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
     }
 
     private void OnDestroy()
@@ -242,31 +240,25 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                     AllPlayerInfo = true;
                 }
 
-
-            /*if (EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null)
+            if (!isOver())
             {
-                Vector3 Eventpos = Vector3.zero;
-                Vector3 floorpos = floor.transform.position;
-                Vector3 floorscale = floor.transform.localScale;
-                if (PhotonNetwork.IsMasterClient)
+                if (AllPlayerInfo && EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_CAPTURE) == null &&
+                EventManager.Instance.GetEvent(BaseEvent.GameEventType.EVENT_FETCH) == null)
                 {
-                    float randx, randy, randz;
-                    randx = Random.Range(floor.transform.position.x - floorscale.x * 0.25f, floor.transform.position.x + floorscale.x * 0.25f);
-                    randy = Random.Range(floor.transform.position.y + floorscale.y * 0.5f, floor.transform.position.y + floorscale.y);
-                    randz = Random.Range(floor.transform.position.z - floorscale.z * 0.25f, floor.transform.position.z + floorscale.z * 0.25f);
-                    Eventpos.Set(randx, randy, randz);
-                    EventManager.Instance.CreateEvent(BaseEvent.GameEventType.EVENT_FETCH, Eventpos);
+                    if (PhotonNetwork.IsMasterClient && ElapsedEventTime <= 0)
+                    {
+                        ElapsedEventTime = EventFrequency;
+                        EventManager.Instance.CreateEvent((BaseEvent.GameEventType)Random.Range(0, EventManager.Instance.GameEventPrefabs.Count),
+                            EventPosition[Random.Range(0, EventPosition.Length)].transform.position);
+                    }
+                    else
+                    {
+                        ElapsedEventTime -= Time.deltaTime;
+                    }
                 }
-            }*/
-            if (EventManager.Instance.ActiveEventList.Count == 0 && !isOver()) // no events happening currently
-            {
-
-                EventManager.Instance.CreateEvent((BaseEvent.GameEventType)Random.Range(0, EventManager.Instance.GameEventPrefabs.Count),
-                    EventPosition[Random.Range(0, EventPosition.Length)].transform.position);
+                
             }
         }
-
-        
 
         if (!isOver())
         {
@@ -276,12 +268,13 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             // Timed Conditions
             if (curTimer < GameTime / 2)
             {
-                if (rainSettings.RainIntensity < 0.34f)
+                if (rainSettings.RainIntensity < 1.0f)
                 {
-                    rainSettings.EnableWind = true;
                     rainSettings.RainIntensity += 0.2f * Time.deltaTime;
-                    if (rainSettings.RainIntensity >= 0.34f)
-                        rainSettings.RainIntensity = 0.34f;
+                    if (rainSettings.RainIntensity > 1.0f)
+                    {
+                        rainSettings.RainIntensity = 1.0f;
+                    }
                 }
             }         
 
@@ -293,7 +286,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
                 int XpToAdd = player.playerGameInfo.iPoints;
                 int CashToAdd = player.playerGameInfo.iPoints / 2;
 
-                transform.GetComponent<UpdatePlayerStats>().UpdateStats(XpToAdd, CashToAdd);
+                if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
+                    transform.GetComponent<UpdatePlayerStats>().UpdateStats(XpToAdd, CashToAdd);
 
 
                 // delete all players
@@ -310,10 +304,16 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         return curTimer <= 0 || (AllPlayerInfo && PlayerList.childCount == 0);
     }
 
+    public bool isRaining()
+    {
+        return rainSettings.RainIntensity > 0.3;
+    }
+
     public void Pause()
     {
         isPaused = !isPaused;
         UI_Manager.Instance.SetPauseScreen(isPaused);
+        rainSettings.TogglePause();
 
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
         {
@@ -393,7 +393,8 @@ public class FYGameManager : MonoBehaviourPunCallbacks
         }
         if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
         {
-            ClientPlayer = PhotonNetwork.Instantiate(GlobalSettings.CurrentSkin, position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+            //change to isntantiate player with skins later
+            ClientPlayer = PhotonNetwork.Instantiate("The_Gentleman", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
             MinimapCam.GetComponent<MinimapScript>().setPlayertoFollow(ClientPlayer);
             MinimapCam.GetComponent<MinimapScript>().settpc(MainCamera);
         }

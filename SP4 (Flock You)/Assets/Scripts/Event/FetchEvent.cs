@@ -93,7 +93,10 @@ public class FetchEvent : BaseEvent
                 {
                     calculateDistance(false);
                     TextCarriedby.text = carriedby + " is carrying the item";
-                    TextDistanceCheck.text = "Nearest Nest: " + Distance.ToString() + "m";
+                    if (carriedby.IsMine)
+                        TextDistanceCheck.text = "Nearest Nest: " + Distance.ToString() + "m";
+                    else
+                        TextDistanceCheck.text = "Player with item:" + Distance.ToString();
                     FetchItem.GetComponent<FetchItemScript>().stoprender(true);
                 }
             }
@@ -184,7 +187,13 @@ public class FetchEvent : BaseEvent
                     }
                     else if (!Item) // search for the nearest nest to the player 
                     {
-                        Distance = getNearestNest(t.position);
+                        if (carriedby.IsMine)
+                            Distance = getNearestNest(t.position);
+                        else
+                        {
+                            Distance = Vector3.Distance(carriedby.gameObject.transform.position,t.gameObject.transform.position);
+                            Distance = Mathf.Round(Distance);
+                        }
                     }
                 }
             }
