@@ -241,8 +241,7 @@ public class FetchEvent : BaseEvent
             {
                 stream.SendNext(Completed);
                 stream.SendNext(Destructiontimer);
-                if (carriedby != null)
-                    stream.SendNext(carriedby.ViewID);
+                stream.SendNext(carriedby.ViewID);
             }
         }
         else if (stream.IsReading)
@@ -251,7 +250,7 @@ public class FetchEvent : BaseEvent
             Destructiontimer = (double)stream.ReceiveNext();
             int carriedview = -1;
             carriedview = (int)stream.ReceiveNext();
-            if (carriedview != -1)
+            if (carriedview != -1 && carriedview != null)
                 carriedby = PhotonNetwork.GetPhotonView(carriedview);
         }
     }
