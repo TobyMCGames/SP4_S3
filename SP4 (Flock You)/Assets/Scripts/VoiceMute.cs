@@ -14,8 +14,7 @@ public class VoiceMute : MonoBehaviour
     void Start()
     {
         recorder = GetComponent<Recorder>();
-        recorder.TransmitEnabled = false; // mute when start game
-        recorder.IsRecording = false;
+        recorder.TransmitEnabled = true; // mute when start game
         //recorder.MicrophoneDevice = 
         isMuted = true;
     }

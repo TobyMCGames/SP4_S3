@@ -14295,7 +14295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a792c6ee6b6a84fb03bdc0d88306ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameTime: 65
+  GameTime: 120
   curTimer: 0
   rainSettings: {fileID: 1765915562}
   isPaused: 0
