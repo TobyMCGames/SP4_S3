@@ -141,7 +141,7 @@ public class Enemy : MonoBehaviour
             navMeshAgent.SetDestination(player.position);
 
             //Deal damage to player
-            if (isMeleeAttacking == true && distanceBetweenPlayer <= 1.0f)
+            if (isMeleeAttacking == true && distanceBetweenPlayer <= 1.1f)
             {
                 if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                 {

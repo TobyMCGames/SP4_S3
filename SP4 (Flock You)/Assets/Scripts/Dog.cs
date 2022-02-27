@@ -8,7 +8,7 @@ public class Dog : Enemy
 {
     
     Rigidbody rigidbody;
-    float jumpPower = 20f;
+    float jumpPower = 150f;
     Enemy enemy;
     public bool isPouncing;
     bool pounceSuccess;
