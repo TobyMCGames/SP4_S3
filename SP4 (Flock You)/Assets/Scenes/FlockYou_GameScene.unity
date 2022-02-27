@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1863494, g: 0.5226209, b: 0.83286655, a: 1}
+  m_IndirectSpecularColor: {r: 0.18634948, g: 0.522621, b: 0.83286655, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5921,17 +5921,17 @@ PrefabInstance:
     - target: {fileID: 6877641834323163963, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.777512
+      value: 2.0049474
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835054059403, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.777512
+      value: 2.0049474
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835400412571, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.777512
+      value: 2.0049474
       objectReference: {fileID: 0}
     - target: {fileID: 6877641835838080389, guid: 1796f246ec9d3d542bca7d71a751be1a,
         type: 3}
@@ -15510,7 +15510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a792c6ee6b6a84fb03bdc0d88306ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameTime: 30000
+  GameTime: 300
   curTimer: 0
   rainSettings: {fileID: 1765915562}
   isPaused: 0
