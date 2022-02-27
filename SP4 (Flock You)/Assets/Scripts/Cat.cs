@@ -58,15 +58,15 @@ public class Cat : Enemy
             navMeshAgent.SetDestination(player.position);
 
             //Deal damage to player
-            if (isMeleeAttacking == true && distanceBetweenPlayer <= 1.0f)
+            if (enemyObserver.isPlayerInRange == true && distanceBetweenPlayer <= 8.3f)
             {
                 if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                 {
-                    if (playerInvolved.GetComponent<PhotonView>().IsMine)
-                        playerInvolved.GetComponent<FYPlayer>().Damaged(1);
+                    if (player.GetComponent<PhotonView>().IsMine)
+                        player.GetComponent<FYPlayer>().Damaged(1);
                 }
                 else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
-                    playerInvolved.GetComponent<FYPlayer>().Damaged(1);
+                    player.GetComponent<FYPlayer>().Damaged(1);
 
                 Debug.Log("Enemy melee attacked a player");
             }
@@ -80,25 +80,19 @@ public class Cat : Enemy
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Peckable")) // Only affects Nestspawn at time of writing
-        {
-            // Deals damage to nest
-            //other.GetComponent<NestSpawnScript>().SetCanBeDamaged(true);
-        }
-        if (other.CompareTag("Player"))
-        {
-            isMeleeAttacking = true;
-            playerInvolved = other;
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        playerInvolved = other;
+    //    }
+    //}
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isMeleeAttacking = false;
-        }
-    }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        isMeleeAttacking = false;
+    //    }
+    //}
 }
