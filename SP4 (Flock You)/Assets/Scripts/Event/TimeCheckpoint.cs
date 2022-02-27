@@ -32,5 +32,9 @@ public class TimeCheckpoint : MonoBehaviour
     {
         return Collided;
     }
+    public void ResetCheckpoint()
+    {
+        Collided = false;
+    }
 }
 
