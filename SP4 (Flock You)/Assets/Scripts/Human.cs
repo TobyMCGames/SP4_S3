@@ -43,9 +43,12 @@ public class Human : Enemy
             }
             else
             {
+                if (player != null)
+                    Head.LookAt(player.transform);
                 // Make enemy chase player
                 player = enemyObserver.player;
-                navMeshAgent.SetDestination(player.position);
+                if(player != null)
+                    navMeshAgent.SetDestination(player.position);
             }
 
             // if human already has a weapon
@@ -55,9 +58,11 @@ public class Human : Enemy
                 //EnemyHand.transform.LookAt(player.transform);
 
                 //make Shoulder face player
-                Shoulder.LookAt(player.transform);
+                if (player != null)
+                    Shoulder.LookAt(player.transform);
                 //make enemy look at player
-                Head.LookAt(player.transform);
+                if (player != null)
+                    Head.LookAt(player.transform);
                 //make weapon shoot
                 HeldWeapon.GetComponent<Weapon>().canShoot = true;
             }
@@ -69,6 +74,9 @@ public class Human : Enemy
                 //make weapon stop shooting
                 HeldWeapon.GetComponent<Weapon>().canShoot = false;
             }
+
+            Shoulder.localRotation = Quaternion.Euler(90, 0, 0);
+            Head.localRotation = Quaternion.Euler(0, 0, 0);
 
             curState = FSM.DISTRACTED;
             Distract_Timer = DistractTime; 
