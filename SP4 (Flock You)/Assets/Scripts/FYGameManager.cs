@@ -283,7 +283,7 @@ public class FYGameManager : MonoBehaviourPunCallbacks
             {
                 UI_Manager.Instance.SetEndScreen();
 
-                int XpToAdd = player.playerGameInfo.iPoints;
+                int XpToAdd = 10 + player.playerGameInfo.iPoints;
                 int CashToAdd = player.playerGameInfo.iPoints / 2;
 
                 if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)

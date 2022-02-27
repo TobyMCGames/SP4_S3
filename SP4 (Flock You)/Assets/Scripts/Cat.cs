@@ -58,7 +58,7 @@ public class Cat : Enemy
             navMeshAgent.SetDestination(player.position);
 
             //Deal damage to player
-            if (isMeleeAttacking == true && distanceBetweenPlayer <= 1f)
+            if (isMeleeAttacking == true && distanceBetweenPlayer <= 1.0f)
             {
                 if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
                 {
