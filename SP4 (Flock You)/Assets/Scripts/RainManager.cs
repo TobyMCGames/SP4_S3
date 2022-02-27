@@ -37,10 +37,16 @@ public class RainManager : MonoBehaviour
         CloudSystem.emissionRate = CloudEmi * RainIntensity;
 
         if (RainSound != null)
+        {
             RainLoopAudio = new LoopingAudioSource(this, RainSound, null);
+            RainLoopAudio.Play(RainIntensity);
+        }
 
         if (WindSound != null)
+        {
             WindLoopAudio = new LoopingAudioSource(this, WindSound, null);
+            WindLoopAudio.Play(RainIntensity);
+        }
     }
 
     // Update is called once per frame
