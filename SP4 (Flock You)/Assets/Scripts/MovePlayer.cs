@@ -489,6 +489,7 @@ public class MovePlayer : MonoBehaviour
                                     playerState = PlayerState.FLYING_DIVEBOMB;
                                     DiveBombDirection = vec3front;
                                     fallspeed = 0;
+                                    keyfirsttapstatus[i] = false;
                                 }
                                 else if (playerState == PlayerState.FLYING_DIVEBOMB) // recover divebomb
                                 {

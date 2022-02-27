@@ -8,6 +8,7 @@ public class DropSystem : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] float ForcerequiredtoBreak;
     [SerializeField] GameObject interactlist;
+    [SerializeField] GameObject Inventory;
     private Rigidbody m_rigidbody;
     bool isbroken = false;
     float destructiontime = 5f;
@@ -21,7 +22,7 @@ public class DropSystem : MonoBehaviour
     private void Start()
     {
         InteractItem interactscript;
-        foreach (Transform t in transform)
+        foreach (Transform t in Inventory.transform)
         {
             if (interactscript = t.gameObject.GetComponent<InteractItem>())
             {
@@ -42,7 +43,25 @@ public class DropSystem : MonoBehaviour
                 destructiontime -= Time.deltaTime;
             return;
         }
-        if (m_rigidbody.velocity.sqrMagnitude >= ForcerequiredtoBreak && !GetComponent<InteractItem>().IsHeldonto())
+
+    }
+
+    [PunRPC]
+    public void ReleaseInventory()
+    { 
+        foreach (Transform t in Inventory.transform)
+        {
+             t.SetParent(interactlist.transform);
+            t.gameObject.SetActive(true);
+        }
+        isbroken = true;
+        gameObject.SetActive(false);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.impulse.magnitude);
+        if (collision.impulse.magnitude >= ForcerequiredtoBreak && !GetComponent<InteractItem>().IsHeldonto())
         {
             if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.MULTIPLAYER)
             {
@@ -51,17 +70,5 @@ public class DropSystem : MonoBehaviour
             else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
                 ReleaseInventory();
         }
-    }
-
-    [PunRPC]
-    public void ReleaseInventory()
-    { 
-        foreach (Transform t in transform)
-        {
-             t.SetParent(interactlist.transform);
-            t.gameObject.SetActive(true);
-        }
-        isbroken = true;
-        gameObject.SetActive(false);
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class TimeTrial : BaseEvent
 {
@@ -10,6 +11,7 @@ public class TimeTrial : BaseEvent
     [SerializeField] int completionBonus = 20;
     [SerializeField] float TrialTime = 2f;
     [SerializeField] float CurrentTrialTime;
+    [SerializeField] protected Text TimeText;
     GameObject TargetPlayer  = null;
     List<GameObject> pathways = new List<GameObject>();
     bool TimeTrialStarted = false;
@@ -34,6 +36,7 @@ public class TimeTrial : BaseEvent
                 pathways[currentPoint].SetActive(false);
                 currentPoint++;
                 pathways[currentPoint].SetActive(true);
+                
             }
             else if (currentPoint == 0) // startpoint 
             {
@@ -41,6 +44,7 @@ public class TimeTrial : BaseEvent
                 pathways[currentPoint].SetActive(false);
                 currentPoint++;
                 pathways[currentPoint].SetActive(true);
+                EventManager.Instance.TextToDisplay(TimeText);
             }
             else if (currentPoint == Path.transform.childCount-1) // handle point giving
             {
@@ -51,25 +55,26 @@ public class TimeTrial : BaseEvent
                     UI_Manager.Instance.photonView.RPC("UpdatePlayerScore", RpcTarget.AllViaServer,
                     TargetPlayer.GetComponent<FYPlayer>().playerGameInfo.sUsername, TargetPlayer.GetComponent<FYPlayer>().playerGameInfo.iPoints,
                     0);
+                    returnEventobj();
                 }
                 else if (GlobalSettings.curMode == GlobalSettings.GAMEMODES.SINGLE_PLAYER)
                 {
                     UI_Manager.Instance.UpdatePlayerScore(TargetPlayer.GetComponent<FYPlayer>().playerGameInfo.sUsername, TargetPlayer.GetComponent<FYPlayer>().playerGameInfo.iPoints,0);
+                    returnEventobj();
                 }
-                
                 gameObject.SetActive(false);
             }
         }
         if (TimeTrialStarted)
         {
             CurrentTrialTime -= Time.deltaTime;
-            if (CurrentTrialTime  <=0)
+            TimeText.text = "Trial Time left: "+ CurrentTrialTime.ToString();
+            if (CurrentTrialTime  <= 0)
             {
                 CurrentTrialTime = TrialTime;
                 TimeTrialStarted = false;
                 Initcheckpoints();
                 currentPoint = 0;
-
             }
         }
     } 
@@ -82,14 +87,26 @@ public class TimeTrial : BaseEvent
             pathways.Add(t.gameObject);
         }
         pathways[0].SetActive(true);
+        pathways[0].GetComponent<TimeCheckpoint>().ResetCheckpoint();
         for (int i = 1; i < pathways.Count; i++)
         {
             pathways[i].SetActive(false);
+            pathways[i].GetComponent<TimeCheckpoint>().ResetCheckpoint();
         }
     }
 
     public void initTargetPlayer(GameObject _targetObject)
     {
         TargetPlayer = _targetObject;
+    }
+
+    public override void returnEventobj()
+    {
+        if (canvas != null)
+        {
+            TimeText.transform.parent = canvas.transform;
+        }
+        else
+            Debug.Log("Canvas is null in eventbase");
     }
 }
