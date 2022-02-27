@@ -87,7 +87,7 @@ public class CaptureEvent : BaseEvent
                 if (playerview = player.gameObject.GetComponent<PhotonView>())
                 {
                     progressbar = progressbarlist[playercount];
-                    playername = "get playername here yes";
+                    playername = playerview.gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername;
                     if (playerview.IsMine)
                     {
                         playername += "(You)";
@@ -153,7 +153,6 @@ public class CaptureEvent : BaseEvent
                 }
                 else if (!Completed)
                 {
-                    Debug.Log(mostprogressViewID);
                         Leadingplayer.text = PhotonNetwork.GetPhotonView(mostprogressViewID).gameObject.GetComponent<FYPlayer>().playerGameInfo.sUsername + " is: " +
                         Mathf.Round((playerProgresslist[mostprogressViewID].getProgress() * 100f)).ToString() + "% to capturing the point";
                 }

@@ -13,7 +13,6 @@ public class VoiceDeafen : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.mute = true;
     }
 
     // Update is called once per frame
