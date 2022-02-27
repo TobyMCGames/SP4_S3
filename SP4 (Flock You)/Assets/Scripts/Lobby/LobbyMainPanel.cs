@@ -236,6 +236,11 @@ namespace Photon.Pun.Demo.Asteroids
             SetActivePanel(SelectionPanel.name);
         }
 
+        public void OnQuitClicked()
+        {
+            Application.Quit();
+        }
+
         public void OpenRegisterPanel()
         {
             RegisterPanel.SetActive(true);
