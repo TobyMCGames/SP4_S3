@@ -90,8 +90,8 @@ MonoBehaviour:
   Player: {fileID: 0}
   tpc: {fileID: 0}
   BasecameraOffset: 10
-  ScrollSpeed: 20
+  ScrollSpeed: 30
   minZoom: 5
   currZoom: 10
-  maxZoom: 40
+  maxZoom: 100
   zoomspeed: 5

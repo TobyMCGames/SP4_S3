@@ -26,6 +26,9 @@ public class FYPlayer : MonoBehaviour
 
     //LayEggAbility layEggAbility = new LayEggAbility();
     LayEggAbility layEggAbility;
+    GameObject currentActiveModel;
+
+    public Transform PlayerModels;
 
     private void Awake()
     {
@@ -76,13 +79,18 @@ public class FYPlayer : MonoBehaviour
                 BlinkTimer -= Time.deltaTime;
                 if (BlinkTimer <= 0)
                 {
-                    GetComponent<MeshRenderer>().enabled = !GetComponent<MeshRenderer>().enabled;
+                    if(currentActiveModel.activeSelf)
+                        currentActiveModel.SetActive(false);
+                    else
+                        currentActiveModel.SetActive(true);
+                    //currentActiveModel.GetComponent<MeshRenderer>().enabled = !GetComponent<MeshRenderer>().enabled;
                     BlinkTimer = BlinkFrame;
                 }
             }
 
             if (InvincibilityTimer <= 0)
-                GetComponent<MeshRenderer>().enabled = true;
+                currentActiveModel.SetActive(true);
+                //currentActiveModel.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 
@@ -126,8 +134,17 @@ public class FYPlayer : MonoBehaviour
         curHealth -= _damage;
         UI_Manager.Instance.UpdateHealth();
 
-
+        GetCurrentActiveModel();
         InvincibilityTimer = InvincibilityDuration;
         BlinkTimer = BlinkFrame;
+    }
+
+    private void GetCurrentActiveModel()
+    {
+        foreach (Transform model in PlayerModels)
+        {
+            if (model.gameObject.activeSelf)
+                currentActiveModel = model.gameObject;
+        }
     }
 }

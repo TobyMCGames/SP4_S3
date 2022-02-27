@@ -5,10 +5,13 @@ using UnityEngine;
 public class Human : Enemy
 {
     private bool hasWeapon;
-    private GameObject EnemyHand;
-    private Transform WeaponHolder;
+    //private GameObject EnemyHand;
     private GameObject HeldWeapon;
     private bool pickupWeapon;
+
+    public Transform Shoulder;
+    public Transform WeaponHolder;
+    public Transform Head;
 
     protected void Start()
     {
@@ -20,8 +23,8 @@ public class Human : Enemy
         DistractTime = 6f;
         hasWeapon = false;
         pickupWeapon = false;
-        EnemyHand = gameObject.transform.Find("hand").gameObject;
-        WeaponHolder = EnemyHand.transform.GetChild(0);
+        //EnemyHand = gameObject.transform.Find("hand").gameObject;
+        //WeaponHolder = EnemyHand.transform.GetChild(0);
     }
 
     protected override void AgroState()
@@ -34,6 +37,7 @@ public class Human : Enemy
             if (enemyObserver.WeaponInRange() == true && HeldWeapon == null)
             {
                 //walk towards weapon 
+                Head.LookAt(enemyObserver.GetWeaponTransform());
                 navMeshAgent.SetDestination(enemyObserver.GetWeaponTransform().position);
                 pickupWeapon = true;
             }
@@ -48,7 +52,12 @@ public class Human : Enemy
             if(HeldWeapon != null)
             {
                 //make hand face player
-                EnemyHand.transform.LookAt(player.transform);
+                //EnemyHand.transform.LookAt(player.transform);
+
+                //make Shoulder face player
+                Shoulder.LookAt(player.transform);
+                //make enemy look at player
+                Head.LookAt(player.transform);
                 //make weapon shoot
                 HeldWeapon.GetComponent<Weapon>().canShoot = true;
             }

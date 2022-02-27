@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8091674571460155323}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 4430051076257001015}
   - {fileID: 25869582307403390}
@@ -80,6 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonView: {fileID: 0}
   InteractableList: {fileID: 0}
+  affectedbygravity: 1
 --- !u!114 &3925729711192010116
 MonoBehaviour:
   m_ObjectHideFlags: 0
