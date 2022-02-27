@@ -594,6 +594,7 @@ MonoBehaviour:
   birdterminalvelocity: -30
   AirResistance: 10
   playerState: 0
+  PrevPlayerState: 0
   camera: {fileID: 0}
   Lookat: {fileID: 8714987993477327268}
   isgrounded: 0
@@ -999,7 +1000,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2637982356567866675}
   m_LocalRotation: {x: -0.39634687, y: -0, z: -0, w: 0.91810083}
-  m_LocalPosition: {x: -0.054999996, y: 0.5160003, z: 2.0424998}
+  m_LocalPosition: {x: -0.002, y: 0.5160003, z: 2.0424998}
   m_LocalScale: {x: 0.45454544, y: 0.4545456, z: 0.4545456}
   m_Children:
   - {fileID: 4595096567694191879}
@@ -1032,7 +1033,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3054712146337417429}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0.104, y: 0.89, z: 0.16}
+  m_LocalPosition: {x: 0.12, y: 0.89, z: 0.16}
   m_LocalScale: {x: 80, y: 80, z: 80}
   m_Children: []
   m_Father: {fileID: 7756286572193399566}
