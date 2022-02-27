@@ -671,7 +671,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 85d4de6b422fe964bb67cc76e7ba2a79, type: 2}
+  - {fileID: 2100000, guid: ae29ac02d08992344b9095971167e1c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2547,7 +2547,7 @@ PrefabInstance:
     - target: {fileID: 4967154475190431383, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9797468
+      value: 1.777512
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476080642628, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
@@ -2567,12 +2567,12 @@ PrefabInstance:
     - target: {fileID: 4967154476088973863, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9797468
+      value: 1.777512
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476267677751, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9797468
+      value: 1.777512
       objectReference: {fileID: 0}
     - target: {fileID: 4967154476586342109, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
@@ -2622,7 +2622,7 @@ PrefabInstance:
     - target: {fileID: 4967154476839047209, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9797468
+      value: 1.777512
       objectReference: {fileID: 0}
     - target: {fileID: 8917505357998334060, guid: 7291dfad709b8084a89e077c15d6311a,
         type: 3}
