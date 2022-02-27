@@ -241,16 +241,19 @@ public class FetchEvent : BaseEvent
             {
                 stream.SendNext(Completed);
                 stream.SendNext(Destructiontimer);
-                stream.SendNext(carriedby.ViewID);
+                if (carriedby == null)
+                    stream.SendNext(-1);
+                else
+                    stream.SendNext(carriedby.ViewID);
             }
         }
         else if (stream.IsReading)
         {
             Completed = (bool)stream.ReceiveNext();
             Destructiontimer = (double)stream.ReceiveNext();
-            int carriedview = -1;
+            int carriedview;
             carriedview = (int)stream.ReceiveNext();
-            if (carriedview != -1 && carriedview != null)
+            if (carriedview != -1)
                 carriedby = PhotonNetwork.GetPhotonView(carriedview);
         }
     }
