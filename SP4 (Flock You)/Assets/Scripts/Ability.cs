@@ -8,6 +8,7 @@ public class Ability
     protected PhotonView photonView;
     protected Transform player;
     protected AudioManager PlayerAudio;
+    protected bool AudioIsSet = false;
 
     public float cooldown = 0;
     public float CurCooldown = 0;

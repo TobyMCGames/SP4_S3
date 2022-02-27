@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
     public bool SetAsGlobalVolume;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (SetAsGlobalVolume)
             GlobalSettings.Volume = Volume;

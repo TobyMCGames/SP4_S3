@@ -121,4 +121,11 @@ public class AbilityControl : MonoBehaviour
             enemy.Distracted(_pos);
         }
     }
+
+    [PunRPC]
+    public void PlayAudio(string key)
+    {
+        if (PlayerAudio != null)
+            PlayerAudio.PlayAudio(key);
+    }
 }
